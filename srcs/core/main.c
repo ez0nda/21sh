@@ -6,20 +6,20 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:43 by ezonda            #+#    #+#             */
-/*   Updated: 2019/08/19 14:00:52 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/04 13:36:23 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/include.h"
+#include "../includes/core.h"
 
-int		exit_shell(void)
+int				exit_shell(void)
 {
 	if (tcsetattr(0, TCSANOW, &og_term))
 		return (0);
 	exit(0);
 }
 
-t_var	*update_data(int mod, t_var *data)
+t_var			*update_data(int mod, t_var *data)
 {
 	static t_var *data2;
 
@@ -28,7 +28,7 @@ t_var	*update_data(int mod, t_var *data)
 	return (data2);
 }
 
-void	set_termcanon(t_var *data)
+void			set_termcanon(t_var *data)
 {
 	char buffer[256];
 
@@ -42,7 +42,7 @@ void	set_termcanon(t_var *data)
 		return ;
 }
 
-void	set_env(t_var *data)
+static void		set_env(t_var *data)
 {
 	char *path;
 	char cwd[256];
@@ -56,7 +56,7 @@ void	set_env(t_var *data)
 	data->environ[3] = NULL;
 }
 
-int		main(int ac, char **av, char **env)
+int				main(int ac, char **av, char **env)
 {
 	t_var data;
 

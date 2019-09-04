@@ -6,21 +6,31 @@
 #    By: ezonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/19 11:30:32 by ezonda            #+#    #+#              #
-#    Updated: 2019/08/19 12:26:49 by ezonda           ###   ########.fr        #
+#    Updated: 2019/09/04 12:57:09 by ezonda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 
-SRC = srcs/main.c \
-	  srcs/tools.c \
-	  srcs/input.c \
-	  srcs/signal.c \
+SRC = srcs/core/main.c \
+	  srcs/core/signal.c \
+	  srcs/tools/edition_tools.c \
+	  srcs/edition/input.c \
+	  srcs/edition/history.c \
+	  srcs/edition/arrows.c \
+	  srcs/edition/prompt.c \
+	  srcs/edition/edit.c \
+	  srcs/edition/skip.c \
 
-OBJ = srcs/main.o \
-	  srcs/tools.o \
-	  srcs/input.o \
-	  srcs/signal.o \
+OBJ = srcs/core/main.o \
+	  srcs/core/signal.o \
+	  srcs/tools/edition_tools.o \
+	  srcs/edition/input.o \
+	  srcs/edition/history.o \
+	  srcs/edition/arrows.o \
+	  srcs/edition/prompt.o \
+	  srcs/edition/edit.o \
+	  srcs/edition/skip.o \
 
 LIB = libft/libft.a
 

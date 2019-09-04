@@ -6,11 +6,11 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:24:39 by ezonda            #+#    #+#             */
-/*   Updated: 2019/08/19 13:53:21 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/04 13:38:21 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/include.h"
+#include "../includes/core.h"
 
 static void		signal_quit(int sig)
 {
@@ -18,7 +18,11 @@ static void		signal_quit(int sig)
 
 	data = update_data(1, data);
 	if (sig == SIGINT)
-		ft_putstr("\n^C");
+	{
+		ft_putstr("^C\n");
+		get_input(data);
+		return ;
+	}
 	ft_putchar('\n');
 	exit_shell();
 }
@@ -50,7 +54,7 @@ static void		signal_resize(int sig)
 
 	(void)sig;
 	data = update_data(1, data);
-	ft_putstr("SIGWINCH\n");
+	get_winsize(data);
 }
 
 void			signal_handler(void)

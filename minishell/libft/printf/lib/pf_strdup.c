@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools.c                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/19 10:44:48 by ezonda            #+#    #+#             */
-/*   Updated: 2019/08/19 13:58:23 by ezonda           ###   ########.fr       */
+/*   Created: 2018/11/07 13:04:12 by ezonda            #+#    #+#             */
+/*   Updated: 2019/01/29 16:05:21 by jebrocho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/include.h"
+#include "../includes/ft_printf.h"
 
-void	init_shell(t_var *data)
-{
-	data->pos = 0;
-}
-
-char	**ft_tabdup(char **tab)
+char	*pf_strdup(const char *s)
 {
 	int		i;
-	char	**dest;
+	int		n;
+	char	*dest;
 
 	i = 0;
-	while (tab[i])
-		i++;
-	if (!(dest = (char**)malloc(sizeof(char*) * (i + 1))))
+	n = 0;
+	while (s[n])
+		n++;
+	if (!(dest = (char*)malloc(sizeof(char) * (n + 1))))
 		return (NULL);
-	i = 0;
-	while (tab[i])
+	while (i < n)
 	{
-		dest[i] = ft_strdup(tab[i]);
+		dest[i] = s[i];
 		i++;
 	}
-	dest[i] = NULL;
+	dest[i] = '\0';
 	return (dest);
 }

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 13:18:21 by ezonda            #+#    #+#             */
-/*   Updated: 2019/04/07 11:45:11 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/08/29 11:38:59 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_strstr(const char *str, const char *to_find);
 char			*ft_strnstr(const char *str, const char *to_find, size_t n);
 char			**ft_strsplit(char const *s, char c);
+char			**ft_strsplit_ws(char const *s);
 char			*ft_strsub(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s);

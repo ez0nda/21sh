@@ -6,7 +6,7 @@
 #    By: ezonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 09:46:09 by ezonda            #+#    #+#              #
-#    Updated: 2019/04/07 12:12:45 by ezonda           ###   ########.fr        #
+#    Updated: 2019/08/29 11:41:22 by ezonda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ SRC = srcs/convert/ft_atoi.c \
 	  srcs/string/ft_strrchr.c \
 	  srcs/string/ft_strrev.c \
 	  srcs/string/ft_strsplit.c \
+	  srcs/string/ft_split_ws.c \
 	  srcs/string/ft_strstr.c \
 	  srcs/string/ft_strsub.c \
 	  srcs/string/ft_strtrim.c \
@@ -156,6 +157,7 @@ OBJ = ft_atoi.o \
 	  ft_strrchr.o \
 	  ft_strrev.o \
 	  ft_strsplit.o \
+	  ft_split_ws.o \
 	  ft_strstr.o \
 	  ft_strsub.o \
 	  ft_strtrim.o \
