@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/04 13:41:12 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/06 14:28:15 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define KEY_R		(char[4]){ 27, 91, 67, 0}
 # define OPT_C		(char[4]){ -61, -89, 0, 0}
 # define OPT_V		(char[4]){ -30, -120, -102, 0}
+# define OPT_X		(char[4]){ -30, -119, -120, 0}
+# define OPT_S		(char[4]){ -61, -97, 0, 0}
 # define OPT_L		(char[5]){ 27, 27, 91, 68, 0}
 # define OPT_R		(char[5]){ 27, 27, 91, 67, 0}
 # define OPT_U		(char[5]){ 27, 27, 91, 65, 0}
@@ -46,9 +48,13 @@ typedef struct	s_var
 	char	**history;
 	int		nb_cols;
 	int		nb_rows;
+	int		in_selection;
+	char	*selection;
+	int		*tab;
 }				t_var;
 
 void			get_input(t_var *data);
+void			select_mode(t_var *data);
 
 void			move_left(t_var *data);
 void			move_right(t_var *data);
@@ -56,6 +62,7 @@ void			move_up(t_var *data);
 void			move_down(t_var *data);
 
 void			add_to_string(char c, t_var *data);
+void			realloc_str(char c, t_var *data);
 void			remove_prev_char(t_var *data);
 void			remove_cur_char(t_var *data);
 
@@ -63,11 +70,14 @@ void			add_to_history(t_var *data);
 void			show_history(t_var *data, int mod);
 
 void			prompt(t_var *data);
-void			realloc_str(char c, t_var *data);
 void			get_winsize(t_var *data);
 void			get_curs_pos(t_var *data, int index);
 
 void			jump(t_var *data, int mod);
+void			get_prev_word(t_var *data);
+void			get_next_word(t_var *data);
 void			move_first_last(t_var *data, int mod);
+
+
 
 #endif

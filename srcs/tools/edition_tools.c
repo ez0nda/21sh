@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:44:48 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/04 13:45:55 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/06 13:28:49 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,25 @@ int		ft_putchar_v2(int c)
 
 void	init_shell(t_var *data)
 {
+	int i;
+
+	i = 0;
 	data->pos = 0;
 	data->char_count = 0;
+	data->in_selection = 0;
 	if (!(data->lex_str = (char*)malloc(sizeof(char) * BUFF_SIZE)))
-		return ;
+			return ;
 	if (!(data->history = (char**)malloc(sizeof(char*) * BUFF_SIZE)))
 		return ;
+	if (!(data->selection = (char*)malloc(sizeof(char) * BUFF_SIZE)))
+		return ;
+	if (!(data->tab = malloc(sizeof(int) * BUFF_SIZE)))
+		return ;
+	while (i < BUFF_SIZE)
+	{
+		data->tab[i] = 0;
+		i++;
+	}
 }
 
 int		ft_tablen(char **tab)

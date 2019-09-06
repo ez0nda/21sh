@@ -6,11 +6,12 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:06:09 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/04 13:47:42 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/06 14:02:05 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/core.h"
+
 
 void	move_left(t_var *data)
 {
@@ -18,6 +19,8 @@ void	move_left(t_var *data)
 		return ;
 	data->pos--;
 	TERMCAP("le");
+	if (data->in_selection == 1)
+		select_mode(data);
 }
 
 void	move_right(t_var *data)
@@ -26,6 +29,8 @@ void	move_right(t_var *data)
 		return ;
 	data->pos++;
 	TERMCAP("nd");
+	if (data->in_selection == 1)
+		select_mode(data);
 }
 
 void	move_up(t_var *data)

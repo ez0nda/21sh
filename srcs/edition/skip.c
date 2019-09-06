@@ -6,13 +6,13 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 11:40:10 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/04 13:48:41 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/04 13:07:30 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/core.h"
 
-void			move_first_last(t_var *data, int mod)
+void	move_first_last(t_var *data, int mod)
 {
 	int tmp;
 
@@ -28,7 +28,7 @@ void			move_first_last(t_var *data, int mod)
 	}
 }
 
-static void		get_prev_word(t_var *data)
+void	get_prev_word(t_var *data)
 {
 	while ((data->lex_str[data->pos] == ' ' || data->lex_str[data->pos] == '\t')
 			&& data->pos > 0)
@@ -44,7 +44,7 @@ static void		get_prev_word(t_var *data)
 	prompt(data);
 }
 
-static void		get_next_word(t_var *data)
+void	get_next_word(t_var *data)
 {
 	while ((data->lex_str[data->pos] == ' ' || data->lex_str[data->pos] == '\t')
 			&& data->pos < ft_strlen(data->lex_str))
@@ -58,10 +58,10 @@ static void		get_next_word(t_var *data)
 	prompt(data);
 }
 
-void			jump(t_var *data, int mod)
+void	jump(t_var *data, int mod)
 {
-	int		i;
-	char	**words;
+	int i;
+	char **words;
 
 	i = 0;
 	words = ft_strsplit_ws(data->lex_str);
