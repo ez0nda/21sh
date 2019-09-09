@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/06 14:28:15 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/09 13:04:47 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct	s_var
 	int		in_selection;
 	char	*selection;
 	int		*tab;
+	int		left;
+	int		right;
 }				t_var;
 
 void			get_input(t_var *data);
@@ -78,6 +80,9 @@ void			get_prev_word(t_var *data);
 void			get_next_word(t_var *data);
 void			move_first_last(t_var *data, int mod);
 
-
+void			select_mode(t_var *data);
+void			copy_cut_mode(t_var *data, int mod);
+void			paste_mode(t_var *data);
+void			abort_selection(t_var *data);
 
 #endif

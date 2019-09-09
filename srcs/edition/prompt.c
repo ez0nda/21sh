@@ -6,11 +6,11 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/06 14:28:41 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/09 13:09:55 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../../includes/core.h"
 
 static void		print_str(t_var *data)
 {

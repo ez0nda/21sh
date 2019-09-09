@@ -6,11 +6,11 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 11:40:10 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/04 13:07:30 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/09 11:38:05 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/core.h"
+#include "../../includes/core.h"
 
 void	move_first_last(t_var *data, int mod)
 {
@@ -60,8 +60,8 @@ void	get_next_word(t_var *data)
 
 void	jump(t_var *data, int mod)
 {
-	int i;
-	char **words;
+	int		i;
+	char	**words;
 
 	i = 0;
 	words = ft_strsplit_ws(data->lex_str);
