@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 11:36:22 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/09 12:44:24 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/12 14:20:16 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	realloc_str(char c, t_var *data)
 {
 	int		i;
 	int		j;
-	char	s1[BUFF_SIZE];
-	char	s2[BUFF_SIZE];
+	char	s1[BUFF_SHELL];
+	char	s2[BUFF_SHELL];
 
 	j = 0;
 	i = data->pos;

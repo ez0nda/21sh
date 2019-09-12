@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:44:48 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/09 12:48:09 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/12 14:20:49 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ void	init_shell(t_var *data)
 	data->in_selection = 0;
 	data->left = 0;
 	data->right = 0;
-	if (!(data->lex_str = (char*)malloc(sizeof(char) * BUFF_SIZE)))
+	if (!(data->lex_str = (char*)malloc(sizeof(char) * BUFF_SHELL)))
 			return ;
-	if (!(data->history = (char**)malloc(sizeof(char*) * BUFF_SIZE)))
+	if (!(data->history = (char**)malloc(sizeof(char*) * BUFF_SHELL)))
 		return ;
-	if (!(data->selection = (char*)malloc(sizeof(char) * BUFF_SIZE)))
+	if (!(data->selection = (char*)malloc(sizeof(char) * BUFF_SHELL)))
 		return ;
-	if (!(data->tab = malloc(sizeof(int) * BUFF_SIZE)))
+	if (!(data->tab = malloc(sizeof(int) * BUFF_SHELL)))
 		return ;
-	while (i < BUFF_SIZE)
+	while (i < BUFF_SHELL)
 	{
 		data->tab[i] = 0;
 		i++;
@@ -53,7 +53,7 @@ int		ft_tablen(char **tab)
 	return (i);
 }
 
-char	**ft_tabdup(char **tab)
+char	**ft_tabdup(char **tab, int n)
 {
 	int		i;
 	char	**dest;
@@ -61,6 +61,7 @@ char	**ft_tabdup(char **tab)
 	i = 0;
 	while (tab[i])
 		i++;
+	i += n;
 	if (!(dest = (char**)malloc(sizeof(char*) * (i + 1))))
 		return (NULL);
 	i = 0;

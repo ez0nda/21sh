@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:24:39 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/04 13:06:27 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/12 14:53:13 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ static void		signal_quit(int sig)
 	data = update_data(1, data);
 	if (sig == SIGINT)
 	{
-		ft_putstr("^C\n");
-		get_input(data);
+		ft_putchar('\n');
+		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+		data->pos = 0;
+		prompt(data);
 		return ;
 	}
 	ft_putchar('\n');

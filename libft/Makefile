@@ -69,6 +69,7 @@ SRC = srcs/convert/ft_atoi.c \
 	  srcs/string/ft_striter.c \
 	  srcs/string/ft_striteri.c \
 	  srcs/string/ft_strjoin.c \
+		srcs/string/ft_strjoin_free.c \
 	  srcs/string/ft_strlcat.c \
 	  srcs/string/ft_strlen.c \
 	  srcs/string/ft_strmap.c \
@@ -144,6 +145,7 @@ OBJ = ft_atoi.o \
 	  ft_striter.o \
 	  ft_striteri.o \
 	  ft_strjoin.o \
+		ft_strjoin_free.o \
 	  ft_strlcat.o \
 	  ft_strlen.o \
 	  ft_strmap.o \

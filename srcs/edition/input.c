@@ -6,23 +6,24 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/09 15:31:25 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/12 15:07:39 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/core.h"
 
-static void		check_overflow(t_var *data)
+int			check_overflow(t_var *data)
 {
-	if ((data->char_count + ft_strlen(data->selection) >= BUFF_SIZE)
-		|| (data->char_count + ft_strlen(data->lex_str) >= BUFF_SIZE))
+	if (data->char_count >= BUFF_SHELL)
 	{
-		ft_putstr_fd("BUFFER OVERFLOW\n", 2);
-		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-		ft_bzero(data->selection, ft_strlen(data->selection));
+		ft_putendl_fd("\nBUFFER OVERFLOW", 2);
+		data->pos = 0;
 		data->char_count = 0;
+		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 		prompt(data);
+		return (0);
 	}
+	return (1);
 }
 
 static void		get_copy_paste(t_var *data, char *buffer)
@@ -70,7 +71,8 @@ void			get_input(t_var *data)
 {
 	char buffer[6];
 
-	ft_putstr("21sh $> ");
+//	ft_putstr("21sh $> ");
+	prompt(data);
 	while (1)
 	{
 		update_data(0, data);
@@ -84,16 +86,16 @@ void			get_input(t_var *data)
 			ft_putchar(buffer[0]);
 			add_to_string(buffer[0], data);
 			data->char_count++;
-//			ft_printf("count : %d\n", data->char_count);
-//			if (data->char_count == 4080)
-//				ft_printf("\n!\n");
 		}
 		if (!ft_strcmp(buffer, RET))
 		{
 			add_to_history(data);
+			data->lexer = lexer(data->lex_str);
+			init_exec(data);
 			data->pos = 0;
 			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-			ft_printf("\n21sh $> ");
+			prompt(data);
+//			ft_printf("21sh $> ");
 		}
 		get_key(data, buffer);
 	}

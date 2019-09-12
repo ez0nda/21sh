@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools.h                                            :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/05 12:15:39 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/10 15:38:25 by ezonda           ###   ########.fr       */
+/*   Created: 2019/09/11 10:53:35 by ezonda            #+#    #+#             */
+/*   Updated: 2019/09/11 10:56:54 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOOLS_H
-# define TOOLS_H
+#include "../../includes/core.h"
 
-# include "core.h"
+int		env_builtin(char **environ)
+{
+	int i;
 
-char			**ft_tabdup(char **tab, int n);
-int				ft_tablen(char **tab);
-void			init_shell(t_var *data);
-int				ft_putchar_v2(int c);
-
-#endif
+	i = 0;
+	while (environ[i])
+		ft_putendl(environ[i++]);
+	return (1);
+}

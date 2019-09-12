@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/09 13:09:55 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/12 15:11:31 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ void			prompt(t_var *data)
 	data->pos = -9;
 	get_curs_pos(data, data->pos);
 	TERMCAP("cd");
+	TERMCAP("md");
 	ft_putstr("21sh $> ");
+	TERMCAP("me");
 	print_str(data);
 	data->pos = tmp;
 	get_curs_pos(data, data->pos);

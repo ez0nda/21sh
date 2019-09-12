@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 11:00:50 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/09 15:32:10 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/12 11:26:18 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,13 @@ void	paste_mode(t_var *data)
 	int		i;
 
 	i = 0;
+	data->char_count += ft_strlen(data->selection);
+	if (!check_overflow(data))
+		return ;
 	while (data->selection[i])
 	{
 		realloc_str(data->selection[i], data);
 		i++;
 	}
-	data->char_count += ft_strlen(data->selection);
 	prompt(data);
 }

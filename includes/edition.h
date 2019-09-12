@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/09 13:04:47 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/12 11:10:04 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ struct winsize		wind;
 typedef struct	s_var
 {
 	char	**environ;
+	char	*home;
 	int		pos;
 	int		char_count;
 	char	*lex_str;
@@ -53,10 +54,11 @@ typedef struct	s_var
 	int		*tab;
 	int		left;
 	int		right;
+	char	**lexer;
 }				t_var;
 
 void			get_input(t_var *data);
-void			select_mode(t_var *data);
+int				check_overflow(t_var *data);
 
 void			move_left(t_var *data);
 void			move_right(t_var *data);
