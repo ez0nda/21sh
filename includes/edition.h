@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/12 11:10:04 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/17 13:49:12 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct	s_var
 	int		char_count;
 	char	*lex_str;
 	char	**history;
+	int		new_history;
 	int		nb_cols;
 	int		nb_rows;
 	int		in_selection;
@@ -55,6 +56,10 @@ typedef struct	s_var
 	int		left;
 	int		right;
 	char	**lexer;
+	int		quotes;
+	int		dquotes;
+	int		std_prompt;
+	char	*stock;
 }				t_var;
 
 void			get_input(t_var *data);
@@ -86,5 +91,7 @@ void			select_mode(t_var *data);
 void			copy_cut_mode(t_var *data, int mod);
 void			paste_mode(t_var *data);
 void			abort_selection(t_var *data);
+
+void			odd_quotes(t_var *data);
 
 #endif

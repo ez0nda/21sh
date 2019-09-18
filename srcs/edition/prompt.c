@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/12 15:11:31 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/18 11:04:27 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,39 @@ static void		print_str(t_var *data)
 	}
 }
 
+static void		print_prompt(t_var *data)
+{
+	TERMCAP("md");
+	if (data->quotes % 2 != 0)
+	{
+		data->std_prompt = 0;
+		ft_putstr("quote> ");
+	}
+	else if (data->dquotes % 2 != 0)
+	{
+		data->std_prompt = 0;
+		ft_putstr("dquotes> ");
+	}
+	else
+	{
+		data->std_prompt = 1;
+		ft_putstr("21sh $> ");
+	}
+	TERMCAP("me");
+}
+
 void			prompt(t_var *data)
 {
 	int tmp;
 
 	tmp = data->pos;
-	data->pos = -9;
+	if (data->std_prompt)
+		data->pos = -9;
+	else
+		data->pos = -12;
 	get_curs_pos(data, data->pos);
 	TERMCAP("cd");
-	TERMCAP("md");
-	ft_putstr("21sh $> ");
-	TERMCAP("me");
+	print_prompt(data);
 	print_str(data);
 	data->pos = tmp;
 	get_curs_pos(data, data->pos);

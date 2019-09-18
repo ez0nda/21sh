@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:55:06 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/12 10:42:02 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/16 14:23:04 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int		is_builtin(t_var *data)
 	}
 	else if (!ft_strcmp(data->lexer[0], "env"))
 		return (env_builtin(data->environ));
-	else if (!ft_strcmp(data->lexer[0], "echo"))
+/*	else if (!ft_strcmp(data->lexer[0], "echo"))
 	{
 		ft_putstr("echo\n");
 		return (1);
-	}
+	}*/
 	else if (!ft_strcmp(data->lexer[0], "setenv"))
 		return (setenv_builtin(data, data->lexer));
 	else if (!ft_strcmp(data->lexer[0], "unsetenv"))
@@ -58,6 +58,8 @@ void	init_exec(t_var *data)
 
 	bin_path = NULL;
 	ft_putchar('\n');
+	if (data->quotes % 2 != 0 || data->dquotes % 2 != 0)
+		return ;
 	if (!data->lexer[0])
 		return;
 	path = get_var("PATH=", data->environ);

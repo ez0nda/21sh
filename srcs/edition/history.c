@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:21:59 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/09 11:37:52 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/16 11:14:58 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,37 @@ void	add_to_history(t_var *data)
 		}
 		data->history[0] = tmp;
 	}
+	data->new_history = 1;
 }
 
 void	show_history(t_var *data, int mod)
 {
-	static int	i;
+	static int i;
 
-	if (mod == 1 && i <= ft_tablen(data->history))
+	if (data->new_history == 1)
 	{
-		prompt(data);
-		if (i == ft_tablen(data->history))
+		data->new_history = 0;
+		i = 0;
+	}
+	if (mod == 1)
+	{
+		if (!data->history[i])
 			return ;
-		if (i >= 0)
-		{
-			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-			data->lex_str = ft_strcpy(data->lex_str, data->history[i]);
-		}
+		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+		data->lex_str = ft_strcpy(data->lex_str, data->history[i]);
 		i++;
 	}
-	else if (mod == 2 && i >= 0)
+	else
 	{
-		prompt(data);
-		if (i < ft_tablen(data->history))
-		{
-			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-			data->lex_str = ft_strcpy(data->lex_str, data->history[i]);
-		}
 		i--;
+		if (!data->history[i])
+		{
+			i++;
+			return ;
+		}
+		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+		data->lex_str = ft_strcpy(data->lex_str, data->history[i]);
 	}
 	data->pos = ft_strlen(data->lex_str);
+	prompt(data);
 }

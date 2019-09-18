@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/12 15:07:39 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/18 13:39:10 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,88 @@ static void		get_key(t_var *data, char *buffer)
 	get_copy_paste(data, buffer);
 }
 
+void			odd_quotes(t_var *data)
+{
+	char buffer[6];
+	ft_putstr("\n");
+	add_to_string('\n', data);
+	ft_putstr("quote>");
+	read(0, buffer, sizeof(buffer));
+	ft_putchar(buffer[0]);
+}
+
+void			remove_quotes(t_var *data)
+{
+	int i;
+
+	i = 0;
+	while (data->lex_str[i])
+	{
+		if (data->lex_str[i] == 39 || data->lex_str[i] == 34)
+		{
+			while (data->lex_str[i])
+			{
+				data->lex_str[i] = data->lex_str[i + 1];
+				i++;
+			}
+			i = 0;
+		}
+		i++;
+	}
+}
+
+void			parse_quotes(t_var *data)
+{
+	int i;
+
+	i = 0;
+	while (data->lex_str[i])
+	{
+		if (data->lex_str[i] == 39)
+			data->quotes++;
+		else if (data->lex_str[i] == 34)
+			data->dquotes++;
+		i++;
+	}
+	if (data->quotes % 2 != 0 || data->dquotes % 2 != 0)
+	{
+		ft_putchar('\n');
+		data->std_prompt = 0;
+	}
+	else
+	{
+		data->std_prompt = 1;
+	}
+}
+
+void			stock_str(t_var *data)
+{
+	int		i;
+	int		mod;
+	char	*tmp;
+
+	i = 0;
+	mod = 1;
+	if (!data->stock[0])
+	{
+		mod = 0;
+		data->stock = ft_strdup(data->lex_str);
+		while (data->stock[i])
+			i++;
+		data->stock[i++] = '\n';
+		data->stock[i] = '\0';
+	}
+	while (data->stock[i])
+		i++;
+	data->stock[i++] = '\n';
+	data->stock[i] = '\0';
+	data->stock = ft_strjoin(data->stock, data->lex_str);
+}
+
 void			get_input(t_var *data)
 {
 	char buffer[6];
 
-//	ft_putstr("21sh $> ");
 	prompt(data);
 	while (1)
 	{
@@ -91,11 +168,25 @@ void			get_input(t_var *data)
 		{
 			add_to_history(data);
 			data->lexer = lexer(data->lex_str);
-			init_exec(data);
+			parse_quotes(data);
+			if (data->std_prompt)
+			{
+				if (data->stock[0])
+					data->lex_str = ft_strcpy(data->lex_str, data->stock);
+				remove_quotes(data);
+				data->lexer = lexer(data->lex_str);
+				ft_printf("\nhere\n");
+// permet l'exec mais fausse les cas d'erreur
+				init_exec(data);
+				ft_bzero(data->stock, ft_strlen(data->stock));
+			}
+			else
+			{
+				stock_str(data);
+			}
 			data->pos = 0;
 			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 			prompt(data);
-//			ft_printf("21sh $> ");
 		}
 		get_key(data, buffer);
 	}
