@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/18 13:39:10 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/19 11:21:12 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void		get_key(t_var *data, char *buffer)
 		move_first_last(data, 2);
 	get_copy_paste(data, buffer);
 }
-
+/*
 void			odd_quotes(t_var *data)
 {
 	char buffer[6];
@@ -76,7 +76,7 @@ void			odd_quotes(t_var *data)
 	read(0, buffer, sizeof(buffer));
 	ft_putchar(buffer[0]);
 }
-
+*/
 void			remove_quotes(t_var *data)
 {
 	int i;
@@ -168,22 +168,21 @@ void			get_input(t_var *data)
 		{
 			add_to_history(data);
 			data->lexer = lexer(data->lex_str);
-			parse_quotes(data);
-			if (data->std_prompt)
-			{
-				if (data->stock[0])
-					data->lex_str = ft_strcpy(data->lex_str, data->stock);
-				remove_quotes(data);
-				data->lexer = lexer(data->lex_str);
-				ft_printf("\nhere\n");
-// permet l'exec mais fausse les cas d'erreur
+//			parse_quotes(data);
+//			if (data->std_prompt)
+//			{
+//				if (data->stock[0])
+//					data->lex_str = ft_strcpy(data->lex_str, data->stock);
+//				remove_quotes(data);
+//				data->lexer = lexer(data->lex_str);
+//               permet l'exec mais fausse les cas d'erreur
 				init_exec(data);
-				ft_bzero(data->stock, ft_strlen(data->stock));
-			}
-			else
-			{
-				stock_str(data);
-			}
+//				ft_bzero(data->stock, ft_strlen(data->stock));
+//			}
+//			else
+//			{
+//				stock_str(data);
+//			}
 			data->pos = 0;
 			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 			prompt(data);
