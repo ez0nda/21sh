@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/18 11:04:27 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/26 15:02:42 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ void			prompt(t_var *data)
 	int tmp;
 
 	tmp = data->pos;
-	if (data->std_prompt)
-		data->pos = -9;
-	else
-		data->pos = -12;
+	data->pos = -9;
 	get_curs_pos(data, data->pos);
 	TERMCAP("cd");
 	print_prompt(data);

@@ -6,7 +6,7 @@
 #    By: ezonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/19 11:30:32 by ezonda            #+#    #+#              #
-#    Updated: 2019/09/11 11:27:52 by ezonda           ###   ########.fr        #
+#    Updated: 2019/09/26 15:55:08 by ezonda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME = 21sh
 
 SRC = srcs/core/main.c \
 	  srcs/core/signal.c \
-	  srcs/tools/edition_tools.c \
 	  srcs/edition/input.c \
 	  srcs/edition/history.c \
 	  srcs/edition/arrows.c \
@@ -22,18 +21,21 @@ SRC = srcs/core/main.c \
 	  srcs/edition/edit.c \
 	  srcs/edition/skip.c \
 	  srcs/edition/copy_paste.c \
-	  srcs/lexer_parser/lexer.c \
-	  srcs/lexer_parser/tools_lexer.c \
+	  srcs/edition/edition_tools.c \
+	  srcs/parser/constructors.c \
+	  srcs/parser/parser.c \
+	  srcs/parser/tokenizer.c \
+	  srcs/parser/parser_tools.c \
 	  srcs/execute/exec_cmd.c \
 	  srcs/execute/execute_tools.c \
 	  srcs/execute/init_excute.c \
+	  srcs/execute/cmd_type.c \
 	  srcs/builtins/env.c \
 	  srcs/builtins/setenv.c \
 	  srcs/builtins/unsetenv.c \
 
 OBJ = srcs/core/main.o \
 	  srcs/core/signal.o \
-	  srcs/tools/edition_tools.o \
 	  srcs/edition/input.o \
 	  srcs/edition/history.o \
 	  srcs/edition/arrows.o \
@@ -41,11 +43,15 @@ OBJ = srcs/core/main.o \
 	  srcs/edition/edit.o \
 	  srcs/edition/skip.o \
 	  srcs/edition/copy_paste.o \
-	  srcs/lexer_parser/lexer.o \
-	  srcs/lexer_parser/tools_lexer.o \
+	  srcs/edition/edition_tools.o \
+	  srcs/parser/constructors.o \
+	  srcs/parser/parser.o \
+	  srcs/parser/tokenizer.o \
+	  srcs/parser/parser_tools.o \
 	  srcs/execute/exec_cmd.o \
 	  srcs/execute/execute_tools.o \
 	  srcs/execute/init_excute.o \
+	  srcs/execute/cmd_type.o \
 	  srcs/builtins/env.o \
 	  srcs/builtins/setenv.o \
 	  srcs/builtins/unsetenv.o \

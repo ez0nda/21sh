@@ -6,13 +6,13 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/19 11:21:12 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/26 15:01:10 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/core.h"
 
-int			check_overflow(t_var *data)
+int				check_overflow(t_var *data)
 {
 	if (data->char_count >= BUFF_SHELL)
 	{
@@ -66,87 +66,10 @@ static void		get_key(t_var *data, char *buffer)
 		move_first_last(data, 2);
 	get_copy_paste(data, buffer);
 }
-/*
-void			odd_quotes(t_var *data)
-{
-	char buffer[6];
-	ft_putstr("\n");
-	add_to_string('\n', data);
-	ft_putstr("quote>");
-	read(0, buffer, sizeof(buffer));
-	ft_putchar(buffer[0]);
-}
-*/
-void			remove_quotes(t_var *data)
-{
-	int i;
-
-	i = 0;
-	while (data->lex_str[i])
-	{
-		if (data->lex_str[i] == 39 || data->lex_str[i] == 34)
-		{
-			while (data->lex_str[i])
-			{
-				data->lex_str[i] = data->lex_str[i + 1];
-				i++;
-			}
-			i = 0;
-		}
-		i++;
-	}
-}
-
-void			parse_quotes(t_var *data)
-{
-	int i;
-
-	i = 0;
-	while (data->lex_str[i])
-	{
-		if (data->lex_str[i] == 39)
-			data->quotes++;
-		else if (data->lex_str[i] == 34)
-			data->dquotes++;
-		i++;
-	}
-	if (data->quotes % 2 != 0 || data->dquotes % 2 != 0)
-	{
-		ft_putchar('\n');
-		data->std_prompt = 0;
-	}
-	else
-	{
-		data->std_prompt = 1;
-	}
-}
-
-void			stock_str(t_var *data)
-{
-	int		i;
-	int		mod;
-	char	*tmp;
-
-	i = 0;
-	mod = 1;
-	if (!data->stock[0])
-	{
-		mod = 0;
-		data->stock = ft_strdup(data->lex_str);
-		while (data->stock[i])
-			i++;
-		data->stock[i++] = '\n';
-		data->stock[i] = '\0';
-	}
-	while (data->stock[i])
-		i++;
-	data->stock[i++] = '\n';
-	data->stock[i] = '\0';
-	data->stock = ft_strjoin(data->stock, data->lex_str);
-}
 
 void			get_input(t_var *data)
 {
+	t_cmd *cmd;
 	char buffer[6];
 
 	prompt(data);
@@ -157,8 +80,7 @@ void			get_input(t_var *data)
 		get_winsize(data);
 		check_overflow(data);
 		read(0, &buffer, sizeof(buffer));
-		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0)
-				|| (buffer[0] == 9 && buffer[1] == 0))
+		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
 		{
 			ft_putchar(buffer[0]);
 			add_to_string(buffer[0], data);
@@ -167,22 +89,8 @@ void			get_input(t_var *data)
 		if (!ft_strcmp(buffer, RET))
 		{
 			add_to_history(data);
-			data->lexer = lexer(data->lex_str);
-//			parse_quotes(data);
-//			if (data->std_prompt)
-//			{
-//				if (data->stock[0])
-//					data->lex_str = ft_strcpy(data->lex_str, data->stock);
-//				remove_quotes(data);
-//				data->lexer = lexer(data->lex_str);
-//               permet l'exec mais fausse les cas d'erreur
-				init_exec(data);
-//				ft_bzero(data->stock, ft_strlen(data->stock));
-//			}
-//			else
-//			{
-//				stock_str(data);
-//			}
+			cmd = shell_parser(data->lex_str);
+			get_cmd_type(cmd, data);
 			data->pos = 0;
 			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 			prompt(data);

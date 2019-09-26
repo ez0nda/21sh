@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:43 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/12 10:50:03 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/26 15:03:19 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int		main(int ac, char **av, char **env)
 		set_env(&data);
 	else
 		data.environ = ft_tabdup(env, 0);
-//	data.home = ft_strdup(get_var("HOME=", data.environ));
 	signal_handler();
 	init_shell(&data);
 	set_termcanon(&data);

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/17 13:49:12 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/26 15:24:20 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ typedef struct	s_var
 	int		*tab;
 	int		left;
 	int		right;
-	char	**lexer;
-	int		quotes;
-	int		dquotes;
 	int		std_prompt;
 	char	*stock;
+	int		quotes;
+	int		dquotes;
+	char	**argv;
 }				t_var;
 
 void			get_input(t_var *data);

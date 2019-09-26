@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 13:00:44 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/12 14:20:12 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/26 15:23:03 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # include "edition.h"
 # include "tools.h"
-# include "lexer-parser.h"
+# include "parser.h"
 # include "execute.h"
 # include "builtins.h"
 

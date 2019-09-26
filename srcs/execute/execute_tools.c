@@ -6,13 +6,13 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 12:50:13 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/12 10:32:07 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/26 14:52:49 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/core.h"
 
-char *init_path(char *str, char *cmd)
+char	*init_path(char *str, char *cmd)
 {
 	char *path;
 	char *tmp;
@@ -29,8 +29,6 @@ void	error_msg(char **bin_path, char *path)
 	char			*abs_path;
 	struct stat		st;
 
-//	i = ft_strlen(path) - 1;
-//	path[i] = '\0';
 	i = 0;
 	while (bin_path && bin_path[i])
 	{

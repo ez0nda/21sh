@@ -6,64 +6,63 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:55:06 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/16 14:23:04 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/09/26 15:36:25 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/core.h"
 
-int		is_builtin(t_var *data)
+int		is_builtin(t_var *data, char **cmd)
 {
-	if (!ft_strcmp(data->lexer[0], "exit"))
-		exit(data->lexer[1] ? ft_atoi(data->lexer[1]) : 0);
-	else if (!ft_strcmp(data->lexer[0], "cd"))
-	{
-		ft_putstr("cd\n");
+	if (!ft_strcmp(cmd[0], "exit"))
+		exit(cmd[1] ? ft_atoi(cmd[1]) : 0);
+	else if (!ft_strcmp(cmd[0], "cd"))
 		return (1);
-	}
-	else if (!ft_strcmp(data->lexer[0], "env"))
-		return (env_builtin(data->environ));
-/*	else if (!ft_strcmp(data->lexer[0], "echo"))
-	{
-		ft_putstr("echo\n");
+	else if (!ft_strcmp(cmd[0], "env"))
 		return (1);
-	}*/
-	else if (!ft_strcmp(data->lexer[0], "setenv"))
-		return (setenv_builtin(data, data->lexer));
-	else if (!ft_strcmp(data->lexer[0], "unsetenv"))
-		return (unsetenv_builtin(data, data->lexer));
+	else if (!ft_strcmp(cmd[0], "echo"))
+		return (1);
+	else if (!ft_strcmp(cmd[0], "setenv"))
+		return (1);
+	else if (!ft_strcmp(cmd[0], "unsetenv"))
+		return (1);
 	return (0);
 }
 
-int		check_exe(t_var *data)
+int		check_exe(t_var *data, char *cmd)
 {
-	int i;
+	int		i;
+	char	**split_cmd;
 
 	i = 0;
-	while (data->lexer[i])
+	split_cmd = ft_strsplit_ws(cmd);
+	while (split_cmd[i])
 	{
-		if (data->lexer[i][0] == '$')
-			data->lexer[i] = get_dollar_var(data->lexer[i], data);
+		if (split_cmd[i][0] == '$')
+			split_cmd[i] = get_dollar_var(split_cmd[i], data);
 		i++;
 	}
-	if (is_builtin(data))
+	if (is_builtin(data, split_cmd))
 		return (1);
 	return (0);
 }
 
 void	init_exec(t_var *data)
 {
+	int		i;
 	char	*path;
 	char	**bin_path;
+	char	**cmds;
 
-	bin_path = NULL;
+	i = 0;
 	ft_putchar('\n');
-	if (data->quotes % 2 != 0 || data->dquotes % 2 != 0)
-		return ;
-	if (!data->lexer[0])
-		return;
 	path = get_var("PATH=", data->environ);
 	bin_path = ft_strsplit(path, ':');
-	if (!check_exe(data))
-		exec_cmd(bin_path, data->lexer, data);
+	cmds = ft_strsplit(data->lex_str, ';');
+	while (cmds[i])
+	{
+		if (!check_exe(data, cmds[i]))
+			exec_cmd(bin_path, data);
+		i++;
+	}
 }
