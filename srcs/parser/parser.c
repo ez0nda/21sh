@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:34:02 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/10 12:13:28 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/10 14:52:34 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ t_cmd		*parse_redir(t_cmd *cmd, char **p, char *end)
 	while (strings_scan_whitespaces(p, end, "12<>"))
 	{
 		if ((**p == '1' || **p == '2') && (*p)[1] != '>' && (*p)[1] != '<')
+		{
+		//	ft_printf("\nBREAK, **p:%c, (*p)[1]:%c\n", **p, (*p)[1]);
 			break ;
+		}
 		tok = tokenizer(p, end, 0, 0);
 		tokenizer(p, end, &q, &eq);
 		if ((f = ft_strndup(q, eq - q + 1)) && tok == '<')

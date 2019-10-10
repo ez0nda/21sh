@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 12:57:21 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/10 13:33:04 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/10 14:58:35 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	error_msg(char **bin_path, char *path);
 int		free_tab(char **tab);
 char	*get_var(char *str, char **env);
 char	*get_dollar_var(char *cmd, t_var *data);
-void	exec_cmd(char **bin_path, char *cmd, t_var *data);
+void	exec_cmd(char **bin_path, t_var *data);
 void	init_exec(t_var *data);
 
 void	get_cmd_type(t_cmd *cmd, t_var *data);

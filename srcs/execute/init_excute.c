@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:55:06 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/10 14:27:30 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/10 14:58:14 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,10 @@ void	init_exec(t_var *data)
 	path = get_var("PATH=", data->environ);
 	bin_path = ft_strsplit(path, ':');
 	cmds = ft_strsplit(data->lex_str, ';');
-//	while (data->argv[i])
-//		ft_printf("argv: %s\n", data->argv[i++]);
-//	i = 0;
 	while (cmds[i])
 	{
-//		ft_printf("cmd: %s\n", data->cmds[i]);
 		if (!check_exe(data, cmds[i]))
-			exec_cmd(bin_path, cmds[i], data);
+			exec_cmd(bin_path, data);
 		i++;
 	}
 }
