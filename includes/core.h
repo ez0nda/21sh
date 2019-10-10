@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 13:00:44 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/26 15:23:03 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/10 14:32:55 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <signal.h>
+# include <dirent.h>
 
 # include "edition.h"
 # include "tools.h"
