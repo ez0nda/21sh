@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 11:21:46 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/26 16:11:17 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/10 11:19:46 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	strings_scan_pipes(char **p_input, char *end,
 		tmp++;
 	*new_cmd_end = tmp;
 	*p_input = tmp;
+//	ft_printf("\np_input: {%s}\n", *p_input);
 	return (tmp != end);
 }
 

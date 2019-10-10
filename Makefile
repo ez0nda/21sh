@@ -33,6 +33,9 @@ SRC = srcs/core/main.c \
 	  srcs/builtins/env.c \
 	  srcs/builtins/setenv.c \
 	  srcs/builtins/unsetenv.c \
+		srcs/builtins/cd.c \
+		srcs/builtins/tools.c \
+#		srcs/builtins/echo.c \
 
 OBJ = srcs/core/main.o \
 	  srcs/core/signal.o \
@@ -55,6 +58,9 @@ OBJ = srcs/core/main.o \
 	  srcs/builtins/env.o \
 	  srcs/builtins/setenv.o \
 	  srcs/builtins/unsetenv.o \
+		srcs/builtins/cd.o \
+		srcs/builtins/tools.o \
+#		srcs/builtins/echo.c \
 
 LIB = libft/libft.a
 

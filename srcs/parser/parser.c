@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:34:02 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/26 16:12:38 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/10 12:13:28 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_cmd		*parse_pipe(char **p_input, char *end, int *res)
 	{
 		cmd = parse_basic(&new_cmd, new_cmd_end, res);
 		(*p_input)++;
+//		ft_printf("\np_input: {%s}\n", *p_input);
 		cmd = parse_pipe_cmd(
 			cmd, parse_pipe(p_input, end, res));
 	}

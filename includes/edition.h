@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/26 15:24:20 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/10 13:03:32 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct	s_var
 	int		quotes;
 	int		dquotes;
 	char	**argv;
+	char	**cmds;
 }				t_var;
 
 void			get_input(t_var *data);

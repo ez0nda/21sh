@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/26 16:14:51 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/10 13:47:27 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void		cmd_pipe(t_cmd *cmd, t_var *data)
 		get_cmd_type(pcmd->left, data);
 		exit(0);
 	}
+	ft_printf("\nHERE\n");
 	if ((pid[1] == fork()) == 0)
 	{
 		dup2(pipes[0], STDIN_FILENO);
@@ -67,13 +68,13 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 	data->argv = malloc(sizeof(char*) * (ft_lstcount(ecmd->argv) + 1));
 	i = 0;
 	cur = ecmd->argv;
-	while (cur/* && ft_strcmp(cur->content, ";")*/)
+/*	while (cur && ft_strcmp(cur->content, ";"))
 	{
 		data->argv[i] = cur->content;
 		i++;
 		cur = cur->next;
 	}
-	data->argv[i] = NULL;
+	data->argv[i] = NULL;*/
 	init_exec(data);
 }
 

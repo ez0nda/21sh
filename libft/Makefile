@@ -37,6 +37,7 @@ SRC = srcs/convert/ft_atoi.c \
 	  srcs/is/ft_isascii.c \
 	  srcs/is/ft_isdigit.c \
 	  srcs/is/ft_isprint.c \
+		srcs/is/ft_is_dir.c \
 	  \
 	  srcs/lst/ft_lstadd.c \
 	  srcs/lst/ft_lstdel.c \
@@ -65,6 +66,7 @@ SRC = srcs/convert/ft_atoi.c \
 	  srcs/string/ft_strcpy.c \
 	  srcs/string/ft_strdel.c \
 	  srcs/string/ft_strdup.c \
+		srcs/string/ft_strndup.c \
 	  srcs/string/ft_strequ.c \
 	  srcs/string/ft_striter.c \
 	  srcs/string/ft_striteri.c \
@@ -84,6 +86,7 @@ SRC = srcs/convert/ft_atoi.c \
 	  srcs/string/ft_strrev.c \
 	  srcs/string/ft_strsplit.c \
 	  srcs/string/ft_split_ws.c \
+		srcs/string/ft_split.c \
 	  srcs/string/ft_strstr.c \
 	  srcs/string/ft_strsub.c \
 	  srcs/string/ft_strtrim.c \
@@ -108,6 +111,7 @@ OBJ = ft_atoi.o \
 	  get_next_line.o \
 	  \
 	  ft_is_prime.o \
+		ft_is_dir.o \
 	  ft_isalnum.o \
 	  ft_isalpha.o \
 	  ft_isascii.o \
@@ -141,6 +145,7 @@ OBJ = ft_atoi.o \
 	  ft_strcpy.o \
 	  ft_strdel.o \
 	  ft_strdup.o \
+		ft_strndup.o \
 	  ft_strequ.o \
 	  ft_striter.o \
 	  ft_striteri.o \
@@ -160,6 +165,7 @@ OBJ = ft_atoi.o \
 	  ft_strrev.o \
 	  ft_strsplit.o \
 	  ft_split_ws.o \
+		ft_split.o \
 	  ft_strstr.o \
 	  ft_strsub.o \
 	  ft_strtrim.o \
