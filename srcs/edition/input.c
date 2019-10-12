@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/26 15:01:10 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/12 15:13:25 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,25 @@ static void		get_key(t_var *data, char *buffer)
 	get_copy_paste(data, buffer);
 }
 
+void			launch_cmds(t_var *data)
+{
+	t_cmd	*cmd;
+
+	data->cmd_index = 0;
+	data->cmds = ft_strsplit(data->lex_str, ';');
+	while (data->cmds[data->cmd_index])
+	{
+		cmd = shell_parser(data->cmds[data->cmd_index]);
+		get_cmd_type(cmd, data);
+		data->cmd_index++;
+	}
+	data->pos = 0;
+	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+	free_tab(data->cmds);
+}
+
 void			get_input(t_var *data)
 {
-	t_cmd *cmd;
 	char buffer[6];
 
 	prompt(data);
@@ -89,10 +105,7 @@ void			get_input(t_var *data)
 		if (!ft_strcmp(buffer, RET))
 		{
 			add_to_history(data);
-			cmd = shell_parser(data->lex_str);
-			get_cmd_type(cmd, data);
-			data->pos = 0;
-			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+			launch_cmds(data);
 			prompt(data);
 		}
 		get_key(data, buffer);

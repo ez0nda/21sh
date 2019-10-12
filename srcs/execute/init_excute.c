@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:55:06 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/10 14:58:14 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/12 15:19:10 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,14 @@ int		check_exe(t_var *data, char *cmd)
 
 void	init_exec(t_var *data)
 {
-	int		i;
 	char	*path;
 	char	**bin_path;
 	char	**cmds;
 
-	i = 0;
-	ft_putchar('\n');
 	path = get_var("PATH=", data->environ);
 	bin_path = ft_strsplit(path, ':');
-	cmds = ft_strsplit(data->lex_str, ';');
-	while (cmds[i])
-	{
-		if (!check_exe(data, cmds[i]))
-			exec_cmd(bin_path, data);
-		i++;
-	}
+	if (data->cmd_index == 0)
+		ft_putchar('\n');
+	if (!check_exe(data, data->cmds[data->cmd_index]))
+		exec_cmd(bin_path, data);
 }

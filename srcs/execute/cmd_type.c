@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/10 14:53:13 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/12 13:14:11 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void		cmd_pipe(t_cmd *cmd, t_var *data)
 		get_cmd_type(pcmd->left, data);
 		exit(0);
 	}
-	ft_printf("\nHERE\n");
 	if ((pid[1] == fork()) == 0)
 	{
 		dup2(pipes[0], STDIN_FILENO);
@@ -68,11 +67,12 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 	data->argv = malloc(sizeof(char*) * (ft_lstcount(ecmd->argv) + 1));
 	i = 0;
 	cur = ecmd->argv;
-	while (cur && ft_strcmp(cur->content, ";"))
+	while (cur/* && ft_strcmp(cur->content, ";")*/)
 	{
 		data->argv[i] = cur->content;
-		i++;
 		cur = cur->next;
+//		ft_printf("argv1: %s\n", data->argv[i]);
+		i++;
 	}
 	data->argv[i] = NULL;
 	init_exec(data);
@@ -95,9 +95,20 @@ void		get_cmd_type(t_cmd *cmd, t_var *data)
 	path = get_var("PATH=", data->environ);
 	bin_path = ft_strsplit(path, ':');
 	if (cmd->type == PIPE)
+	{
+//		ft_printf("\nPIPE\n");
 		cmd_pipe(cmd, data);
+	}
 	else if (cmd->type == REDIR)
+	{
+//		ft_printf("\nREDIR\n");
 		cmd_redir(cmd, data);
+	}
 	else if (cmd->type == BASIC)
+	{
+//		ft_printf("\nBASIC\n");
 		cmd_basic(cmd, data);
+	}
+//	else
+//		ft_printf("\nNO CMD\n");
 }

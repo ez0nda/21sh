@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 13:44:52 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/10 14:58:25 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/12 12:02:47 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void		execute(char **bin_path, pid_t pid, t_var *data)
 	char	*path;
 
 	i = 0;
+	int j = 0;
 	if (bin_path != NULL)
 	{
 		while (bin_path[i])
@@ -27,7 +28,11 @@ static void		execute(char **bin_path, pid_t pid, t_var *data)
 			else
 				path = ft_strdup(data->argv[0]);
 			if (access(path, X_OK) != -1 && pid == 0)
+			{
+	//			while (data->argv[j])
+	//				ft_printf("argv2: %s\n", data->argv[j++]);
 				execve(path, data->argv, data->environ);
+			}
 			free(path);
 			i++;
 		}
@@ -35,7 +40,12 @@ static void		execute(char **bin_path, pid_t pid, t_var *data)
 	else
 	{
 		if (access(data->argv[0], X_OK) != -1 && pid == 0)
+		{
+			j = 0;
+	//		while (data->argv[j])
+	//			ft_printf("argv2: %s\n", data->argv[j++]);
 			execve(data->argv[0], data->argv, data->environ);
+		}
 	}
 }
 
