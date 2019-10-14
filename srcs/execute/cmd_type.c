@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/12 13:14:11 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/14 13:29:19 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 	rcmd = (t_redirection_cmd *)cmd;
 	new_fd = open(rcmd->file, rcmd->mode, S_IRUSR | S_IWUSR);
 	back_fd = dup(rcmd->fd);
+//	ft_printf("\nfile : %s - fd : %d\n", rcmd->file, rcmd->fd);
 	dup2(new_fd, rcmd->fd);
 	close(new_fd);
 	get_cmd_type(rcmd->cmd, data);

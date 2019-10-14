@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:43 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/26 15:03:19 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/14 15:29:38 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,41 @@ void	set_env(t_var *data)
 	data->environ[3] = NULL;
 }
 
+void	create_history(t_var *data)
+{
+	
+}
+
+void	update_history(t_var *data, int fd)
+{
+	int		i;
+	char	*line;
+
+	i = 0;
+	line = NULL;
+	while (get_next_line(fd, &line) == 1)
+	{
+//		ft_putstr("history : ");
+//		ft_putendl(ft_strdup(line));
+		data->history[i] = ft_strdup(line);
+		ft_printf("history : %s\n", data->history[i]);
+//		free(line);
+		i++;
+	}
+}
+
+void	get_history(t_var *data)
+{
+	int		fd;
+	char	*line;
+
+	fd = open("/Users/ezonda/.zsh_history", O_RDONLY);
+	if (fd == -1)
+		create_history(data);
+	else
+		update_history(data, fd);
+}
+
 int		main(int ac, char **av, char **env)
 {
 	t_var data;
@@ -66,6 +101,7 @@ int		main(int ac, char **av, char **env)
 		data.environ = ft_tabdup(env, 0);
 	signal_handler();
 	init_shell(&data);
+	get_history(&data);
 	set_termcanon(&data);
 	get_input(&data);
 	return (exit_shell());
