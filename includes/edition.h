@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/12 13:33:21 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/15 14:01:10 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void			remove_cur_char(t_var *data);
 
 void			add_to_history(t_var *data);
 void			show_history(t_var *data, int mod);
+void			update_history(t_var *data);
 
 void			prompt(t_var *data);
 void			get_winsize(t_var *data);

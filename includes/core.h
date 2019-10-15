@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 13:00:44 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/10 14:32:55 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/15 13:59:20 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define BUFF_SHELL 4096
 
 t_var			*update_data(int mod, t_var *data);
-int				exit_shell(void);
+int				exit_shell(t_var *data);
 void			set_termcanon(t_var *data);
 
 void			signal_handler(void);

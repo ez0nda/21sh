@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:24:39 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/18 14:48:25 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/15 13:59:49 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void		signal_quit(int sig)
 		return ;
 	}
 	ft_putchar('\n');
-	exit_shell();
+	exit_shell(data);
 }
 
 static void		signal_inter(int sig)

@@ -6,16 +6,17 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:43 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/14 15:29:38 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/15 15:25:26 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/core.h"
 
-int		exit_shell(void)
+int		exit_shell(t_var *data)
 {
 	if (tcsetattr(0, TCSANOW, &og_term))
 		return (0);
+	update_history(data);
 	exit(0);
 }
 
@@ -56,39 +57,71 @@ void	set_env(t_var *data)
 	data->environ[3] = NULL;
 }
 
-void	create_history(t_var *data)
+void	update_history(t_var *data)
 {
-	
+	t_cmd				*cmd;
+	t_redirection_cmd	*rcmd;
+	int					new_fd;
+	int					back_fd;
+
+	ft_printf("\n-1-\n");
+	new_fd = open("/Users/ezonda/.21sh_history", M_WRITE_TRUNC);
+	back_fd = dup(0);
+	dup2(new_fd, 0);
+//	perror("error ");
+	ft_printf("\n---\n");
+	close(new_fd);
+	dup2(back_fd, 0);
+	ft_printf("\n-2-\n");
+
+
+/*	rcmd = malloc(sizeof(*cmd));
+	rcmd->type = REDIR;
+	rcmd->cmd = cmd;
+	rcmd->file = "/Users/ezonda/.21sh_history";
+	rcmd->mode = M_WRITE_TRUNC;
+	rcmd->fd = 1;
+	ft_printf("\n---\n");
+	cmd_redir(cmd, data);*/
 }
 
-void	update_history(t_var *data, int fd)
+void	get_history(t_var *data, int fd)
 {
 	int		i;
+	int		j;
 	char	*line;
+	char	**tmp_hist;
 
 	i = 0;
+	j = 0;
 	line = NULL;
-	while (get_next_line(fd, &line) == 1)
+	if (!(tmp_hist = (char**)malloc(sizeof(char*) * BUFF_SHELL)))
+		return ;
+	while (get_next_line(fd, &line) == 1 && i < BUFF_SHELL)
 	{
-//		ft_putstr("history : ");
-//		ft_putendl(ft_strdup(line));
-		data->history[i] = ft_strdup(line);
-		ft_printf("history : %s\n", data->history[i]);
-//		free(line);
+		tmp_hist[i] = ft_strdup(line);
 		i++;
 	}
+	i--;
+	while (i >= 0)
+	{
+		data->history[j] = ft_strdup(tmp_hist[i]);
+		j++;
+		i--;
+	}
+	free_tab(tmp_hist);
 }
 
-void	get_history(t_var *data)
+void	manage_history(t_var *data)
 {
 	int		fd;
 	char	*line;
 
-	fd = open("/Users/ezonda/.zsh_history", O_RDONLY);
+	fd = open("/Users/ezonda/.21sh_history", O_RDONLY);
 	if (fd == -1)
-		create_history(data);
+		fd = open("/Users/ezonda/.21sh_history", O_CREAT, S_IRUSR | S_IWUSR);
 	else
-		update_history(data, fd);
+		get_history(data, fd);
 }
 
 int		main(int ac, char **av, char **env)
@@ -101,8 +134,8 @@ int		main(int ac, char **av, char **env)
 		data.environ = ft_tabdup(env, 0);
 	signal_handler();
 	init_shell(&data);
-	get_history(&data);
+	manage_history(&data);
 	set_termcanon(&data);
 	get_input(&data);
-	return (exit_shell());
+	return (exit_shell(&data));
 }

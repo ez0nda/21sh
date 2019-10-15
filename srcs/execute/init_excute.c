@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:55:06 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/14 12:16:08 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/15 14:24:42 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 int		is_builtin(t_var *data, char **cmd)
 {
 	if (!ft_strcmp(cmd[0], "exit"))
-		exit(cmd[1] ? ft_atoi(cmd[1]) : 0);
+	{
+		exit_shell(data);
+//		tcsetattr(0, TCSANOW, &og_term);
+//		exit(cmd[1] ? ft_atoi(cmd[1]) : 0);
+	}
 	else if (!ft_strcmp(cmd[0], "cd"))
 		return (cd_builtin(data, cmd));
 	else if (!ft_strcmp(cmd[0], "env"))
