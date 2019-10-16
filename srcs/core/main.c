@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:43 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/15 15:25:26 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/16 11:53:37 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,57 +59,32 @@ void	set_env(t_var *data)
 
 void	update_history(t_var *data)
 {
-	t_cmd				*cmd;
-	t_redirection_cmd	*rcmd;
-	int					new_fd;
-	int					back_fd;
+	int i;
+	int hist;
+	int back_fd;
 
-	ft_printf("\n-1-\n");
-	new_fd = open("/Users/ezonda/.21sh_history", M_WRITE_TRUNC);
-	back_fd = dup(0);
-	dup2(new_fd, 0);
-//	perror("error ");
-	ft_printf("\n---\n");
-	close(new_fd);
-	dup2(back_fd, 0);
-	ft_printf("\n-2-\n");
-
-
-/*	rcmd = malloc(sizeof(*cmd));
-	rcmd->type = REDIR;
-	rcmd->cmd = cmd;
-	rcmd->file = "/Users/ezonda/.21sh_history";
-	rcmd->mode = M_WRITE_TRUNC;
-	rcmd->fd = 1;
-	ft_printf("\n---\n");
-	cmd_redir(cmd, data);*/
+	i = 0;
+	hist = open("/Users/ezonda/.21sh_history", O_WRONLY, O_APPEND);
+	back_fd = dup(1);
+	dup2(hist, 1);
+	while (data->history[i])
+		ft_putendl(data->history[i++]);
+	close(hist);
+	dup2(back_fd, 1);
 }
 
 void	get_history(t_var *data, int fd)
 {
 	int		i;
-	int		j;
 	char	*line;
-	char	**tmp_hist;
 
 	i = 0;
-	j = 0;
 	line = NULL;
-	if (!(tmp_hist = (char**)malloc(sizeof(char*) * BUFF_SHELL)))
-		return ;
 	while (get_next_line(fd, &line) == 1 && i < BUFF_SHELL)
 	{
-		tmp_hist[i] = ft_strdup(line);
+		data->history[i] = ft_strdup(line);
 		i++;
 	}
-	i--;
-	while (i >= 0)
-	{
-		data->history[j] = ft_strdup(tmp_hist[i]);
-		j++;
-		i--;
-	}
-	free_tab(tmp_hist);
 }
 
 void	manage_history(t_var *data)

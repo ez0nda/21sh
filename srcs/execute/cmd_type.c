@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/15 14:51:58 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/16 15:15:19 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 	int					back_fd;
 
 	rcmd = (t_redirection_cmd *)cmd;
-	ft_printf("\nfile: |%s| - mode: |%d| - fd: |%d|", rcmd->file, rcmd->mode, rcmd->fd);
+//	ft_printf("\nfile: |%s| - mode: |%d| - fd: |%d|", rcmd->file, rcmd->mode, rcmd->fd);
 	new_fd = open(rcmd->file, rcmd->mode, S_IRUSR | S_IWUSR);
 	back_fd = dup(rcmd->fd);
 	dup2(new_fd, rcmd->fd);
@@ -60,19 +60,19 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 
 void		cmd_basic(t_cmd *cmd, t_var *data)
 {
-	t_list *cur;
-	t_exec_cmd *ecmd;
-	int i;
+	int			i;
+	t_list		*cur;
+	t_exec_cmd	*ecmd;
 
+	i = 0;
 	ecmd = (t_exec_cmd *)cmd;
 	data->argv = malloc(sizeof(char*) * (ft_lstcount(ecmd->argv) + 1));
-	i = 0;
 	cur = ecmd->argv;
 	while (cur/* && ft_strcmp(cur->content, ";")*/)
 	{
 		data->argv[i] = cur->content;
+	//	ft_printf("argv1: %s\n", cur->content);
 		cur = cur->next;
-//		ft_printf("argv1: %s\n", data->argv[i]);
 		i++;
 	}
 	data->argv[i] = NULL;

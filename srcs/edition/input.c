@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/14 12:15:18 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/16 15:01:32 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void			get_input(t_var *data)
 		}
 		if (!ft_strcmp(buffer, RET))
 		{
+		//	ft_printf("\n\n--%d--str : |%s|\n", ft_strlen(data->lex_str), data->lex_str);
 			add_to_history(data);
 			launch_cmds(data);
 			prompt(data);
