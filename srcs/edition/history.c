@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:21:59 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/16 12:14:10 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/21 13:16:55 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	add_to_history(t_var *data)
 
 	i = 0;
 	tmp = ft_strdup(data->lex_str);
+	while (is_whitespaces(data->lex_str[i]))
+		i++;
+	if (i == ft_strlen(data->lex_str))
+		return;
+	i = 0;
 	if (!data->history[0])
 		data->history[i] = ft_strdup(data->lex_str);
 	else
@@ -38,7 +43,8 @@ void	show_history(t_var *data, int mod)
 {
 	static int i;
 
-//	ft_printf("   --pos : %d--\n", data->pos);
+//	ft_printf("   --pos : %d --\n", data->pos);
+	ft_printf("\n");
 	if (data->new_history == 1)
 	{
 		data->new_history = 0;

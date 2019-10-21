@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/16 12:27:55 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/21 12:11:11 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,14 @@ void			prompt(t_var *data)
 	tmp = data->pos;
 	data->pos = -9;
 	get_curs_pos(data, data->pos);
+//	ft_printf("-- pos : %d\n", data->pos);
 	TERMCAP("cd");
 //	ft_printf("ret: %d\n", tputs(tgetstr("cd", NULL), 1, ft_putchar_v2));
 	print_prompt(data);
 	print_str(data);
 	data->pos = tmp;
 	get_curs_pos(data, data->pos);
+//	ft_printf("-- pos : %d\n", data->pos);
 }
 
 void			get_winsize(t_var *data)

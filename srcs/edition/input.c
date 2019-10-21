@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/16 15:01:32 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/21 12:37:51 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void			launch_cmds(t_var *data)
 
 	data->cmd_index = 0;
 	data->cmds = ft_strsplit(data->lex_str, ';');
+//	ft_printf("\ncmd : |%s| - len : %d\n", data->cmds[0], ft_strlen(data->cmds[0]));
 	while (data->cmds[data->cmd_index])
 	{
 		cmd = shell_parser(data->cmds[data->cmd_index]);
@@ -104,9 +105,13 @@ void			get_input(t_var *data)
 		}
 		if (!ft_strcmp(buffer, RET))
 		{
-		//	ft_printf("\n\n--%d--str : |%s|\n", ft_strlen(data->lex_str), data->lex_str);
-			add_to_history(data);
-			launch_cmds(data);
+			if (ft_strlen(data->lex_str) != 0)
+			{
+				add_to_history(data);
+				launch_cmds(data);
+			}
+			else
+				ft_putchar('\n');
 			prompt(data);
 		}
 		get_key(data, buffer);

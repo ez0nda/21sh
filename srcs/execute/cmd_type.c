@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/16 15:15:19 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/21 08:56:38 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,34 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 void		cmd_basic(t_cmd *cmd, t_var *data)
 {
 	int			i;
+	char		**split;
 	t_list		*cur;
 	t_exec_cmd	*ecmd;
 
 	i = 0;
 	ecmd = (t_exec_cmd *)cmd;
-	data->argv = malloc(sizeof(char*) * (ft_lstcount(ecmd->argv) + 1));
+//	data->argv = malloc(sizeof(char*) * (ft_lstcount(ecmd->argv) + 1));
+	data->argv = (char **)malloc(sizeof(char*) * BUFF_SHELL);
 	cur = ecmd->argv;
-	while (cur/* && ft_strcmp(cur->content, ";")*/)
+/*	while (cur)
 	{
-		data->argv[i] = cur->content;
-	//	ft_printf("argv1: %s\n", cur->content);
+		j = 0;
+		data->argv[i] = ft_strdup(cur->content);
+//		while (data->argv[i][j] && ft_isalnum(data->argv[i][j]))
+//			j++;
+//		data->argv[i][j] = '\0';
+		ft_putstr("\n  -- content : ");
+		ft_putstr(data->argv[i]);
 		cur = cur->next;
 		i++;
 	}
-	data->argv[i] = NULL;
+	data->argv[i] = NULL;*/
+	split = ft_strsplit(data->cmds[data->cmd_index], ' ');
+	while (split[i])
+	{
+		data->argv[i] = ft_strdup(split[i]);
+		i++;
+	}
 	init_exec(data);
 }
 
