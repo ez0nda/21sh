@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/21 08:56:38 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/22 15:48:24 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void		cmd_pipe(t_cmd *cmd, t_var *data)
 		dup2(pipes[1], STDOUT_FILENO);
 		close(pipes[0]);
 		get_cmd_type(pcmd->left, data);
+	ft_printf("\n\n\nhere1\n\n\n");
 		exit(0);
 	}
 	if ((pid[1] == fork()) == 0)
@@ -33,8 +34,10 @@ void		cmd_pipe(t_cmd *cmd, t_var *data)
 		dup2(pipes[0], STDIN_FILENO);
 		close(pipes[1]);
 		get_cmd_type(pcmd->right, data);
+	ft_printf("\n\n\nhere2\n\n\n");
 		exit(0);
 	}
+	ft_printf("\n\n\nhere3\n\n\n");
 	close(pipes[0]);
 	close(pipes[1]);
 	waitpid(-1, 0, 0);
@@ -67,28 +70,23 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 
 	i = 0;
 	ecmd = (t_exec_cmd *)cmd;
-//	data->argv = malloc(sizeof(char*) * (ft_lstcount(ecmd->argv) + 1));
-	data->argv = (char **)malloc(sizeof(char*) * BUFF_SHELL);
+	data->argv = malloc(sizeof(char*) * (ft_lstcount(ecmd->argv) + 1));
+//	data->argv = (char**)malloc(sizeof(char*) * BUFF_SHELL);
 	cur = ecmd->argv;
-/*	while (cur)
+	while (cur)
 	{
-		j = 0;
-		data->argv[i] = ft_strdup(cur->content);
-//		while (data->argv[i][j] && ft_isalnum(data->argv[i][j]))
-//			j++;
-//		data->argv[i][j] = '\0';
-		ft_putstr("\n  -- content : ");
-		ft_putstr(data->argv[i]);
+		data->argv[i] = cur->content;
 		cur = cur->next;
 		i++;
 	}
-	data->argv[i] = NULL;*/
-	split = ft_strsplit(data->cmds[data->cmd_index], ' ');
-	while (split[i])
-	{
-		data->argv[i] = ft_strdup(split[i]);
-		i++;
-	}
+	data->argv[i] = NULL;
+//	split = ft_strsplit(data->cmds[data->cmd_index], ' ');
+//	while (split[i])
+//	{
+//		data->argv[i] = ft_strdup(split[i]);
+//		i++;
+//	}
+//	data->argv[i] = NULL;
 	init_exec(data);
 }
 
@@ -109,20 +107,11 @@ void		get_cmd_type(t_cmd *cmd, t_var *data)
 	path = get_var("PATH=", data->environ);
 	bin_path = ft_strsplit(path, ':');
 	if (cmd->type == PIPE)
-	{
-//		ft_printf("\nPIPE\n");
 		cmd_pipe(cmd, data);
-	}
 	else if (cmd->type == REDIR)
-	{
-//		ft_printf("\nREDIR\n");
 		cmd_redir(cmd, data);
-	}
 	else if (cmd->type == BASIC)
-	{
-//		ft_printf("\nBASIC\n");
 		cmd_basic(cmd, data);
-	}
 //	else
 //		ft_printf("\nNO CMD\n");
 }

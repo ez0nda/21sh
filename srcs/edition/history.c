@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:21:59 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/21 13:16:55 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/22 13:03:00 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	show_history(t_var *data, int mod)
 {
 	static int i;
 
-//	ft_printf("   --pos : %d --\n", data->pos);
-	ft_printf("\n");
 	if (data->new_history == 1)
 	{
 		data->new_history = 0;

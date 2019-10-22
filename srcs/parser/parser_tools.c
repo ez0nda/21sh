@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 11:21:46 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/18 12:48:16 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/22 12:42:30 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,11 @@ void	ft_lstadd_back(t_list **alst, t_list *nw)
 	while (*alst)
 		alst = &(*alst)->next;
 	*alst = nw;
-/*	while (nw)
+	while (nw)
 	{
-		ft_printf(" -- cur : %s\n", nw->content);
+//		ft_printf(" -- cur : %s\n", nw->content);
 		nw = nw->next;
-		i++;
-	}*/
+	}
 }
 
 int		is_whitespaces(char c)

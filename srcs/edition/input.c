@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/21 12:37:51 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/21 14:06:29 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int				check_overflow(t_var *data)
 {
 	if (data->char_count >= BUFF_SHELL)
 	{
-		ft_putendl_fd("\nBUFFER OVERFLOW", 2);
+		ft_putstr_fd("\n21sh: buffer overflow: ", STDERR_FILENO);
+		ft_putendl_fd("command line has too many characters", STDERR_FILENO);
 		data->pos = 0;
 		data->char_count = 0;
 		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
@@ -73,7 +74,6 @@ void			launch_cmds(t_var *data)
 
 	data->cmd_index = 0;
 	data->cmds = ft_strsplit(data->lex_str, ';');
-//	ft_printf("\ncmd : |%s| - len : %d\n", data->cmds[0], ft_strlen(data->cmds[0]));
 	while (data->cmds[data->cmd_index])
 	{
 		cmd = shell_parser(data->cmds[data->cmd_index]);
