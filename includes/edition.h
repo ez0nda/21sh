@@ -59,6 +59,7 @@ typedef struct	s_var
 	char	*stock;
 	int		quotes;
 	int		dquotes;
+	int  	mod_quotes;
 	char	**argv;
 	char	**cmds;
 	int		cmd_index;
@@ -66,6 +67,7 @@ typedef struct	s_var
 
 void			get_input(t_var *data);
 int				check_overflow(t_var *data);
+void			get_key(t_var *data, char *buffer);
 
 void			move_left(t_var *data);
 void			move_right(t_var *data);

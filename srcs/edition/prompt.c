@@ -34,15 +34,10 @@ static void		print_str(t_var *data)
 static void		print_prompt(t_var *data)
 {
 	TERMCAP("md");
-	if (data->quotes % 2 != 0)
+	if (data->quotes % 2 != 0 || data->dquotes % 2 != 0)
 	{
 		data->std_prompt = 0;
-		ft_putstr("quote> ");
-	}
-	else if (data->dquotes % 2 != 0)
-	{
-		data->std_prompt = 0;
-		ft_putstr("dquotes> ");
+		ft_putstr("> ");
 	}
 	else
 	{
@@ -62,7 +57,8 @@ void			prompt(t_var *data)
 	TERMCAP("cd");
 //	ft_printf("ret: %d\n", tputs(tgetstr("cd", NULL), 1, ft_putchar_v2));
 	print_prompt(data);
-	print_str(data);
+	if (data->quotes % 2 == 0 && data->dquotes % 2 == 0)
+		print_str(data);
 	data->pos = tmp;
 	get_curs_pos(data, data->pos);
 //	ft_printf("-- pos : %d\n", data->pos);

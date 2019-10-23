@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/core.h"
 
 void	rm_echo(char *str)
 {
@@ -92,12 +92,15 @@ int		algo_cote(char *line, int i)
 	return (i);
 }
 
-char	**ft_echo(char *str)
+int 	echo_builtin(char **cmd)
 {
 	int i;
-	int id_cote;
+//	int id_cote;
 
-	rm_echo(str);
+	i = -1;
+	while (cmd[++i])
+		ft_printf("%s\n", cmd[i]);
+/*	rm_echo(str);
 	id_cote = 0;
 	i = -1;
 	while (str[++i])
@@ -109,6 +112,6 @@ char	**ft_echo(char *str)
 	}
 	rm_cote(str);
 	ft_printf("%s", str);
-	free(str);
-	return (NULL);
+	free(str);*/
+	return (1);
 }

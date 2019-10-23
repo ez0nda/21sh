@@ -79,4 +79,8 @@ char	*ft_strndup(const char *s1, size_t n);
 int		is_whitespaces(char c);
 int		ft_lstcount(t_list *list);
 
+int 		check_quotes(t_var *data);
+void read_quotes(t_var *data);
+
+
 #endif

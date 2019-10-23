@@ -39,7 +39,7 @@ static void		get_copy_paste(t_var *data, char *buffer)
 		paste_mode(data);
 }
 
-static void		get_key(t_var *data, char *buffer)
+void		get_key(t_var *data, char *buffer)
 {
 	if (!ft_strcmp(buffer, KEY_L))
 		move_left(data);
@@ -107,6 +107,8 @@ void			get_input(t_var *data)
 		{
 			if (ft_strlen(data->lex_str) != 0)
 			{
+				if (check_quotes(data) == 1)
+					read_quotes(data);
 				add_to_history(data);
 				launch_cmds(data);
 			}

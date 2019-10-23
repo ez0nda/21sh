@@ -18,7 +18,6 @@
 int		env_builtin(char **environ);
 int		setenv_builtin(t_var *data, char **cmd);
 int		unsetenv_builtin(t_var *data, char **cmd);
-char	**ft_echo(char *str);
 char  *get_env(char **environ, char *selec);
 
 int   cd_builtin(t_var *data, char **cmd);
@@ -27,5 +26,6 @@ char	*error_cd(char *str, int mod);
 char  *parse_error(char *s, t_var *data);
 void	rm_error(char *s);
 
+int   echo_builtin(char **cmd);
 
 #endif

@@ -62,9 +62,11 @@ void	update_history(t_var *data)
 	int i;
 	int hist;
 	int back_fd;
+	char *str;
 
 	i = 0;
-	hist = open("/Users/ezonda/.21sh_history", O_WRONLY, O_APPEND);
+	str = ft_strjoin_free(get_env(data->environ, "HOME="), "/.21sh_hisotry", 0);
+	hist = open(str, O_WRONLY, O_APPEND);
 	back_fd = dup(1);
 	dup2(hist, 1);
 	while (data->history[i])
@@ -90,11 +92,12 @@ void	get_history(t_var *data, int fd)
 void	manage_history(t_var *data)
 {
 	int		fd;
-	char	*line;
+	char	*str;
 
-	fd = open("/Users/ezonda/.21sh_history", O_RDONLY);
+	str = ft_strjoin_free(get_env(data->environ, "HOME="), "/.21sh_hisotry", 0);
+	fd = open(str, O_RDONLY);
 	if (fd == -1)
-		fd = open("/Users/ezonda/.21sh_history", O_CREAT, S_IRUSR | S_IWUSR);
+		fd = open(str, O_CREAT, S_IRUSR | S_IWUSR);
 	else
 		get_history(data, fd);
 }

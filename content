@@ -1,4 +1,0 @@
-srcs/execute/cmd_type.c:	while (cur/* && ft_strcmp(cur->content, ";")*/)
-srcs/execute/cmd_type.c:		data->argv[i] = cur->content;
-srcs/execute/cmd_type.c:		ft_printf("argv1: %s\n", cur->content);
-srcs/execute/cmd_type.c:		cur = cur->next;

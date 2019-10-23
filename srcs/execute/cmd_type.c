@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/23 12:26:58 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/23 12:36:24 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 	back_fd = dup(rcmd->fd);
 	dup2(new_fd, rcmd->fd);
 	close(new_fd);
+	ft_putchar('\n');
 	get_cmd_type(rcmd->cmd, data);
 	dup2(back_fd, rcmd->fd);
-	ft_putchar('\n');
 }
 
 void		cmd_basic(t_cmd *cmd, t_var *data)

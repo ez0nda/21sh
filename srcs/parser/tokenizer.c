@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:33:36 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/10 14:51:51 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/23 16:27:59 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int	tokenizer_aggregators(char **s, int ret)
 			*s += 2;
 		}
 	}
+//	ft_printf("\nRET : %d\n", ret);
 	return (ret);
 }
 
@@ -70,8 +71,8 @@ int			tokenizer(
 		s++;
 	else if (*s && ft_is_in("><", *s))
 		ret = tokenizer_redirection(&s, ret);
-	else if (*s && ft_is_in("12", *s))
-		ret = tokenizer_aggregators(&s, ret);
+//	else if (*s && ft_is_in("12", *s))
+//		ret = tokenizer_aggregators(&s, ret);
 	else if (*s)
 		ret = tokenizer_string(&s, end);
 	if (new_cmd_end)

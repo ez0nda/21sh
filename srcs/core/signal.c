@@ -26,6 +26,10 @@ static void		signal_quit(int sig)
 		while (i >= 0)
 			data->tab[i--] = 0;
 		data->pos = 0;
+		data->quotes = 0;
+		data->dquotes = 0;
+		data->mod_quotes = 0;
+//		get_input(data);
 		prompt(data);
 		return ;
 	}
