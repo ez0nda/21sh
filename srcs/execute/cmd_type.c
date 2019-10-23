@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/22 15:48:24 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/23 11:10:37 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@ void		cmd_pipe(t_cmd *cmd, t_var *data)
 
 	pcmd = (t_pipe_cmd *)cmd;
 	if (pipe(pipes) != 0)
-		ft_putendl_fd("pipe error", 2);
+		ft_putendl_fd("\n21sh: pipe: syntax error", 2);
 	else if ((pid[0] = fork()) == 0)
 	{
+	ft_printf("\n\n\nhere1\n\n\n");
 		dup2(pipes[1], STDOUT_FILENO);
 		close(pipes[0]);
 		get_cmd_type(pcmd->left, data);
-	ft_printf("\n\n\nhere1\n\n\n");
 		exit(0);
 	}
 	if ((pid[1] == fork()) == 0)
 	{
+	ft_printf("\n\n\nhere2\n\n\n");
 		dup2(pipes[0], STDIN_FILENO);
 		close(pipes[1]);
 		get_cmd_type(pcmd->right, data);
-	ft_printf("\n\n\nhere2\n\n\n");
 		exit(0);
 	}
 	ft_printf("\n\n\nhere3\n\n\n");
@@ -97,6 +97,7 @@ void		get_cmd_type(t_cmd *cmd, t_var *data)
 	char **bin_path;
 
 	i = 0;
+//	ft_printf("\n\nin cmd_type\n\n");
 	while (is_whitespaces(data->lex_str[i]))
 		i++;
 	if (i == ft_strlen(data->lex_str))
