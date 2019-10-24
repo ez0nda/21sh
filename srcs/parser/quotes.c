@@ -6,7 +6,7 @@
 /*   By: jebrocho <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 14:21:43 by jebrocho          #+#    #+#             */
-/*   Updated: 2019/10/16 14:21:49 by jebrocho         ###   ########.fr       */
+/*   Updated: 2019/10/24 15:49:51 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,13 @@ int 		check_quotes(t_var *data)
 		{
 			data->quotes++;
 			data->mod_quotes = 'q';
+		}
+		if ((data->dquotes > 0 && data->dquotes % 2 == 0)
+			|| (data->quotes > 0 && data->quotes % 2 == 0))
+		{
+			data->quotes = 0;
+			data->dquotes = 0;
+			data->mod_quotes = 0;
 		}
 		i++;
 	}
