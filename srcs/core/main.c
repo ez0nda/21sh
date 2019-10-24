@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:43 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/23 11:40:36 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/24 15:20:27 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	update_history(t_var *data)
 	char *str;
 
 	i = 0;
-	str = ft_strjoin_free(get_env(data->environ, "HOME="), "/.21sh_hisotry", 0);
+	str = ft_strjoin_free(get_env(data->environ, "HOME="), "/.21sh_history", 0);
 	hist = open(str, O_WRONLY, O_APPEND);
 	back_fd = dup(1);
 	dup2(hist, 1);
@@ -94,7 +94,7 @@ void	manage_history(t_var *data)
 	int		fd;
 	char	*str;
 
-	str = ft_strjoin_free(get_env(data->environ, "HOME="), "/.21sh_hisotry", 0);
+	str = ft_strjoin_free(get_env(data->environ, "HOME="), "/.21sh_history", 0);
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 		fd = open(str, O_CREAT, S_IRUSR | S_IWUSR);

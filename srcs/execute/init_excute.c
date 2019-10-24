@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:55:06 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/15 14:24:42 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/24 12:39:27 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,7 @@ void	init_exec(t_var *data)
 	if (data->cmd_index == 0)
 		ft_putchar_fd('\n', 0);
 	if (!check_exe(data, data->cmds[data->cmd_index]))
+	{
 		exec_cmd(bin_path, data);
+	}
 }

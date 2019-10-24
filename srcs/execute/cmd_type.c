@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/23 12:36:24 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/24 14:28:14 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,13 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 
 	i = 0;
 	ecmd = (t_exec_cmd *)cmd;
-	data->argv = malloc(sizeof(char*) * (ft_lstcount(ecmd->argv) + 1));
+	data->argv = malloc(sizeof(char**) * (ft_lstcount(ecmd->argv) + 1));
 //	data->argv = (char**)malloc(sizeof(char*) * BUFF_SHELL);
 	cur = ecmd->argv;
 	while (cur)
 	{
 		data->argv[i] = cur->content;
+//		ft_printf("\nargv: %s\n", cur->content);
 		cur = cur->next;
 		i++;
 	}
@@ -105,11 +106,17 @@ void		get_cmd_type(t_cmd *cmd, t_var *data)
 	path = get_var("PATH=", data->environ);
 	bin_path = ft_strsplit(path, ':');
 	if (cmd->type == PIPE)
+	{
 		cmd_pipe(cmd, data);
+	}
 	else if (cmd->type == REDIR)
+	{
 		cmd_redir(cmd, data);
+	}
 	else if (cmd->type == BASIC)
+	{
 		cmd_basic(cmd, data);
+	}
 //	else
 //		ft_printf("\nNO CMD\n");
 }

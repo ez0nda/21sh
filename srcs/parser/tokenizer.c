@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:33:36 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/23 16:27:59 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/24 15:22:02 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@ static int	tokenizer_redirection(char **s, int ret)
 		(*s)++;
 		return ('=');
 	}
+//	ft_printf("\nRET : %d\n", ret);
 	return (ret);
 }
 
 static int	tokenizer_aggregators(char **s, int ret)
 {
+//	ft_printf("\nhere2\n");
+//	getchar();
 	if (*(*s + 1) == '>')
 	{
 		if (*(*s + 2) == '>')
@@ -42,6 +45,11 @@ static int	tokenizer_aggregators(char **s, int ret)
 			ret = (**s == '1') ? '>' : '*';
 			*s += 2;
 		}
+	}
+	else
+	{
+		while (*(*s) == '1' || *(*s) == '2')
+			*s += 1;
 	}
 //	ft_printf("\nRET : %d\n", ret);
 	return (ret);
@@ -71,8 +79,12 @@ int			tokenizer(
 		s++;
 	else if (*s && ft_is_in("><", *s))
 		ret = tokenizer_redirection(&s, ret);
-//	else if (*s && ft_is_in("12", *s))
-//		ret = tokenizer_aggregators(&s, ret);
+	else if (*s && ft_is_in("12", *s))
+	{
+//		ft_printf("\nhere1\n");
+//		getchar();
+		ret = tokenizer_aggregators(&s, ret);
+	}
 	else if (*s)
 		ret = tokenizer_string(&s, end);
 	if (new_cmd_end)

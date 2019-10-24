@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:34:02 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/23 16:03:16 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/24 15:22:25 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,29 @@ t_cmd		*parse_basic(char **p_input, char *end, int *res)
 	ret = parse_redir(ret, p_input, end);
 	while (*p_input < end)
 	{
+//		ft_printf("\np_input : %d -- end : %d -- diff : %d\n", *p_input, end, 
+//				end - *p_input);
 		if ((tok = tokenizer(p_input, end, &new_cmd, &new_cmd_end)) == 0)
+		{
+			ft_printf("\ntokenizer == 0\n");
 			break ;
+		}
+//		ft_printf("\ntokenizer = %d\n", tok);
+//		ft_printf("\nhere3\n");
+//		getchar();
+//		if (tok == 49 || tok == 50)
+//			return (NULL) ;
 		if (tok != 'a' && (*res = 0))
 			return (NULL);
 		ft_lstadd_back(&cmd->argv, ft_lstnew(
 			ft_strndup(new_cmd, new_cmd_end - new_cmd),
 			new_cmd_end - new_cmd + 1));
 		ret = parse_redir(ret, p_input, end);
+//		ft_printf("\np_input : %d -- end : %d -- diff : %d\n", *p_input, end, 
+//				end - *p_input);
 	}
+//	ft_printf("\nHERE\n");
+//	getchar();
 	return (ret);
 }
 
