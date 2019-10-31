@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/31 14:32:01 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/31 16:02:12 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,23 +104,44 @@ void			get_last_pipe(t_var *data, int index)
 	data->p_prompt = 0;
 }
 
+void			join_cmds(t_var *data, int index)
+{
+	data->cmds[index] = ft_strjoin_free(data->cmds[index], data->cmds[index + 1], 0);
+	index++;
+	while (data->cmds[index])
+	{
+		data->cmds[index] = data->cmds[index + 1];
+		index++;
+	}
+}
+
 void			check_single_pipes(t_var *data)
 {
 	int i;
 	int len;
+	int last_cmd;
 
 	i = 0;
 	len = 0;
-	while (data->cmds[i])
-		i++;
-	i--;
-	len = ft_strlen(data->cmds[i]) - 1;
-	while (is_whitespaces(data->cmds[i][len]))
-		len--;
-	if (data->cmds[i][len] == '|')
+	last_cmd = 0;
+	last_cmd = ft_tablen(data->cmds) - 1;
+	while (i <= last_cmd)
+	{
+		last_cmd = ft_tablen(data->cmds) - 1;
+		len = ft_strlen(data->cmds[i]) - 1;
+		while (is_whitespaces(data->cmds[i][len]))
+			len--;
+		if (data->cmds[i][len] == '|' && i != last_cmd)
+		{
+			join_cmds(data, i);
+		}
+		else
+			i++;
+	}
+	if (data->cmds[last_cmd][len] == '|')
 	{
 		ft_putchar('\n');
-		get_last_pipe(data, i);
+		get_last_pipe(data, last_cmd);
 	}
 }
 
