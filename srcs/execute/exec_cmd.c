@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 13:44:52 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/24 15:31:16 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/28 10:42:11 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void		execute(char **bin_path, pid_t pid, t_var *data)
 	i = 0;
 //	ft_printf("\n\nin exec - pid : %d\n\n", pid);
 //	ft_printf("\nHERE\n");
-	while (data->argv[i])
-		ft_printf("\nargv : %s\n", data->argv[i++]);
-	i = 0;
+//	while (data->argv[i])
+//		ft_printf("\nargv : %s\n", data->argv[i++]);
+//	i = 0;
 	if (bin_path != NULL)
 	{
 		while (bin_path[i])

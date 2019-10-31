@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/24 14:28:14 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/29 11:54:24 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,20 @@ void		cmd_pipe(t_cmd *cmd, t_var *data)
 		ft_putendl_fd("\n21sh: pipe: syntax error", 2);
 	else if ((pid[0] = fork()) == 0)
 	{
+//		ft_printf("\nget type left1\n");
+//		ft_printf("\npipe0 : %d - pipe1 : %d\n", pipes[0], pipes[1]);
 		dup2(pipes[1], STDOUT_FILENO);
 		close(pipes[0]);
+//		ft_printf("\nget type left2\n");
 		get_cmd_type(pcmd->left, data);
 		exit(0);
 	}
 	if ((pid[1] = fork()) == 0)
 	{
+//		ft_printf("\nget type right1\n");
 		dup2(pipes[0], STDIN_FILENO);
 		close(pipes[1]);
+//		ft_printf("\nget type right2\n");
 		get_cmd_type(pcmd->right, data);
 		exit(0);
 	}
@@ -90,9 +95,9 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 
 void		get_cmd_type(t_cmd *cmd, t_var *data)
 {
-	int i;
-	char *path;
-	char **bin_path;
+	int		i;
+	char	*path;
+	char	**bin_path;
 
 	i = 0;
 //	ft_printf("\n\nin cmd_type\n\n");
@@ -107,14 +112,19 @@ void		get_cmd_type(t_cmd *cmd, t_var *data)
 	bin_path = ft_strsplit(path, ':');
 	if (cmd->type == PIPE)
 	{
+//		if (cmd->single_pipe == 1)
+//			ft_printf("\nSINGLE PIPE\n");
+//		ft_printf("\nPIPE\n");
 		cmd_pipe(cmd, data);
 	}
 	else if (cmd->type == REDIR)
 	{
+//		ft_printf("\nREDIR\n");
 		cmd_redir(cmd, data);
 	}
 	else if (cmd->type == BASIC)
 	{
+//		ft_printf("\nBASIC\n");
 		cmd_basic(cmd, data);
 	}
 //	else

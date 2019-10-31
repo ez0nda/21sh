@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/24 12:36:58 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/31 14:32:01 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,69 @@ void		get_key(t_var *data, char *buffer)
 	get_copy_paste(data, buffer);
 }
 
+void			get_last_pipe(t_var *data, int index)
+{
+	int i;
+	char *tmp;
+	char buffer[6];
+
+	i = 0;
+	data->p_prompt = 1;
+	tmp = ft_strdup(data->lex_str);
+	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+	prompt(data);
+	while (1)
+	{
+		update_data(0, data);
+		ft_bzero(buffer, 6);
+		get_winsize(data);
+		check_overflow(data);
+		read(0, &buffer, sizeof(buffer));
+		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
+		{
+			ft_putchar(buffer[0]);
+			data->lex_str = ft_strjoin(data->lex_str, &buffer[0]);
+			data->pos = ft_strlen(data->lex_str);
+			data->char_count++;
+		}
+		if (!ft_strcmp(buffer, RET))
+		{
+			break ;
+		}
+		get_key(data, buffer);
+	}
+	data->cmds[index] = ft_strjoin_free(data->cmds[index], data->lex_str, 0);
+	check_single_pipes(data);
+	data->p_prompt = 0;
+}
+
+void			check_single_pipes(t_var *data)
+{
+	int i;
+	int len;
+
+	i = 0;
+	len = 0;
+	while (data->cmds[i])
+		i++;
+	i--;
+	len = ft_strlen(data->cmds[i]) - 1;
+	while (is_whitespaces(data->cmds[i][len]))
+		len--;
+	if (data->cmds[i][len] == '|')
+	{
+		ft_putchar('\n');
+		get_last_pipe(data, i);
+	}
+}
+
 void			launch_cmds(t_var *data)
 {
 	t_cmd	*cmd;
 
 	data->cmd_index = 0;
 	data->cmds = ft_strsplit(data->lex_str, ';');
+	check_single_pipes(data);
 	while (data->cmds[data->cmd_index])
 	{
 		cmd = shell_parser(data->cmds[data->cmd_index]);

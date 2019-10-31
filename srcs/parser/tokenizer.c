@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:33:36 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/24 15:22:02 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/28 10:41:10 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	tokenizer_aggregators(char **s, int ret)
 	}
 	else
 	{
-		while (*(*s) == '1' || *(*s) == '2')
+		while (**s == '1' || **s == '2')
 			*s += 1;
 	}
 //	ft_printf("\nRET : %d\n", ret);

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/15 14:01:10 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/31 12:15:51 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct	s_var
 	char	**argv;
 	char	**cmds;
 	int		cmd_index;
+	int		p_prompt;
 }				t_var;
 
 void			get_input(t_var *data);
@@ -98,5 +99,8 @@ void			paste_mode(t_var *data);
 void			abort_selection(t_var *data);
 
 void			odd_quotes(t_var *data);
+
+void			check_single_pipes(t_var *data);
+void			get_last_pipe(t_var *data, int index);
 
 #endif

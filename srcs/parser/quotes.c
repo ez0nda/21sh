@@ -6,7 +6,7 @@
 /*   By: jebrocho <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 14:21:43 by jebrocho          #+#    #+#             */
-/*   Updated: 2019/10/24 15:49:51 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/29 15:27:01 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ void read_quotes(t_var *data)
 		}
 		if (!ft_strcmp(buffer, RET))
 		{
-				if (check_quotes(data) == 1)
-					read_quotes(data);
+			if (check_quotes(data) == 1)
+				read_quotes(data);
 		}
 		get_key(data, buffer);
 	}

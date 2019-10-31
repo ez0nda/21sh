@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/22 13:04:41 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/29 15:22:25 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ static void		print_prompt(t_var *data)
 		data->std_prompt = 0;
 		ft_putstr("> ");
 	}
+	else if (data->p_prompt == 1)
+	{
+		ft_putstr("pipe> ");
+	}
 	else
 	{
 		data->std_prompt = 1;
@@ -52,7 +56,10 @@ void			prompt(t_var *data)
 	int tmp;
 
 	tmp = data->pos;
-	data->pos = -9;
+	if (data->p_prompt != 1)
+		data->pos = -9;
+	else
+		data->pos = -7;
 	get_curs_pos(data, data->pos);
 	TERMCAP("cd");
 //	ft_printf("ret: %d\n", tputs(tgetstr("cd", NULL), 1, ft_putchar_v2));

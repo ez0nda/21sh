@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:34:02 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/24 15:22:25 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/10/29 11:56:51 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ t_cmd		*parse_pipe(char **p_input, char *end, int *res)
 	if (strings_scan_pipes(
 		p_input, end, &new_cmd, &new_cmd_end))
 	{
+//		ft_printf("\nin scan_pipes\n");
 		cmd = parse_basic(&new_cmd, new_cmd_end, res);
 		(*p_input)++;
 //		ft_printf("\np_input: {%s}\n", *p_input);
@@ -103,7 +104,14 @@ t_cmd		*parse_pipe(char **p_input, char *end, int *res)
 			cmd, parse_pipe(p_input, end, res));
 	}
 	else
+	{
+//		ft_printf("\nin scan_basic\n");
 		cmd = parse_basic(&new_cmd, new_cmd_end, res);
+	}
+//	ft_printf("\nnew_cmd : {%s} - new_cmd_end : {%s}", new_cmd, new_cmd_end);
+	if (!ft_strcmp("|", new_cmd))
+	{
+	}
 	return (cmd);
 }
 
