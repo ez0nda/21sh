@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:44:48 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/16 15:13:52 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/08 12:06:43 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	init_shell(t_var *data)
 	data->quotes = 0;
 	data->dquotes = 0;
 	data->std_prompt = 1;
+	data->mod_quotes = 0;
 	if (!(data->lex_str = (char*)malloc(sizeof(char) * BUFF_SHELL)))
 			return ;
 	if (!(data->history = (char**)malloc(sizeof(char*) * BUFF_SHELL)))
@@ -41,6 +42,8 @@ void	init_shell(t_var *data)
 	if (!(data->tab = malloc(sizeof(int) * BUFF_SHELL)))
 		return ;
 	if (!(data->stock = (char*)malloc(sizeof(char) * BUFF_SHELL)))
+		return ;
+	if (!(data->here_stock = (char*)malloc(sizeof(char) * BUFF_SHELL)))
 		return ;
 	while (i < BUFF_SHELL)
 	{

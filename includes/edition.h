@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/31 12:15:51 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/08 14:12:23 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ typedef struct	s_var
 	char	**cmds;
 	int		cmd_index;
 	int		p_prompt;
+	int		h_prompt;
+	char	*herend;
+	char	*here_stock;
+	int		cat_here;
 }				t_var;
 
 void			get_input(t_var *data);

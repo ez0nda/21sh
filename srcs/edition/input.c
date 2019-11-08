@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/31 16:02:12 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/08 16:03:56 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,9 @@ void		get_key(t_var *data, char *buffer)
 
 void			get_last_pipe(t_var *data, int index)
 {
-	int i;
-	char *tmp;
 	char buffer[6];
 
-	i = 0;
 	data->p_prompt = 1;
-	tmp = ft_strdup(data->lex_str);
 	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 	prompt(data);
 	while (1)
@@ -132,9 +128,7 @@ void			check_single_pipes(t_var *data)
 		while (is_whitespaces(data->cmds[i][len]))
 			len--;
 		if (data->cmds[i][len] == '|' && i != last_cmd)
-		{
 			join_cmds(data, i);
-		}
 		else
 			i++;
 	}
@@ -175,6 +169,12 @@ void			get_input(t_var *data)
 		get_winsize(data);
 		check_overflow(data);
 		read(0, &buffer, sizeof(buffer));
+/*		ft_printf("\n%d - ", buffer[0]);
+		ft_printf("%d - ", buffer[1]);
+		ft_printf("%d - ", buffer[2]);
+		ft_printf("%d - ", buffer[3]);
+		ft_printf("%d - ", buffer[4]);
+		ft_printf("%d - \n", buffer[5]);*/
 		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
 		{
 			ft_putchar(buffer[0]);

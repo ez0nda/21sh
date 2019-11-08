@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/29 15:22:25 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/08 11:30:38 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ static void		print_prompt(t_var *data)
 	if (data->quotes % 2 != 0 || data->dquotes % 2 != 0)
 	{
 		data->std_prompt = 0;
-		ft_putstr("> ");
+		ft_putstr("quotes> ");
 	}
 	else if (data->p_prompt == 1)
-	{
 		ft_putstr("pipe> ");
-	}
+	else if (data->h_prompt == 1)
+		ft_putstr("heredoc> ");
 	else
 	{
 		data->std_prompt = 1;
@@ -58,8 +58,10 @@ void			prompt(t_var *data)
 	tmp = data->pos;
 	if (data->p_prompt != 1)
 		data->pos = -9;
-	else
+	else if (data->p_prompt == 1)
 		data->pos = -7;
+	else if (data->h_prompt == 1)
+		data->pos = -10;
 	get_curs_pos(data, data->pos);
 	TERMCAP("cd");
 //	ft_printf("ret: %d\n", tputs(tgetstr("cd", NULL), 1, ft_putchar_v2));

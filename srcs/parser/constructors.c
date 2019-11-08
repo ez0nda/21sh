@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:33:47 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/10 11:29:52 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/08 12:15:39 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_cmd	*parse_redir_cmd(
 	cmd->cmd = subcmd;
 	cmd->file = file;
 	cmd->mode = mode;
+//	ft_printf("\nPARSE REDIR - file : {%s} - mode : %d\n", file, mode);
 	cmd->fd = fd;
 	return (t_cmd*)cmd;
 }
