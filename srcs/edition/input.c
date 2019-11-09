@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/08 16:03:56 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/09 13:37:52 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ static void		get_copy_paste(t_var *data, char *buffer)
 		copy_cut_mode(data, 1);
 	if (!ft_strcmp(buffer, OPT_V))
 		paste_mode(data);
+	if (!ft_strcmp(buffer, CTRL_D))
+	{
+		if (data->lex_str[0])
+			remove_cur_char(data);
+		else
+			exit_shell(data);
+	}
 }
 
 void		get_key(t_var *data, char *buffer)
@@ -169,12 +176,6 @@ void			get_input(t_var *data)
 		get_winsize(data);
 		check_overflow(data);
 		read(0, &buffer, sizeof(buffer));
-/*		ft_printf("\n%d - ", buffer[0]);
-		ft_printf("%d - ", buffer[1]);
-		ft_printf("%d - ", buffer[2]);
-		ft_printf("%d - ", buffer[3]);
-		ft_printf("%d - ", buffer[4]);
-		ft_printf("%d - \n", buffer[5]);*/
 		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
 		{
 			ft_putchar(buffer[0]);

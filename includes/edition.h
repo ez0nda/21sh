@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/08 14:12:23 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/09 13:27:25 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define END		(char[4]){ 27, 91, 70, 0}
 # define UNDO		(char[4]){ 127, 0, 0, 0}
 # define DEL		(char[5]){ 27, 91, 51, 126, 0}
+# define CTRL_D		(char[4]){ 4, 0, 0, 0}
 
 # define TERMCAP(x) tputs(tgetstr(x, NULL), 1, ft_putchar_v2)
 
