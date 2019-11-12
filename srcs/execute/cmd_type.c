@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/08 15:43:21 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/12 03:24:24 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,28 @@ int			check_cmd(t_var *data)
 	}
 }
 
+char		*rm_char(char *str, char c)
+{
+	int i;
+	char *new;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+		{
+			while (str[i])
+			{
+				str[i] = str[i + 1];
+				i++;
+			}
+			i = 0;
+		}
+		i++;
+	}
+	return (str);
+}
+
 void		cmd_redir(t_cmd *cmd, t_var *data)
 {
 	t_redirection_cmd	*rcmd;
@@ -120,7 +142,7 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 	if (rcmd->mode == 524)
 	{
 		ft_putchar('\n');
-		data->herend = ft_strdup(rcmd->file);
+		data->herend = ft_strdup(rm_char(rcmd->file, ' '));
 		heredoc_read(data);
 		if (!check_cmd(data))
 			return ;
@@ -175,6 +197,7 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 	{
 		data->cat_here = 0;
 		ft_putstr(data->here_stock);
+		ft_bzero(data->here_stock, ft_strlen(data->here_stock));
 	}
 	else
 		init_exec(data);
