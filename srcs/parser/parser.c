@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:34:02 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/29 11:56:51 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/16 03:28:35 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_cmd		*parse_redir(t_cmd *cmd, char **p, char *end)
 			cmd = parse_redir_cmd(cmd, f, M_READ, 0);
 		if (tok == '>')
 		{
-//			ft_printf("\nparse_redir :\nfile : %s\n", f);
+	//		ft_printf("\nparse_redir file : %s\n", f);
 			cmd = parse_redir_cmd(cmd, f, M_WRITE_TRUNC, 1);
 		}
 		if (tok == '+')
@@ -65,7 +65,6 @@ t_cmd		*parse_basic(char **p_input, char *end, int *res)
 //				end - *p_input);
 		if ((tok = tokenizer(p_input, end, &new_cmd, &new_cmd_end)) == 0)
 		{
-			ft_printf("\ntokenizer == 0\n");
 			break ;
 		}
 //		ft_printf("\ntokenizer = %d\n", tok);

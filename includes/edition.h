@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/12 02:00:45 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/20 07:40:59 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct	s_var
 	char	*herend;
 	char	*here_stock;
 	int		cat_here;
+	char	*files;
 }				t_var;
 
 void			get_input(t_var *data);
@@ -110,7 +111,8 @@ void			check_single_pipes(t_var *data);
 void			get_last_pipe(t_var *data, int index);
 
 void			add_to_here_stock(char c, t_var *data);
-int				check_last_char(t_var *data);
+void			check_last_char(t_var *data);
 char			*rm_char(char *str, char c);
+
 
 #endif

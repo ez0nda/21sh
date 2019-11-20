@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/12 03:24:24 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/20 11:24:45 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,19 @@ void		add_to_here_stock(char c, t_var *data)
 	data->here_stock[i] = '\0';
 }
 
+void		rm_herend(t_var *data)
+{
+	int i;
+
+	i = ft_strlen(data->here_stock);
+	while (data->here_stock[i] != '\n')
+	{
+		data->here_stock[i] = '\0';
+		i--;
+	}
+	data->here_stock[i] = '\0';
+}
+
 void		heredoc_read(t_var *data)
 {
 	char buffer[6];
@@ -84,12 +97,16 @@ void		heredoc_read(t_var *data)
 		{
 			ft_putchar('\n');
 			if (!ft_strcmp(data->lex_str, data->herend))
+			{
+				rm_herend(data);
 				break ;
+			}
 			add_to_here_stock('\n', data);
 			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 		}
 		get_key(data, buffer);
 	}
+	ft_bzero(data->here_stock, ft_strlen(data->here_stock));
 	data->h_prompt = 0;
 }
 
@@ -113,7 +130,6 @@ int			check_cmd(t_var *data)
 char		*rm_char(char *str, char c)
 {
 	int i;
-	char *new;
 
 	i = 0;
 	while (str[i])
@@ -132,13 +148,75 @@ char		*rm_char(char *str, char c)
 	return (str);
 }
 
+int			count_redir(t_var *data)
+{
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (data->lex_str[i])
+	{
+		if (data->lex_str[i] == '>' && data->lex_str[i] + 1 != '>')
+			count++;
+		i++;
+	}
+//	ft_printf("\ncount : %d\n", count);
+	return (count);
+}
+
+void		add_to_files(t_var *data, char *str)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (data->files[i])
+		i++;
+	while (str[j])
+	{
+		data->files[i] = str[j];
+		i++;
+		j++;
+	}
+	data->files[i++] = ' ';
+	data->files[i] = '\0';
+}
+
+void		update_files(t_var *data)
+{
+	int		fd;
+	int		back_fd;
+	char	*line;
+	char	**split;
+
+	split = ft_strsplit(data->files, ' ');
+	fd = open(split[0], O_RDONLY, O_APPEND);
+	back_fd = dup(1);
+	dup2(fd, 1);
+}
+
 void		cmd_redir(t_cmd *cmd, t_var *data)
 {
 	t_redirection_cmd	*rcmd;
+	int					count;
 	int					new_fd;
 	int					back_fd;
 
+	ft_putstr_fd("\nredir start\n", 0);
+	getchar();
+//	if (!data->test)
+//	ft_printf("\ntest : %d\n", test);
+//	if (count == test)
+//	{
+//		ft_printf("\nRETURN\n");
+//		return ;
+//	}
 	rcmd = (t_redirection_cmd *)cmd;
+//	ft_printf("\nfile[0] : {%c}\n", rcmd->file[0]);
+//	getchar();
+	count = count_redir(data);
 	if (rcmd->mode == 524)
 	{
 		ft_putchar('\n');
@@ -147,8 +225,18 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 		if (!check_cmd(data))
 			return ;
 	}
-	if (rcmd->mode != 516 && rcmd->mode != 524)
+	else if (rcmd->mode != 516 && rcmd->mode != 524)
+	{
+		ft_putstr_fd("\nout dup\n", 0);
+		getchar();
+		get_cmd_type(rcmd->cmd, data);
+//		cmd_redir(rcmd->cmd, data);
+//		ft_printf("\nnew file : {%s} -%d-\n", rcmd->file, count++);
 		new_fd = open(rcmd->file, rcmd->mode, S_IRUSR | S_IWUSR);
+		add_to_files(data, rcmd->file);
+	//	if (count == test)
+	//		return ;
+	}
 	else if (rcmd->mode == 516)
 		new_fd = open(rcmd->file, O_RDONLY);
 	if (new_fd == -1)
@@ -161,9 +249,14 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 	dup2(new_fd, rcmd->fd);
 	close(new_fd);
 //	ft_putchar('\n');
+	ft_putstr_fd("\nin dup\n", 0);
+	getchar();
 	get_cmd_type(rcmd->cmd, data);
 	dup2(back_fd, rcmd->fd);
-//	ft_printf("\nEND REDIR\n");
+//	if (count > 1)
+//		update_files(data);
+	ft_putstr_fd("\nredir end\n", 0);
+	getchar();
 }
 
 void		cmd_basic(t_cmd *cmd, t_var *data)
@@ -173,6 +266,8 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 	t_list		*cur;
 	t_exec_cmd	*ecmd;
 
+	ft_putstr_fd("\nbasic start\n", 0);
+	getchar();
 	i = 0;
 	ecmd = (t_exec_cmd *)cmd;
 	data->argv = malloc(sizeof(char**) * (ft_lstcount(ecmd->argv) + 1));
@@ -181,7 +276,7 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 	while (cur)
 	{
 		data->argv[i] = cur->content;
-//		ft_printf("\nargv: %s\n", cur->content);
+	//	ft_printf("\nargv: %s\n", cur->content);
 		cur = cur->next;
 		i++;
 	}
@@ -199,8 +294,10 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 		ft_putstr(data->here_stock);
 		ft_bzero(data->here_stock, ft_strlen(data->here_stock));
 	}
-	else
-		init_exec(data);
+	i = 0;
+	init_exec(data);
+	ft_putstr_fd("\nbasic end\n", 0);
+	getchar();
 }
 
 void		get_cmd_type(t_cmd *cmd, t_var *data)
@@ -209,11 +306,13 @@ void		get_cmd_type(t_cmd *cmd, t_var *data)
 	char	*path;
 	char	**bin_path;
 
+	ft_putstr_fd("\ngcmd start\n", 0);
+	getchar();
 	i = 0;
 //	ft_printf("\n\nin cmd_type\n\n");
-	while (is_whitespaces(data->lex_str[i]))
+	while (is_whitespaces(data->cmds[data->cmd_index][i]))
 		i++;
-	if (i == ft_strlen(data->lex_str))
+	if (i == ft_strlen(data->cmds[data->cmd_index]))
 	{
 		ft_putchar('\n');
 		return;
@@ -224,19 +323,22 @@ void		get_cmd_type(t_cmd *cmd, t_var *data)
 	{
 //		if (cmd->single_pipe == 1)
 //			ft_printf("\nSINGLE PIPE\n");
-//		ft_printf("\nPIPE\n");
 		cmd_pipe(cmd, data);
 	}
 	else if (cmd->type == REDIR)
 	{
-//		ft_printf("\nREDIR\n");
+		ft_putstr_fd("\nREDIR\n", STDIN_FILENO);
+		getchar();
 		cmd_redir(cmd, data);
 	}
 	else if (cmd->type == BASIC)
 	{
-//		ft_printf("\nBASIC\n");
+		ft_putstr_fd("\nBASIC\n", STDIN_FILENO);
+		getchar();
 		cmd_basic(cmd, data);
 	}
+	ft_putstr_fd("\ngcmd end\n", 0);
+	getchar();
 //	else
 //		ft_printf("\nNO CMD\n");
 }

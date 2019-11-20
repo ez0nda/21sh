@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:24:39 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/12 00:14:43 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/20 00:56:55 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,13 @@ static void		signal_quit(int sig)
 		prompt(data);
 		return ;
 	}
-	ft_putchar('\n');
-	exit_shell(data);
+	else if (sig == SIGQUIT)
+		ft_printf("\nSIGQUIT\n");
+	else if (sig == SIGTERM)
+	{
+		ft_putchar('\n');
+		exit_shell(data);
+	}
 }
 
 static void		signal_inter(int sig)

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 13:44:52 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/28 10:42:11 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/20 07:21:22 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void		execute(char **bin_path, pid_t pid, t_var *data)
 //	ft_printf("\nHERE\n");
 //	while (data->argv[i])
 //		ft_printf("\nargv : %s\n", data->argv[i++]);
-//	i = 0;
 	if (bin_path != NULL)
 	{
 		while (bin_path[i])
@@ -32,7 +31,10 @@ static void		execute(char **bin_path, pid_t pid, t_var *data)
 			else
 				path = ft_strdup(data->argv[0]);
 			if (access(path, X_OK) != -1 && pid == 0)
+			{
+		//		ft_putstr_fd(" -- EXECVE\n", STDIN_FILENO);
 				execve(path, data->argv, data->environ);
+			}
 			free(path);
 			i++;
 		}
@@ -58,6 +60,7 @@ void			exec_cmd(char **bin_path, t_var *data)
 	}
 	pid = fork();
 	execute(bin_path, pid, data);
+//	ft_printf("\nhere 2\n");
 	if (pid == 0)
 	{
 		if (data->argv[0][0] != '\n')
