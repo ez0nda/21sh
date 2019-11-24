@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/20 07:32:56 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/23 23:55:52 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ void			get_input(t_var *data)
 		get_winsize(data);
 		check_overflow(data);
 		read(0, &buffer, sizeof(buffer));
-		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
+		if (buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0)
 		{
 			ft_putchar(buffer[0]);
 			add_to_string(buffer[0], data);

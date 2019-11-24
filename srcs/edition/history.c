@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:21:59 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/22 13:03:00 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/23 22:49:34 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,30 @@ void	show_history(t_var *data, int mod)
 	}
 	else
 	{
+//		ft_printf("\nmod 2 - str : {%s}\n", data->history[i]);
 		i--;
 		if (!data->history[i])
 		{
 			i++;
+			if (i == 0)
+			{
+				//ft_printf("\nhere\n");
+				ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+	//			prompt(data);
+			}
+			data->pos = ft_strlen(data->lex_str);
+			prompt(data);
 			return ;
 		}
 		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 		data->lex_str = ft_strcpy(data->lex_str, data->history[i]);
 	}
+//	if (i == 0)
+//		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+	data->pos = -9;
+	TERMCAP("cd");
 	data->pos = ft_strlen(data->lex_str);
+//	ft_printf("\nlen : %d - pos : %d\n", ft_strlen(data->lex_str), data->pos);
 	prompt(data);
+//	data->pos = 0;
 }

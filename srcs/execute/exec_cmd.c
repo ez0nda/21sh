@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 13:44:52 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/20 07:21:22 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/23 19:32:53 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void			exec_cmd(char **bin_path, t_var *data)
 			data->argv[i] = get_dollar_var(data->argv[i], data);
 		i++;
 	}
+//	ft_printf("\nargv[0]: {%s}\n", data->argv[0]);
 	pid = fork();
 	execute(bin_path, pid, data);
 //	ft_printf("\nhere 2\n");

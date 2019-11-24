@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:57:19 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/20 11:24:45 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/24 01:59:21 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,8 +204,6 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 	int					new_fd;
 	int					back_fd;
 
-	ft_putstr_fd("\nredir start\n", 0);
-	getchar();
 //	if (!data->test)
 //	ft_printf("\ntest : %d\n", test);
 //	if (count == test)
@@ -214,6 +212,9 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 //		return ;
 //	}
 	rcmd = (t_redirection_cmd *)cmd;
+	ft_putstr_fd("\nredir start - file : ", 0);
+	ft_putendl_fd(rcmd->file, 0);
+	getchar();
 //	ft_printf("\nfile[0] : {%c}\n", rcmd->file[0]);
 //	getchar();
 	count = count_redir(data);
@@ -227,13 +228,15 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 	}
 	else if (rcmd->mode != 516 && rcmd->mode != 524)
 	{
-		ft_putstr_fd("\nout dup\n", 0);
-		getchar();
-		get_cmd_type(rcmd->cmd, data);
-//		cmd_redir(rcmd->cmd, data);
-//		ft_printf("\nnew file : {%s} -%d-\n", rcmd->file, count++);
+//		ft_putstr_fd("\nout dup\n", 0);
+//		getchar();
+		//get_cmd_type(rcmd->cmd, data);
 		new_fd = open(rcmd->file, rcmd->mode, S_IRUSR | S_IWUSR);
 		add_to_files(data, rcmd->file);
+//		cmd_redir(rcmd->cmd, data);
+//		ft_printf("\nnew file : {%s} -%d-\n", rcmd->file, count++);
+
+
 	//	if (count == test)
 	//		return ;
 	}
@@ -248,14 +251,14 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 	back_fd = dup(rcmd->fd);
 	dup2(new_fd, rcmd->fd);
 	close(new_fd);
-//	ft_putchar('\n');
 	ft_putstr_fd("\nin dup\n", 0);
 	getchar();
 	get_cmd_type(rcmd->cmd, data);
 	dup2(back_fd, rcmd->fd);
 //	if (count > 1)
 //		update_files(data);
-	ft_putstr_fd("\nredir end\n", 0);
+	ft_putstr_fd("\nredir end - file : ", 0);
+	ft_putendl_fd(rcmd->file, 0);
 	getchar();
 }
 
@@ -295,6 +298,8 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 		ft_bzero(data->here_stock, ft_strlen(data->here_stock));
 	}
 	i = 0;
+//	while (data->argv[i])
+//		ft_printf("\nargv[i]: {%s}\n", data->argv[i++]);
 	init_exec(data);
 	ft_putstr_fd("\nbasic end\n", 0);
 	getchar();

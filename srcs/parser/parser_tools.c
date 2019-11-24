@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 11:21:46 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/22 12:42:30 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/23 18:52:50 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_lstadd_back(t_list **alst, t_list *nw)
 	*alst = nw;
 	while (nw)
 	{
-//		ft_printf(" -- cur : %s\n", nw->content);
+//		ft_printf("\ncur : %s\n", nw->content);
 		nw = nw->next;
 	}
 }

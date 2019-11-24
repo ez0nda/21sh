@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 14:10:17 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/10 15:41:22 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/23 19:42:03 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	remove_var(t_var *data, int index)
 	char	*home_tmp;
 	char	**tmp;
 
-	home_tmp = ft_strdup(data->home);
+	home_tmp = ft_strdup(get_var("HOME=", data->environ));
 	free(data->environ[index]);
 	while (data->environ[index])
 	{
@@ -28,7 +28,7 @@ static int	remove_var(t_var *data, int index)
 	free_tab(data->environ);
 	data->environ = ft_tabdup(tmp, 0);
 	free_tab(tmp);
-	data->home = ft_strcpy(data->home, home_tmp);
+//	data->home = ft_strcpy(data->home, home_tmp);
 	free(home_tmp);
 	return (1);
 }

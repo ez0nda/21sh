@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/20 11:21:38 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/23 22:56:48 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void		print_prompt(t_var *data)
 		ft_putstr("> ");
 	else
 	{
+	//	ft_printf("\nhere\n");
 		TERMCAP("md");
 		data->std_prompt = 1;
 		ft_putstr("21sh $> ");
@@ -70,8 +71,8 @@ void			prompt(t_var *data)
 	TERMCAP("cd");
 //	ft_printf("ret: %d\n", tputs(tgetstr("cd", NULL), 1, ft_putchar_v2));
 	print_prompt(data);
-	if (data->quotes % 2 == 0 && data->dquotes % 2 == 0)
-		print_str(data);
+//	if (data->quotes % 2 == 0 && data->dquotes % 2 == 0)
+	print_str(data);
 	data->pos = tmp;
 	get_curs_pos(data, data->pos);
 //	ft_printf("-- pos : %d\n", data->pos);

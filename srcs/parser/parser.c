@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:34:02 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/16 03:28:35 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/23 19:32:20 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cmd		*parse_redir(t_cmd *cmd, char **p, char *end)
 	{
 		if ((**p == '1' || **p == '2') && (*p)[1] != '>' && (*p)[1] != '<')
 		{
-		//	ft_printf("\nBREAK, **p:%c, (*p)[1]:%c\n", **p, (*p)[1]);
+//			ft_printf("\nBREAK, **p:%c, (*p)[1]:%c\n", **p, (*p)[1]);
 			break ;
 		}
 		tok = tokenizer(p, end, 0, 0);
