@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/23 23:55:52 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/26 05:42:29 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void		get_key(t_var *data, char *buffer)
 	get_copy_paste(data, buffer);
 }
 
-void			get_last_pipe(t_var *data, int index)
+void			pipe_prompt(t_var *data, int index)
 {
 	char buffer[6];
 
@@ -116,7 +116,7 @@ void			join_cmds(t_var *data, int index)
 	}
 }
 
-void			new_line(t_var *data)
+void			new_promt(t_var *data)
 {
 	char buffer[6];
 
@@ -144,7 +144,7 @@ void			new_line(t_var *data)
 		{
 			rm_char(data->here_stock, '\\');
 			data->cmds[ft_tablen(data->cmds) - 1] = ft_strdup(data->here_stock);
-			check_last_char(data);
+			check_first_last_char(data, 1);
 			break ;
 		}
 		get_key(data, buffer);
@@ -162,7 +162,6 @@ void			check_single_pipes(t_var *data)
 
 	i = 0;
 	len = 0;
-	last_cmd = 0;
 	last_cmd = ft_tablen(data->cmds) - 1;
 	while (i <= last_cmd)
 	{
@@ -175,22 +174,76 @@ void			check_single_pipes(t_var *data)
 		else
 			i++;
 	}
-	if (data->cmds[last_cmd][len] == '|')
+//	ft_printf("\nlast_cmd : |%s| - len : %d\n", data->cmds[last_cmd], len);
+	if (data->cmds[last_cmd] && data->cmds[last_cmd][len] == '|')
 	{
 		ft_putchar('\n');
-		get_last_pipe(data, last_cmd);
+		pipe_prompt(data, last_cmd);
 	}
 }
 
-void			check_last_char(t_var *data)
+void			cursh_prompt(t_var *data)
+{
+	int i = 0;
+	char buffer[6];
+
+	data->c_prompt = 1;
+	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+	while (1)
+	{
+		prompt(data);
+		update_data(0, data);
+		ft_bzero(buffer, 6);
+		get_winsize(data);
+		check_overflow(data);
+		read(0, &buffer, sizeof(buffer));
+		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
+		{
+			ft_putchar(buffer[0]);
+			add_to_here_stock(buffer[0], data);
+			data->lex_str = ft_strjoin(data->lex_str, &buffer[0]);
+	//		add_to_string(buffer[0], data);
+			data->pos = ft_strlen(data->lex_str);
+			data->char_count++;
+		}
+		if (!ft_strcmp(buffer, RET))
+		{
+//			ft_printf("\nstr : |%s|\n", data->lex_str);
+			if (data->lex_str[ft_strlen(data->lex_str) - 1] == '}')
+			{
+//				ft_printf("\nstock : |%s|\n", data->here_stock);
+//				ft_printf("\nstr : |%s|\n", data->lex_str);
+				break ;
+			}
+			add_to_here_stock(';', data);
+	//		check_first_last_char(data);
+			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+			ft_putchar('\n');
+		}
+		get_key(data, buffer);
+	}
+	free(data->lex_str);
+	data->lex_str = ft_strdup(data->here_stock);
+	rm_char(data->lex_str, '}');
+	ft_bzero(data->here_stock, ft_strlen(data->here_stock));
+	data->c_prompt = 0;
+
+}
+
+void			check_first_last_char(t_var *data, int mod)
 {
 	int len;
 
 	len = ft_strlen(data->lex_str) - 1;
-	if (data->lex_str[len] == 92)
+	if (data->lex_str[0] == '{' && data->lex_str[1] == '\0' && mod == 0)
 	{
 		ft_putchar('\n');
-		new_line(data);
+		cursh_prompt(data);
+	}
+	if (data->lex_str[len] == 92 && mod == 1)
+	{
+		ft_putchar('\n');
+		new_promt(data);
 	}
 }
 
@@ -199,9 +252,13 @@ void			launch_cmds(t_var *data)
 	t_cmd	*cmd;
 
 	data->cmd_index = 0;
+	check_first_last_char(data, 0);
 	data->cmds = ft_strsplit(data->lex_str, ';');
+//	int i = 0;
+//	while (data->cmds[i])
+//		ft_printf("\ncmd : |%s|\n", data->cmds[i++]);
 	check_single_pipes(data);
-	check_last_char(data);
+	check_first_last_char(data, 1);
 	while (data->cmds[data->cmd_index])
 	{
 		cmd = shell_parser(data->cmds[data->cmd_index]);

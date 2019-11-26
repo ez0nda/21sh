@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:34:02 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/23 19:32:20 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/26 02:38:00 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,41 @@ t_cmd		*parse_redir(t_cmd *cmd, char **p, char *end)
 		tok = tokenizer(p, end, 0, 0);
 		tokenizer(p, end, &q, &eq);
 		if ((f = ft_strndup(q, eq - q + 1)) && tok == '<')
+		{
+//			ft_printf("\nparse_redir >> file : %s\n", f);
+//			getchar();
 			cmd = parse_redir_cmd(cmd, f, M_READ, 0);
+		}
 		if (tok == '>')
 		{
-	//		ft_printf("\nparse_redir file : %s\n", f);
+//			ft_printf("\nparse_redir > file : %s\n", f);
+//			getchar();
 			cmd = parse_redir_cmd(cmd, f, M_WRITE_TRUNC, 1);
 		}
 		if (tok == '+')
+		{
+//			ft_printf("\nparse_redir + file : %s\n", f);
+//			getchar();
 			cmd = parse_redir_cmd(cmd, f, M_WRITE_APPEND, 1);
+		}
 		if (tok == '=')
+		{
+//			ft_printf("\nparse_redir = file : %s\n", f);
+//			getchar();
 			cmd = parse_redir_cmd(cmd, f, M_READ_APPEND, 0);
+		}
 		if (tok == '*')
+		{
+//			ft_printf("\nparse_redir >> file : %s\n", f);
+//			getchar();
 			cmd = parse_redir_cmd(cmd, f, M_WRITE_TRUNC, 2);
+		}
 		if (tok == '/')
+		{
+//			ft_printf("\nparse_redir >> file : %s\n", f);
+//			getchar();
 			cmd = parse_redir_cmd(cmd, f, M_WRITE_APPEND, 2);
+		}
 	}
 	return (cmd);
 }
@@ -55,6 +76,8 @@ t_cmd		*parse_basic(char **p_input, char *end, int *res)
 	t_exec_cmd		*cmd;
 	t_cmd			*ret;
 
+//	ft_printf("\nparse_basic\n");
+//	getchar();
 	ret = parse_basic_cmd();
 	cmd = (t_exec_cmd *)ret;
 	cmd->argv = NULL;

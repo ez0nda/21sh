@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/23 22:56:48 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/26 03:44:50 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static void		print_prompt(t_var *data)
 		ft_putstr("heredoc> ");
 	else if (data->n_prompt == 1)
 		ft_putstr("> ");
+	else if (data->c_prompt == 1)
+		ft_putstr("cursh> ");
 	else
 	{
 	//	ft_printf("\nhere\n");
@@ -67,6 +69,8 @@ void			prompt(t_var *data)
 		data->pos = -10;
 	else if (data->n_prompt == 1)
 		data->pos = -3;
+	else if (data->c_prompt == 1)
+		data->pos = -8;
 	get_curs_pos(data, data->pos);
 	TERMCAP("cd");
 //	ft_printf("ret: %d\n", tputs(tgetstr("cd", NULL), 1, ft_putchar_v2));

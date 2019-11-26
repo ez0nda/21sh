@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:44:48 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/20 07:41:57 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/11/26 03:43:32 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	init_shell(t_var *data)
 	data->p_prompt = 0;
 	data->h_prompt = 0;
 	data->n_prompt = 0;
+	data->c_prompt = 0;
 	if (!(data->lex_str = (char*)malloc(sizeof(char) * BUFF_SHELL)))
 			return ;
 	if (!(data->history = (char**)malloc(sizeof(char*) * BUFF_SHELL)))
