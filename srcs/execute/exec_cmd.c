@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 13:44:52 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/23 19:32:53 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/12/02 06:07:40 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ static void		execute(char **bin_path, pid_t pid, t_var *data)
 			if (access(path, X_OK) != -1 && pid == 0)
 			{
 		//		ft_putstr_fd(" -- EXECVE\n", STDIN_FILENO);
+	//			int j = 0;
+	//			while (data->argv[j])
+	//				ft_printf("\nargv : {%s}\n", data->argv[j++]);
 				execve(path, data->argv, data->environ);
 			}
 			free(path);

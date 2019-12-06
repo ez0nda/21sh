@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/26 05:11:11 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/12/05 23:59:43 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ typedef struct	s_var
 	char	*here_stock;
 	int		cat_here;
 	char	*files;
+	int test;
+	char **stock_test;
+	int redir_count;
 }				t_var;
 
 void			get_input(t_var *data);
