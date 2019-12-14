@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:21:59 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/23 22:49:34 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/12/10 07:10:56 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	add_to_history(t_var *data)
 	while (is_whitespaces(data->lex_str[i]))
 		i++;
 	if (i == ft_strlen(data->lex_str))
-		return;
+		return ;
 	i = 0;
 	if (!data->history[0])
 		data->history[i] = ft_strdup(data->lex_str);
@@ -58,17 +58,13 @@ void	show_history(t_var *data, int mod)
 	}
 	else
 	{
-//		ft_printf("\nmod 2 - str : {%s}\n", data->history[i]);
 		i--;
 		if (!data->history[i])
 		{
 			i++;
 			if (i == 0)
-			{
-				//ft_printf("\nhere\n");
 				ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-	//			prompt(data);
-			}
+			TERMCAP("cl");
 			data->pos = ft_strlen(data->lex_str);
 			prompt(data);
 			return ;
@@ -76,12 +72,7 @@ void	show_history(t_var *data, int mod)
 		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 		data->lex_str = ft_strcpy(data->lex_str, data->history[i]);
 	}
-//	if (i == 0)
-//		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-	data->pos = -9;
-	TERMCAP("cd");
+	TERMCAP("cl");
 	data->pos = ft_strlen(data->lex_str);
-//	ft_printf("\nlen : %d - pos : %d\n", ft_strlen(data->lex_str), data->pos);
 	prompt(data);
-//	data->pos = 0;
 }

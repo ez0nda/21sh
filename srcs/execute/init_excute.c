@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:55:06 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/16 05:12:54 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/12/14 09:59:50 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 int		is_builtin(t_var *data, char **cmd)
 {
 	if (!ft_strcmp(cmd[0], "exit"))
-	{
 		exit_shell(data);
-//		tcsetattr(0, TCSANOW, &og_term);
-//		exit(cmd[1] ? ft_atoi(cmd[1]) : 0);
-	}
 	else if (!ft_strcmp(cmd[0], "cd"))
 		return (cd_builtin(data, cmd));
 	else if (!ft_strcmp(cmd[0], "env"))
@@ -59,7 +55,6 @@ void	init_exec(t_var *data)
 
 	path = get_var("PATH=", data->environ);
 	bin_path = ft_strsplit(path, ':');
-//	ft_printf("CMDINDEX : %d\n", data->cmd_index);
 	if (data->cmd_index == 0)
 		ft_putchar_fd('\n', 0);
 	if (!check_exe(data, data->cmds[data->cmd_index]))

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/12/05 23:59:43 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/12/14 10:34:24 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,11 @@ void			get_last_pipe(t_var *data, int index);
 void			add_to_here_stock(char c, t_var *data);
 void			check_first_last_char(t_var *data, int mod);
 char			*rm_char(char *str, char c);
+void			rm_herend(t_var *data);
 
+void			new_prompt(t_var *data);
+void			cursh_prompt(t_var *data);
+void			pipe_prompt(t_var *data, int index);
+void			heredoc_prompt(t_var *data);
 
 #endif

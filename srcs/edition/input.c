@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/12/02 07:25:11 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/12/14 10:29:28 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void		get_copy_paste(t_var *data, char *buffer)
 	}
 }
 
-void		get_key(t_var *data, char *buffer)
+void			get_key(t_var *data, char *buffer)
 {
 	if (!ft_strcmp(buffer, KEY_L))
 		move_left(data);
@@ -75,83 +75,16 @@ void		get_key(t_var *data, char *buffer)
 	get_copy_paste(data, buffer);
 }
 
-void			pipe_prompt(t_var *data, int index)
-{
-	char buffer[6];
-
-	data->p_prompt = 1;
-	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-	prompt(data);
-	while (1)
-	{
-		update_data(0, data);
-		ft_bzero(buffer, 6);
-		get_winsize(data);
-		check_overflow(data);
-		read(0, &buffer, sizeof(buffer));
-		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
-		{
-			ft_putchar(buffer[0]);
-			data->lex_str = ft_strjoin(data->lex_str, &buffer[0]);
-			data->pos = ft_strlen(data->lex_str);
-			data->char_count++;
-		}
-		if (!ft_strcmp(buffer, RET))
-			break ;
-		get_key(data, buffer);
-	}
-	data->cmds[index] = ft_strjoin_free(data->cmds[index], data->lex_str, 0);
-	check_single_pipes(data);
-	data->p_prompt = 0;
-}
-
 void			join_cmds(t_var *data, int index)
 {
-	data->cmds[index] = ft_strjoin_free(data->cmds[index], data->cmds[index + 1], 0);
+	data->cmds[index] = ft_strjoin_free(data->cmds[index],
+		data->cmds[index + 1], 0);
 	index++;
 	while (data->cmds[index])
 	{
 		data->cmds[index] = data->cmds[index + 1];
 		index++;
 	}
-}
-
-void			new_promt(t_var *data)
-{
-	char buffer[6];
-
-	if (!data->n_prompt)
-		data->here_stock = ft_strjoin(data->here_stock, data->lex_str);
-	data->n_prompt = 1;
-	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-	while (1)
-	{
-		prompt(data);
-		update_data(0, data);
-		ft_bzero(buffer, 6);
-		get_winsize(data);
-		check_overflow(data);
-		read(0, &buffer, sizeof(buffer));
-		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
-		{
-			ft_putchar(buffer[0]);
-			add_to_here_stock(buffer[0], data);
-			data->lex_str = ft_strjoin(data->lex_str, &buffer[0]);
-			data->pos = ft_strlen(data->lex_str);
-			data->char_count++;
-		}
-		if (!ft_strcmp(buffer, RET))
-		{
-			rm_char(data->here_stock, '\\');
-			data->cmds[ft_tablen(data->cmds) - 1] = ft_strdup(data->here_stock);
-			check_first_last_char(data, 1);
-			break ;
-		}
-		get_key(data, buffer);
-	}
-	ft_bzero(data->here_stock, ft_strlen(data->here_stock));
-	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-	data->n_prompt = 0;
 }
 
 void			check_single_pipes(t_var *data)
@@ -174,60 +107,11 @@ void			check_single_pipes(t_var *data)
 		else
 			i++;
 	}
-//	ft_printf("\nlast_cmd : |%s| - len : %d\n", data->cmds[last_cmd], len);
 	if (data->cmds[last_cmd] && data->cmds[last_cmd][len] == '|')
 	{
 		ft_putchar('\n');
 		pipe_prompt(data, last_cmd);
 	}
-}
-
-void			cursh_prompt(t_var *data)
-{
-	int i = 0;
-	char buffer[6];
-
-	data->c_prompt = 1;
-	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-	while (1)
-	{
-		prompt(data);
-		update_data(0, data);
-		ft_bzero(buffer, 6);
-		get_winsize(data);
-		check_overflow(data);
-		read(0, &buffer, sizeof(buffer));
-		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
-		{
-			ft_putchar(buffer[0]);
-			add_to_here_stock(buffer[0], data);
-			data->lex_str = ft_strjoin(data->lex_str, &buffer[0]);
-	//		add_to_string(buffer[0], data);
-			data->pos = ft_strlen(data->lex_str);
-			data->char_count++;
-		}
-		if (!ft_strcmp(buffer, RET))
-		{
-//			ft_printf("\nstr : |%s|\n", data->lex_str);
-			if (data->lex_str[ft_strlen(data->lex_str) - 1] == '}')
-			{
-//				ft_printf("\nstock : |%s|\n", data->here_stock);
-//				ft_printf("\nstr : |%s|\n", data->lex_str);
-				break ;
-			}
-			add_to_here_stock(';', data);
-	//		check_first_last_char(data);
-			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-			ft_putchar('\n');
-		}
-		get_key(data, buffer);
-	}
-	free(data->lex_str);
-	data->lex_str = ft_strdup(data->here_stock);
-	rm_char(data->lex_str, '}');
-	ft_bzero(data->here_stock, ft_strlen(data->here_stock));
-	data->c_prompt = 0;
-
 }
 
 void			check_first_last_char(t_var *data, int mod)
@@ -243,7 +127,7 @@ void			check_first_last_char(t_var *data, int mod)
 	if (data->lex_str[len] == 92 && mod == 1)
 	{
 		ft_putchar('\n');
-		new_promt(data);
+		new_prompt(data);
 	}
 }
 
@@ -254,9 +138,6 @@ void			launch_cmds(t_var *data)
 	data->cmd_index = 0;
 	check_first_last_char(data, 0);
 	data->cmds = ft_strsplit(data->lex_str, ';');
-//	int i = 0;
-//	while (data->cmds[i])
-//		ft_printf("\ncmd : |%s|\n", data->cmds[i++]);
 	check_single_pipes(data);
 	check_first_last_char(data, 1);
 	while (data->cmds[data->cmd_index])

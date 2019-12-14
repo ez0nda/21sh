@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 13:44:52 by ezonda            #+#    #+#             */
-/*   Updated: 2019/12/02 06:07:40 by ezonda           ###   ########.fr       */
+/*   Updated: 2019/12/14 09:55:26 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ static void		execute(char **bin_path, pid_t pid, t_var *data)
 	char	*path;
 
 	i = 0;
-//	ft_printf("\n\nin exec - pid : %d\n\n", pid);
-//	ft_printf("\nHERE\n");
-//	while (data->argv[i])
-//		ft_printf("\nargv : %s\n", data->argv[i++]);
 	if (bin_path != NULL)
 	{
 		while (bin_path[i])
@@ -31,13 +27,7 @@ static void		execute(char **bin_path, pid_t pid, t_var *data)
 			else
 				path = ft_strdup(data->argv[0]);
 			if (access(path, X_OK) != -1 && pid == 0)
-			{
-		//		ft_putstr_fd(" -- EXECVE\n", STDIN_FILENO);
-	//			int j = 0;
-	//			while (data->argv[j])
-	//				ft_printf("\nargv : {%s}\n", data->argv[j++]);
 				execve(path, data->argv, data->environ);
-			}
 			free(path);
 			i++;
 		}
@@ -61,10 +51,8 @@ void			exec_cmd(char **bin_path, t_var *data)
 			data->argv[i] = get_dollar_var(data->argv[i], data);
 		i++;
 	}
-//	ft_printf("\nargv[0]: {%s}\n", data->argv[0]);
 	pid = fork();
 	execute(bin_path, pid, data);
-//	ft_printf("\nhere 2\n");
 	if (pid == 0)
 	{
 		if (data->argv[0][0] != '\n')

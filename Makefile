@@ -6,7 +6,7 @@
 #    By: ezonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/19 11:30:32 by ezonda            #+#    #+#              #
-#    Updated: 2019/10/23 15:30:03 by ezonda           ###   ########.fr        #
+#    Updated: 2019/12/14 10:53:02 by ezonda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC = srcs/core/main.c \
 	  srcs/edition/prompt.c \
 	  srcs/edition/edit.c \
 	  srcs/edition/skip.c \
+	  srcs/edition/subshell.c \
 	  srcs/edition/copy_paste.c \
 	  srcs/edition/edition_tools.c \
 	  srcs/parser/constructors.c \
@@ -29,6 +30,7 @@ SRC = srcs/core/main.c \
 	  srcs/parser/quotes.c \
 	  srcs/execute/exec_cmd.c \
 	  srcs/execute/execute_tools.c \
+	  srcs/execute/file_manage.c \
 	  srcs/execute/init_excute.c \
 	  srcs/execute/cmd_type.c \
 	  srcs/builtins/env.c \
@@ -46,6 +48,7 @@ OBJ = srcs/core/main.o \
 	  srcs/edition/prompt.o \
 	  srcs/edition/edit.o \
 	  srcs/edition/skip.o \
+	  srcs/edition/subshell.o \
 	  srcs/edition/copy_paste.o \
 	  srcs/edition/edition_tools.o \
 	  srcs/parser/constructors.o \
@@ -55,6 +58,7 @@ OBJ = srcs/core/main.o \
 	  srcs/parser/quotes.o \
 	  srcs/execute/exec_cmd.o \
 	  srcs/execute/execute_tools.o \
+	  srcs/execute/file_manage.o \
 	  srcs/execute/init_excute.o \
 	  srcs/execute/cmd_type.o \
 	  srcs/builtins/env.o \
