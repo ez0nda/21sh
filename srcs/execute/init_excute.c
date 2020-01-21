@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:55:06 by ezonda            #+#    #+#             */
-/*   Updated: 2019/12/14 09:59:50 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/21 10:35:40 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		check_exe(t_var *data, char *cmd)
 	char	**split_cmd;
 
 	i = 0;
-	split_cmd = ft_strsplit_ws(cmd);
+	split_cmd = ft_strsplit(cmd, ' ');
 	while (split_cmd[i])
 	{
 		if (split_cmd[i][0] == '$')
@@ -44,6 +44,7 @@ int		check_exe(t_var *data, char *cmd)
 	}
 	if (is_builtin(data, split_cmd))
 		return (1);
+	free_tab(split_cmd);			// fait segfault "CMD"
 	return (0);
 }
 
@@ -58,7 +59,7 @@ void	init_exec(t_var *data)
 	if (data->cmd_index == 0)
 		ft_putchar_fd('\n', 0);
 	if (!check_exe(data, data->cmds[data->cmd_index]))
-	{
 		exec_cmd(bin_path, data);
-	}
+	if (bin_path)
+		free_tab(bin_path);
 }

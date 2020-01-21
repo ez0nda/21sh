@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:44:48 by ezonda            #+#    #+#             */
-/*   Updated: 2019/12/10 07:12:06 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/20 09:56:08 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@ int		ft_putchar_v2(int c)
 	return (c);
 }
 
-void	init_shell(t_var *data)
+void	init_var(t_var *data)
 {
-	int i;
-
-	i = 0;
 	data->pos = 0;
+	data->cat_here = 0;
 	data->char_count = 0;
 	data->in_selection = 0;
 	data->new_history = 0;
@@ -38,8 +36,14 @@ void	init_shell(t_var *data)
 	data->n_prompt = 0;
 	data->c_prompt = 0;
 	data->redir_count = 0;
-	if (!(data->lex_str = (char*)malloc(sizeof(char) * BUFF_SHELL)))
-		return ;
+}
+
+void	init_shell(t_var *data)
+{
+	int i;
+
+	i = 0;
+	init_var(data);
 	if (!(data->history = (char**)malloc(sizeof(char*) * BUFF_SHELL)))
 		return ;
 	if (!(data->selection = (char*)malloc(sizeof(char) * BUFF_SHELL)))
@@ -51,8 +55,6 @@ void	init_shell(t_var *data)
 	if (!(data->here_stock = (char*)malloc(sizeof(char) * BUFF_SHELL)))
 		return ;
 	if (!(data->files = (char*)malloc(sizeof(char) * BUFF_SHELL)))
-		return ;
-	if (!(data->stock_test = (char**)malloc(sizeof(char) * BUFF_SHELL)))
 		return ;
 	while (i < BUFF_SHELL)
 	{

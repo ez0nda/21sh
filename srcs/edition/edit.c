@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 11:36:22 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/12 14:20:16 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/21 09:32:52 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	realloc_str(char c, t_var *data)
 		s1[j++] = data->lex_str[i++];
 	s1[i++] = c;
 	s1[i] = '\0';
+	free(data->lex_str);
 	data->lex_str = ft_strjoin(s1, s2);
 	data->pos++;
 	prompt(data);

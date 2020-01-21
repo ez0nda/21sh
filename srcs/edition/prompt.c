@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2019/12/10 07:11:28 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/21 10:15:10 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void		print_str(t_var *data)
 
 static void		print_prompt(t_var *data)
 {
+	if (!get_var("SHELL=", data->environ))
+		ft_putchar('\n');
 	if (data->quotes % 2 != 0 || data->dquotes % 2 != 0)
 	{
 		data->std_prompt = 0;
@@ -60,6 +62,9 @@ void			prompt(t_var *data)
 	int tmp;
 
 	tmp = data->pos;
+	if (!data->lex_str)
+		if (!(data->lex_str = (char*)malloc(sizeof(char) * BUFF_SHELL)))
+			return ;
 	if (data->p_prompt != 1)
 		data->pos = -9;
 	else if (data->p_prompt == 1)

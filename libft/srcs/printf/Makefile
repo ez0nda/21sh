@@ -1,54 +1,102 @@
 # **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ezonda <marvin@42.fr>                      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/01/16 11:36:59 by ezonda            #+#    #+#              #
-#    Updated: 2019/01/29 16:40:18 by jebrocho         ###   ########.fr        #
-#                                                                              #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2019/01/16 11:36:59 by ezonda       #+#   ##    ##    #+#        #
+#    Updated: 2019/12/28 21:38:05 by dzonda      ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-SRC = ft_printf.c ft_dispatch.c ft_float.c ft_hexa.c ft_indic_csp.c ft_octal.c \
-	ft_parser.c ft_print_numbers.c ft_unsigned.c ft_indic_mod.c ft_flag_u.c \
-	ft_tools.c ft_tools2.c
+SRCDIR = src
+OBJDIR = obj
+INCDIR = includes
 
-LIB_SRC = lib/pf_atoi.c lib/pf_isdigit.c lib/pf_itoa.c lib/pf_putchar.c \
-	lib/pf_putnbr.c lib/pf_putstr.c lib/pf_strnew.c lib/pf_strrev.c \
-	lib/pf_strlen.c lib/pf_strdup.c lib/pf_strcmp.c lib/pf_strsub.c
+MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(NAME)))
+VERBOSE = FALSE
 
-OBJ = $(SRC:.c=.o)
-
-LIB_OBJ = pf_atoi.o pf_isdigit.o pf_itoa.o pf_putchar.o pf_putnbr.o pf_putstr.o\
-		  pf_strnew.o pf_strrev.o pf_strlen.o pf_strdup.o pf_strcmp.o \
-		  pf_strsub.o
-
+AR = ar rcs
 CC = gcc
+CFLAGS = -Wall -Wextra -Werror
 
-FLAGS = -Wall -Wextra -Werror
+SUBDIR = \
+		core \
+		lib
+
+SUBFILE = \
+		core/ft_printf.c \
+		core/ft_dispatch.c \
+		core/ft_float.c \
+		core/ft_hexa.c \
+		core/ft_indic_csp.c \
+		core/ft_octal.c \
+		core/ft_parser.c \
+		core/ft_print_numbers.c \
+		core/ft_unsigned.c \
+		core/ft_indic_mod.c \
+		core/ft_flag_u.c \
+		core/ft_tools.c \
+		core/ft_tools2.c \
+		lib/pf_atoi.c \
+		lib/pf_isdigit.c \
+		lib/pf_itoa.c \
+		lib/pf_putchar.c \
+		lib/pf_putnbr.c \
+		lib/pf_putstr.c \
+		lib/pf_strnew.c \
+		lib/pf_strrev.c \
+		lib/pf_strlen.c \
+		lib/pf_strdup.c \
+		lib/pf_strcmp.c \
+		lib/pf_strsub.c
+
+SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
+OBJDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(OBJDIR)/, $(dir)))
+INCLUDES = -I$(INCDIR)
+
+SRCS = $(foreach file, $(SUBFILE), $(addprefix $(SRCDIR)/, $(file)))
+OBJS = $(subst $(SRCDIR),$(OBJDIR),$(SRCS:.c=.o))
+DEPS = $(OBJS:.o=.d)
+
+ifeq ($(VERBOSE),TRUE)
+	HIDE =  
+else
+	HIDE = @
+endif
+RM = rm -rf
+MKDIR = mkdir -p
+ERRIGNORE = 2>/dev/null
+
+.PHONY: all clean fclean re 
 
 all: $(NAME)
 
-$(NAME):
-	@$(CC) $(FLAGS) -c $(SRC) $(LIB_SRC)
-	@ar rc $(NAME) $(OBJ) $(LIB_OBJ)
-	@ranlib $(NAME)
+$(NAME): $(OBJDIRS) $(OBJS)
+	$(HIDE)echo $(MAKEFILE_NAME): "Linking \t ->" $@
+	$(HIDE)$(AR) $(NAME) $(OBJS)
 
-%.o: %.c
-	$(CC) -o $@ -c $< $(FLAGS) -I./includes
+-include $(DEPS)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@echo $(MAKEFILE_NAME): "Building \t ->" $@
+	$(HIDE)$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ -MMD
+
+$(OBJDIRS):
+	@echo $(MAKEFILE_NAME): "Making \t\t ->" $(OBJDIRS)
+	$(HIDE)$(MKDIR) $(OBJDIRS) $(ERRIGNORE)
 
 clean:
-	@rm -f $(OBJ)
-	@rm -f $(LIB_OBJ)
+	$(HIDE)$(RM) $(OBJDIR) $(ERRIGNORE)
+	@echo $(MAKEFILE_NAME): Clean done !
 
 fclean:
-	@rm -rf $(OBJ)
-	@rm -rf $(LIB_OBJ)
-	@rm -rf $(NAME)
+	$(HIDE)$(RM) $(OBJDIR) $(ERRIGNORE)
+	$(HIDE)$(RM) $(NAME) $(ERRIGNORE)
+	@echo $(MAKEFILE_NAME): Fclean done !
 
 re: fclean all
-
-.PHONY: clean fclean re all

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:13:18 by ezonda            #+#    #+#             */
-/*   Updated: 2019/12/14 10:34:48 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/20 10:30:19 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,5 @@ void		heredoc_prompt(t_var *data)
 		}
 		get_key(data, buffer);
 	}
-	ft_bzero(data->here_stock, ft_strlen(data->here_stock));
 	data->h_prompt = 0;
 }

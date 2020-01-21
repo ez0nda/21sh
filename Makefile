@@ -5,95 +5,114 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ezonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/08/19 11:30:32 by ezonda            #+#    #+#              #
-#    Updated: 2019/12/14 10:53:02 by ezonda           ###   ########.fr        #
+#    Created: 2020/01/21 09:27:41 by ezonda            #+#    #+#              #
+#    Updated: 2020/01/21 09:27:43 by ezonda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 
-SRC = srcs/core/main.c \
-	  srcs/core/signal.c \
-	  srcs/edition/input.c \
-	  srcs/edition/history.c \
-	  srcs/edition/arrows.c \
-	  srcs/edition/prompt.c \
-	  srcs/edition/edit.c \
-	  srcs/edition/skip.c \
-	  srcs/edition/subshell.c \
-	  srcs/edition/copy_paste.c \
-	  srcs/edition/edition_tools.c \
-	  srcs/parser/constructors.c \
-	  srcs/parser/parser.c \
-	  srcs/parser/tokenizer.c \
-	  srcs/parser/parser_tools.c \
-	  srcs/parser/quotes.c \
-	  srcs/execute/exec_cmd.c \
-	  srcs/execute/execute_tools.c \
-	  srcs/execute/file_manage.c \
-	  srcs/execute/init_excute.c \
-	  srcs/execute/cmd_type.c \
-	  srcs/builtins/env.c \
-	  srcs/builtins/setenv.c \
-	  srcs/builtins/unsetenv.c \
-	  srcs/builtins/cd.c \
-	  srcs/builtins/tools.c \
-	  srcs/builtins/echo.c \
+SRCDIR = srcs
+OBJDIR = objs
+INCDIR = includes
+LIBDIR = libft
 
-OBJ = srcs/core/main.o \
-	  srcs/core/signal.o \
-	  srcs/edition/input.o \
-	  srcs/edition/history.o \
-	  srcs/edition/arrows.o \
-	  srcs/edition/prompt.o \
-	  srcs/edition/edit.o \
-	  srcs/edition/skip.o \
-	  srcs/edition/subshell.o \
-	  srcs/edition/copy_paste.o \
-	  srcs/edition/edition_tools.o \
-	  srcs/parser/constructors.o \
-	  srcs/parser/parser.o \
-	  srcs/parser/tokenizer.o \
-	  srcs/parser/parser_tools.o \
-	  srcs/parser/quotes.o \
-	  srcs/execute/exec_cmd.o \
-	  srcs/execute/execute_tools.o \
-	  srcs/execute/file_manage.o \
-	  srcs/execute/init_excute.o \
-	  srcs/execute/cmd_type.o \
-	  srcs/builtins/env.o \
-	  srcs/builtins/setenv.o \
-	  srcs/builtins/unsetenv.o \
-	  srcs/builtins/cd.o \
-	  srcs/builtins/tools.o \
-	  srcs/builtins/echo.o \
-
-LIB = libft/libft.a
+MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(NAME)))
+VERBOSE = FALSE
 
 CC = gcc
+CFLAGS = # -Wall -Wextra -Werror -Wunused -Wunreachable-code
+LDFLAGS = -Llibft 
+LDLIBS = -lft -ltermcap
 
-FLAGS = -Wall -Wextra -Werror -l termcap
+SUBDIR = \
+		core \
+		edition \
+		parser \
+		execute \
+		builtins
 
-all: $(NAME)
+SUBFILE = \
+		core/main.c \
+		core/signal.c \
+		\
+		edition/input.c \
+		edition/history.c \
+		edition/arrows.c \
+		edition/prompt.c \
+		edition/edit.c \
+		edition/skip.c \
+		edition/subshell.c \
+		edition/copy_paste.c \
+		edition/edition_tools.c \
+		\
+		parser/constructors.c \
+		parser/parser.c \
+		parser/tokenizer.c \
+		parser/parser_tools.c \
+		parser/quotes.c \
+		\
+		execute/exec_cmd.c \
+		execute/execute_tools.c \
+		execute/file_manage.c \
+		execute/init_excute.c \
+		execute/cmd_type.c \
+		\
+		builtins/env.c \
+		builtins/setenv.c \
+		builtins/unsetenv.c \
+		builtins/cd.c \
+		builtins/tools.c \
+		builtins/echo.c
 
-$(NAME): $(OBJ) $(LIB)
-	$(CC) $(FLAGS) $(LIB) -I./libft $(OBJ) -I./includes -o $(NAME)
+SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
+OBJDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(OBJDIR)/, $(dir)))
+INCLUDES = -I$(INCDIR)
 
-$(LIB):
-	make -C libft/ fclean
-	make -C libft
+SRCS = $(foreach file, $(SUBFILE), $(addprefix $(SRCDIR)/, $(file)))
+OBJS := $(subst $(SRCDIR),$(OBJDIR),$(SRCS:.c=.o))
+DEPS = $(OBJS:.o=.d)
 
-%.o: %.c
-	$(CC) -o $@ -c $< -I./includes
+ifeq ($(VERBOSE),TRUE)
+	HIDE =  
+else
+	HIDE = @
+endif
+MAKE = make -C
+RM = rm -rf
+MKDIR = mkdir -p
+ERRIGNORE = 2>/dev/null
+
+.PHONY: all clean fclean re lib
+
+all: lib $(NAME)
+
+$(NAME): $(OBJDIRS) $(OBJS)
+	$(HIDE)echo $(MAKEFILE_NAME): "Linking \t ->" $@
+	$(HIDE)$(CC) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
+
+-include $(DEPS)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@echo $(MAKEFILE_NAME): "Building \t ->" $@
+	$(HIDE)$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ -MMD
+
+$(OBJDIRS):
+	@echo $(MAKEFILE_NAME): "Making \t ->" $(OBJDIRS)
+	$(HIDE)$(MKDIR) $(OBJDIRS) $(ERRIGNORE)
+
+lib:
+	$(HIDE)$(MAKE) $(LIBDIR)
 
 clean:
-	make -C libft/ clean
-	rm -rf $(OBJ)
+	$(HIDE)$(MAKE) $(LIBDIR) clean
+	$(HIDE)$(RM) $(OBJDIR) $(ERRIGNORE)
+	@echo $(MAKEFILE_NAME): Clean done !
 
-fclean: clean
-	make -C libft/ fclean
-	rm -rf $(NAME)
+fclean:
+	$(HIDE)$(MAKE) $(LIBDIR) fclean
+	$(HIDE)$(RM) $(OBJDIR) $(ERRIGNORE)
+	$(HIDE)$(RM) $(NAME) $(ERRIGNORE)
+	@echo $(MAKEFILE_NAME): Fclean done !
 
 re: fclean all
-
-.PHONY: clean fclean re all

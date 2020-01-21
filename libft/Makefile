@@ -1,198 +1,167 @@
 # **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ezonda <marvin@42.fr>                      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/11/12 09:46:09 by ezonda            #+#    #+#              #
-#    Updated: 2019/08/29 11:41:22 by ezonda           ###   ########.fr        #
-#                                                                              #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2018/11/12 09:46:09 by ezonda       #+#   ##    ##    #+#        #
+#    Updated: 2019/12/28 21:42:57 by dzonda      ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
 # **************************************************************************** #
 
 NAME = libft.a
 
-NAME2 = srcs/printf/libftprintf.a
+LIBPRINTF = srcs/printf/libftprintf.a
 
-SRC = srcs/convert/ft_atoi.c \
-	  srcs/convert/ft_itoa.c \
-	  srcs/convert/ft_tolower.c \
-	  srcs/convert/ft_toupper.c \
-	  \
-	  srcs/display/ft_print_words_tables.c \
-	  srcs/display/ft_putchar.c \
-	  srcs/display/ft_putchar_fd.c \
-	  srcs/display/ft_putendl.c \
-	  srcs/display/ft_putendl_fd.c \
-	  srcs/display/ft_putnbr.c \
-	  srcs/display/ft_putnbr_fd.c \
-	  srcs/display/ft_putstr.c \
-	  srcs/display/ft_putstr_fd.c \
-	  \
-	  srcs/get_next_line/get_next_line.c \
-	  \
-	  srcs/is/ft_is_prime.c \
-	  srcs/is/ft_isalnum.c \
-	  srcs/is/ft_isalpha.c \
-	  srcs/is/ft_isascii.c \
-	  srcs/is/ft_isdigit.c \
-	  srcs/is/ft_isprint.c \
-		srcs/is/ft_is_dir.c \
-	  \
-	  srcs/lst/ft_lstadd.c \
-	  srcs/lst/ft_lstdel.c \
-	  srcs/lst/ft_lstdelone.c \
-	  srcs/lst/ft_lstiter.c \
-	  srcs/lst/ft_lstmap.c \
-	  srcs/lst/ft_lstnew.c \
-	  \
-	  srcs/math/ft_recursive_power.c \
-	  srcs/math/ft_sqrt.c \
-	  \
-	  srcs/memory/ft_bzero.c \
-	  srcs/memory/ft_memalloc.c \
-	  srcs/memory/ft_memccpy.c \
-	  srcs/memory/ft_memchr.c \
-	  srcs/memory/ft_memcmp.c \
-	  srcs/memory/ft_memcpy.c \
-	  srcs/memory/ft_memdel.c \
-	  srcs/memory/ft_memmove.c \
-	  srcs/memory/ft_memset.c \
-	  \
-	  srcs/string/ft_strcat.c \
-	  srcs/string/ft_strchr.c \
-	  srcs/string/ft_strclr.c \
-	  srcs/string/ft_strcmp.c \
-	  srcs/string/ft_strcpy.c \
-	  srcs/string/ft_strdel.c \
-	  srcs/string/ft_strdup.c \
-		srcs/string/ft_strndup.c \
-	  srcs/string/ft_strequ.c \
-	  srcs/string/ft_striter.c \
-	  srcs/string/ft_striteri.c \
-	  srcs/string/ft_strjoin.c \
-		srcs/string/ft_strjoin_free.c \
-	  srcs/string/ft_strlcat.c \
-	  srcs/string/ft_strlen.c \
-	  srcs/string/ft_strmap.c \
-	  srcs/string/ft_strmapi.c \
-	  srcs/string/ft_strncat.c \
-	  srcs/string/ft_strncmp.c \
-	  srcs/string/ft_strncpy.c \
-	  srcs/string/ft_strnequ.c \
-	  srcs/string/ft_strnew.c \
-	  srcs/string/ft_strnstr.c \
-	  srcs/string/ft_strrchr.c \
-	  srcs/string/ft_strrev.c \
-	  srcs/string/ft_strsplit.c \
-	  srcs/string/ft_split_ws.c \
-		srcs/string/ft_split.c \
-	  srcs/string/ft_strstr.c \
-	  srcs/string/ft_strsub.c \
-	  srcs/string/ft_strtrim.c \
+SRCDIR = srcs
+OBJDIR = objs
+INCDIR = includes
 
-# OBJ = $(SRC:.c=.o)
+MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(NAME)))
+VERBOSE = FALSE
 
-OBJ = ft_atoi.o \
-	  ft_itoa.o \
-	  ft_tolower.o \
-	  ft_toupper.o \
-	  \
-	  ft_print_words_tables.o \
-	  ft_putchar.o \
-	  ft_putchar_fd.o \
-	  ft_putendl.o \
-	  ft_putendl_fd.o \
-	  ft_putnbr.o \
-	  ft_putnbr_fd.o \
-	  ft_putstr.o \
-	  ft_putstr_fd.o \
-	  \
-	  get_next_line.o \
-	  \
-	  ft_is_prime.o \
-		ft_is_dir.o \
-	  ft_isalnum.o \
-	  ft_isalpha.o \
-	  ft_isascii.o \
-	  ft_isdigit.o \
-	  ft_isprint.o \
-	  \
-	  ft_lstadd.o \
-	  ft_lstdel.o \
-	  ft_lstdelone.o \
-	  ft_lstiter.o \
-	  ft_lstmap.o \
-	  ft_lstnew.o \
-	  \
-	  ft_recursive_power.o \
-	  ft_sqrt.o \
-	  \
-	  ft_bzero.o \
-	  ft_memalloc.o \
-	  ft_memccpy.o \
-	  ft_memchr.o \
-	  ft_memcmp.o \
-	  ft_memcpy.o \
-	  ft_memdel.o \
-	  ft_memmove.o \
-	  ft_memset.o \
-	  \
-	  ft_strcat.o \
-	  ft_strchr.o \
-	  ft_strclr.o \
-	  ft_strcmp.o \
-	  ft_strcpy.o \
-	  ft_strdel.o \
-	  ft_strdup.o \
-		ft_strndup.o \
-	  ft_strequ.o \
-	  ft_striter.o \
-	  ft_striteri.o \
-	  ft_strjoin.o \
-		ft_strjoin_free.o \
-	  ft_strlcat.o \
-	  ft_strlen.o \
-	  ft_strmap.o \
-	  ft_strmapi.o \
-	  ft_strncat.o \
-	  ft_strncmp.o \
-	  ft_strncpy.o \
-	  ft_strnequ.o \
-	  ft_strnew.o \
-	  ft_strnstr.o \
-	  ft_strrchr.o \
-	  ft_strrev.o \
-	  ft_strsplit.o \
-	  ft_split_ws.o \
-		ft_split.o \
-	  ft_strstr.o \
-	  ft_strsub.o \
-	  ft_strtrim.o \
-
-
+AR = ar rcs
+LIBTOOL = libtool -static
 CC = gcc
+CFLAGS = -Wall -Wextra -Werror
 
-FLAGS = -Wall -Wextra -Werror
+SUBDIR = \
+		convert \
+		display \
+		get_next_line \
+		is \
+		lst \
+		math \
+		memory \
+		string
+
+SUBFILE = \
+		convert/ft_atoi.c \
+		convert/ft_itoa.c \
+		convert/ft_tolower.c \
+		convert/ft_toupper.c \
+		\
+		display/ft_print_words_tables.c \
+		display/ft_putchar.c \
+		display/ft_putchar_fd.c \
+		display/ft_putendl.c \
+		display/ft_putendl_fd.c \
+		display/ft_putnbr.c \
+		display/ft_putnbr_fd.c \
+		display/ft_putstr.c \
+		display/ft_putstr_fd.c \
+		\
+		get_next_line/get_next_line.c \
+		\
+		is/ft_is_prime.c \
+		is/ft_isalnum.c \
+		is/ft_isalpha.c \
+		is/ft_isascii.c \
+		is/ft_isdigit.c \
+		is/ft_isprint.c \
+		is/ft_is_dir.c \
+		\
+		lst/ft_lstadd.c \
+		lst/ft_lstdel.c \
+		lst/ft_lstdelone.c \
+		lst/ft_lstiter.c \
+		lst/ft_lstmap.c \
+		lst/ft_lstnew.c \
+		\
+		math/ft_recursive_power.c \
+		math/ft_sqrt.c \
+		\
+		memory/ft_bzero.c \
+		memory/ft_memalloc.c \
+		memory/ft_memccpy.c \
+		memory/ft_memchr.c \
+		memory/ft_memcmp.c \
+		memory/ft_memcpy.c \
+		memory/ft_memdel.c \
+		memory/ft_memmove.c \
+		memory/ft_memset.c \
+		\
+		string/ft_strcat.c \
+		string/ft_strchr.c \
+		string/ft_strclr.c \
+		string/ft_strcmp.c \
+		string/ft_strcpy.c \
+		string/ft_strdel.c \
+		string/ft_strdup.c \
+		string/ft_strndup.c \
+		string/ft_strequ.c \
+		string/ft_striter.c \
+		string/ft_striteri.c \
+		string/ft_strjoin.c \
+		string/ft_strjoin_free.c \
+		string/ft_strlcat.c \
+		string/ft_strlen.c \
+		string/ft_strmap.c \
+		string/ft_strmapi.c \
+		string/ft_strncat.c \
+		string/ft_strncmp.c \
+		string/ft_strncpy.c \
+		string/ft_strnequ.c \
+		string/ft_strnew.c \
+		string/ft_strnstr.c \
+		string/ft_strrchr.c \
+		string/ft_strrev.c \
+		string/ft_strsplit.c \
+		string/ft_split_ws.c \
+		string/ft_split.c \
+		string/ft_strstr.c \
+		string/ft_strsub.c \
+		string/ft_strtrim.c
+
+SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
+OBJDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(OBJDIR)/, $(dir)))
+INCLUDES = -I$(INCDIR)
+
+SRCS = $(foreach file, $(SUBFILE), $(addprefix $(SRCDIR)/, $(file)))
+OBJS = $(subst $(SRCDIR),$(OBJDIR),$(SRCS:.c=.o))
+DEPS = $(OBJS:.o=.d)
+
+ifeq ($(VERBOSE),TRUE)
+	HIDE =  
+else
+	HIDE = @
+endif
+RM = rm -rf
+MKDIR = mkdir -p
+ERRIGNORE = 2>/dev/null
+
+.PHONY: all clean fclean re 
 
 all: $(NAME)
 
-$(NAME):
-	@$(CC) $(FLAGS) -c $(SRC)
-	@make -C srcs/printf/
-	@ar rc $(NAME) $(OBJ)
-	@ranlib $(NAME)
-	@libtool -static -o $(NAME) $(NAME) $(NAME2)
+$(NAME): $(OBJDIRS) $(OBJS)
+	$(HIDE)echo $(MAKEFILE_NAME): "Linking \t ->" $@
+	$(HIDE)$(AR) $(NAME) $(OBJS)
+	$(HIDE)echo $(MAKEFILE_NAME): "Linking \t ->" $@ $(LIBPRINTF)
+	$(HIDE)$(MAKE) -C srcs/printf
+	$(HIDE)$(LIBTOOL) -o $(NAME) $(NAME) $(LIBPRINTF)
 
-%.o: %.c
-	@$(CC) $(FLAGS) $@ -c $< $(FLAGS)
+-include $(DEPS)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@echo $(MAKEFILE_NAME): "Building \t ->" $@
+	$(HIDE)$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ -MMD
+
+$(OBJDIRS):
+	@echo $(MAKEFILE_NAME): "Making \t ->" $(OBJDIRS)
+	$(HIDE)$(MKDIR) $(OBJDIRS) $(ERRIGNORE)
 
 clean:
-	@make clean -C srcs/printf/
-	@rm -f $(OBJ)
+	$(HIDE)$(RM) $(OBJDIR) $(ERRIGNORE)
+	$(HIDE)$(MAKE) -C srcs/printf clean
+	@echo $(MAKEFILE_NAME): Clean done !
 
-fclean: clean
-	@make fclean -C srcs/printf/
-	@rm -f $(NAME)
+fclean:
+	$(HIDE)$(RM) $(OBJDIR) $(ERRIGNORE)
+	$(HIDE)$(RM) $(NAME) $(ERRIGNORE)
+	$(HIDE)$(MAKE) -C srcs/printf fclean
+ 	@echo $(MAKEFILE_NAME): Fclean done !
 
 re: fclean all

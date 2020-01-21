@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2019/12/14 10:29:28 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/21 13:07:01 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,37 @@ void			check_first_last_char(t_var *data, int mod)
 	}
 }
 
+int				parse_error_pipe(t_var *data)
+{
+	int i;
+
+	i = 0;
+	while (data->lex_str[i] == '|' || data->lex_str[i] == ';')
+		i++;
+	if (i == ft_strlen(data->lex_str))
+	{
+		ft_putstr_fd("\n21sh: parse error near `", 2);
+		ft_putchar_fd(data->lex_str[0], 2);
+		ft_putchar_fd(data->lex_str[1], 2);
+		ft_putstr_fd("'\n", 2);
+		return (1);
+	}
+	return (0);
+}
+
 void			launch_cmds(t_var *data)
 {
 	t_cmd	*cmd;
 
+//	ft_printf("\n1\n");
+//	getchar();
 	data->cmd_index = 0;
+	if (parse_error_pipe(data))
+	{
+		data->pos = 0;
+		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+		return ;
+	}
 	check_first_last_char(data, 0);
 	data->cmds = ft_strsplit(data->lex_str, ';');
 	check_single_pipes(data);
@@ -145,10 +171,28 @@ void			launch_cmds(t_var *data)
 		cmd = shell_parser(data->cmds[data->cmd_index]);
 		get_cmd_type(cmd, data);
 		data->cmd_index++;
+//		free(&cmd->type);       // or free(cmd) ?
 	}
 	data->pos = 0;
-	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+	if (data->lex_str)
+		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 	free_tab(data->cmds);
+//	ft_printf("\n2\n");
+//	getchar();
+}
+
+void			init_cmds(t_var *data)
+{
+	if (ft_strlen(data->lex_str) != 0)
+	{
+		if (check_quotes(data) == 1)
+			read_quotes(data);
+		add_to_history(data);
+		launch_cmds(data);
+	}
+	else
+		ft_putchar('\n');
+	prompt(data);
 }
 
 void			get_input(t_var *data)
@@ -158,6 +202,9 @@ void			get_input(t_var *data)
 	prompt(data);
 	while (1)
 	{
+		if (!data->lex_str)
+			if (!(data->lex_str = (char*)malloc(sizeof(char) * BUFF_SHELL)))
+				return ;
 		update_data(0, data);
 		ft_bzero(buffer, 6);
 		get_winsize(data);
@@ -170,18 +217,7 @@ void			get_input(t_var *data)
 			data->char_count++;
 		}
 		if (!ft_strcmp(buffer, RET))
-		{
-			if (ft_strlen(data->lex_str) != 0)
-			{
-				if (check_quotes(data) == 1)
-					read_quotes(data);
-				add_to_history(data);
-				launch_cmds(data);
-			}
-			else
-				ft_putchar('\n');
-			prompt(data);
-		}
+			init_cmds(data);
 		get_key(data, buffer);
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 11:21:46 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/23 18:52:50 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/20 10:53:27 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/core.h"
 
-int	strings_scan_whitespaces(
+int		strings_scan_whitespaces(
 	char **p_input, char *end, char *search)
 {
 	char *tmp;
@@ -24,7 +24,7 @@ int	strings_scan_whitespaces(
 	return (*tmp && ft_strchr(search, *tmp));
 }
 
-int	strings_scan_pipes(char **p_input, char *end,
+int		strings_scan_pipes(char **p_input, char *end,
 	char **new_cmd, char **new_cmd_end)
 {
 	char *tmp;
@@ -37,14 +37,13 @@ int	strings_scan_pipes(char **p_input, char *end,
 		tmp++;
 	*new_cmd_end = tmp;
 	*p_input = tmp;
-//	ft_printf("\np_input: {%s}\n", *p_input);
 	return (tmp != end);
 }
 
 char	*ft_strndup(const char *s1, size_t n)
 {
-	char *s2;
-	size_t i;
+	char	*s2;
+	size_t	i;
 
 	i = 0;
 	if (!(s2 = (char*)malloc(sizeof(char) * (ft_strlen(s1) + 1))))
@@ -75,15 +74,12 @@ void	ft_lstadd_back(t_list **alst, t_list *nw)
 		alst = &(*alst)->next;
 	*alst = nw;
 	while (nw)
-	{
-//		ft_printf("\ncur : %s\n", nw->content);
 		nw = nw->next;
-	}
 }
 
 int		is_whitespaces(char c)
 {
-	if (c == ' ' || c == '\r' || c == '\t' || c == '\n')
+	if (c == ' ' || c == '\r' || c == '\t' || c == '\n' || c == ';' || c == '|')
 		return (1);
 	return (0);
 }
