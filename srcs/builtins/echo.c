@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 10:32:18 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/12 11:01:37 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/13 14:07:55 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,12 @@ int		print_echo(char **cmd, int i)
 	
 		if (cmd[i][k] == '\\' && cmd[i][k + 1] == 'n')
 		{
-//		ft_printf("\nchar : %c\n", cmd[i][k]);
 			ft_putchar('\n');
 			k = k + 2;
 		}
 	}
+	if (cmd[i + 1][0] == '|')
+		return (0);
 	if (cmd[i + 1] && (cmd[i + 1][0] != '>' && cmd[i + 1][0] != '<'))
 		ft_putchar(' ');
 	return (1);

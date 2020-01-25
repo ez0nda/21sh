@@ -64,6 +64,7 @@ typedef struct	s_var
 	int		back_fd;
 	int		new_fd;
 	char	*rfile;
+	int	rmode;
 }				t_var;
 
 void			get_input(t_var *data);
@@ -124,5 +125,7 @@ void			heredoc_prompt(t_var *data);
 void			heredoc_loop(t_var *data);
 
 void			add_this(char *car, t_var *data);
+
+void			save_restore_fd(int mod);
 
 #endif

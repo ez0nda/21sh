@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/12 11:36:44 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/13 14:56:54 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,27 @@ void			manage_pipe(t_var *data)
 	}
 }
 
+void			save_restore_fd(int mod)
+{
+	static int fd[3] = {-1};
+
+	if (mod == 0)
+	{
+		fd[STDIN_FILENO] = dup(STDIN_FILENO);
+		fd[STDOUT_FILENO] = dup(STDOUT_FILENO);
+		fd[STDERR_FILENO] = dup(STDERR_FILENO);
+	}
+	else if (mod == 1)
+	{
+		dup2(fd[STDIN_FILENO], STDIN_FILENO);
+		close(fd[STDIN_FILENO]);
+		dup2(fd[STDOUT_FILENO], STDOUT_FILENO);
+		close(fd[STDOUT_FILENO]);
+		dup2(fd[STDERR_FILENO], STDERR_FILENO);
+		close(fd[STDERR_FILENO]);
+	}
+}
+
 void			launch_cmds(t_var *data)
 {
 	t_cmd	*cmd;
@@ -141,7 +162,8 @@ void			launch_cmds(t_var *data)
 	check_first_last_char(data, 1);
 	while (data->cmds[data->cmd_index])
 	{
-		manage_pipe(data);
+		save_restore_fd(0);
+//		manage_pipe(data);
 		cmd = shell_parser(data->cmds[data->cmd_index]);
 		get_cmd_type(cmd, data);
 		data->cmd_index++;
