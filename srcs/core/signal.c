@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:24:39 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/04 10:32:03 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/12 10:49:20 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void		signal_quit(int sig)
 	int		i;
 	t_var	*data;
 
+	data = NULL;
 	data = update_data(1, data);
 	i = ft_strlen(data->lex_str);
 	data->reset = 1;
@@ -46,6 +47,7 @@ static void		signal_inter(int sig)
 	t_var *data;
 
 	(void)sig;
+	data = NULL;
 	data = update_data(1, data);
 	signal(SIGTSTP, SIG_DFL);
 	ioctl(STDOUT_FILENO, TIOCSTI, "\x1A");
@@ -56,6 +58,7 @@ static void		signal_restart(int sig)
 	t_var *data;
 
 	(void)sig;
+	data = NULL;
 	data = update_data(1, data);
 	set_termcanon(data);
 	signal(SIGTSTP, signal_inter);
@@ -67,6 +70,7 @@ static void		signal_resize(int sig)
 	t_var *data;
 
 	(void)sig;
+	data = NULL;
 	data = update_data(1, data);
 	get_winsize(data);
 	prompt(data);

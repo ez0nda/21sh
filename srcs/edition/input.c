@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/07 12:44:59 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/12 11:36:44 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,91 @@ void			join_cmds(t_var *data, int index)
 	}
 }
 
+void			realloc_pipe(t_var *data)
+{
+	int i;
+	char *s1;
+	char *s2;
+
+	i = 0;
+	s1 = NULL;
+	s2 = ft_strdup(ft_strrchr(data->cmds[data->cmd_index], '|'));
+	while (data->cmds[data->cmd_index][i] != '|')
+		i++;
+	s1 = ft_strnew(i);
+	i = 0;
+	while (data->cmds[data->cmd_index][i] != '|')
+	{
+		s1[i] = data->cmds[data->cmd_index][i];
+		i++;
+	}
+	free(data->cmds[data->cmd_index]);
+	data->cmds[data->cmd_index] = ft_strjoin_free(s1, s2, 2);
+
+}
+
+void			realloc_redir(t_var *data)
+{
+	int i;
+	char *s1;
+	char *s2;
+
+	i = 0;
+	s1 = NULL;
+	s2 = ft_strdup(ft_strchr(data->cmds[data->cmd_index], '>'));
+	while (data->cmds[data->cmd_index][i] != '>')
+		i++;
+	s1 = ft_strnew(i);
+	i = 0;
+	while (data->cmds[data->cmd_index][i] != '|')
+	{
+		s1[i] = data->cmds[data->cmd_index][i];
+		i++;
+	}
+	free(data->cmds[data->cmd_index]);
+	data->cmds[data->cmd_index] = ft_strjoin_free(s1, s2, 2);
+}
+
+void			manage_pipe(t_var *data)
+{
+	int i;
+	int pipe;
+	int redir;
+
+	i = 0;
+	pipe = 0;
+	redir = 0;
+	while (data->cmds[data->cmd_index][i])
+	{
+		if (data->cmds[data->cmd_index][i] == '|')
+			pipe++;
+		else if (data->cmds[data->cmd_index][i] == '>'
+				|| data->cmds[data->cmd_index][i] == '<')
+			redir++;
+		i++;
+	}
+	if (pipe <= 1 && !redir)
+	{
+//		ft_printf("\nNOTHING\n");
+		return ;
+	}
+	else if (redir && !pipe)
+	{
+//		ft_printf("\nREDIR NO PIPE\n");
+		return ;
+	}
+	else if (pipe && redir)
+	{
+//		ft_printf("\nBOTH\n");
+		realloc_redir(data);
+	}
+	else
+	{
+//		ft_printf("\nPIPE NO REDIR\n");
+		realloc_pipe(data);
+	}
+}
+
 void			launch_cmds(t_var *data)
 {
 	t_cmd	*cmd;
@@ -56,6 +141,7 @@ void			launch_cmds(t_var *data)
 	check_first_last_char(data, 1);
 	while (data->cmds[data->cmd_index])
 	{
+		manage_pipe(data);
 		cmd = shell_parser(data->cmds[data->cmd_index]);
 		get_cmd_type(cmd, data);
 		data->cmd_index++;
@@ -85,7 +171,6 @@ void			get_input(t_var *data)
 {
 	char buffer[6];
 
-	data->reset = 0;
 	prompt(data);
 	while (1)
 	{

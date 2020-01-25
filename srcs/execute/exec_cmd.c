@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 13:44:52 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/23 16:21:46 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/12 10:58:37 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void			exec_cmd(char **bin_path, t_var *data)
 	execute(bin_path, pid, data);
 	if (pid == 0)
 	{
+		data->reset = 1;
 		if (data->argv[0][0] != '\n')
 			error_msg(bin_path, data->argv[0]);
 		exit(1);

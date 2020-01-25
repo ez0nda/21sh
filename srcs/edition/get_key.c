@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 12:57:56 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/04 10:00:16 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/12 11:04:35 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void		get_copy_paste(t_var *data, char *buffer)
 		copy_cut_mode(data, 1);
 	if (!ft_strcmp(buffer, (char[4]){ -30, -120, -102, 0}))
 		paste_mode(data);
-	if (!ft_strcmp(buffer, (char[4]){ 4, 0, 0, 0}))
+	if (!ft_strcmp(buffer, (char[4]){ 4, 0, 0, 0}) && !data->h_prompt)
 	{
 		if (data->lex_str[0])
 			remove_cur_char(data);

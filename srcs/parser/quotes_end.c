@@ -6,7 +6,7 @@
 /*   By: jebrocho <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 00:49:56 by jebrocho          #+#    #+#             */
-/*   Updated: 2020/02/05 14:20:56 by jebrocho         ###   ########.fr       */
+/*   Updated: 2020/02/12 10:57:06 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		check_quotes_end(t_var *data)
 
 	quotes = 0;
 	dquotes = 0;
+	index = 0;
 	i = -1;
 	while (data->lex_str[++i])
 	{
@@ -100,6 +101,7 @@ int		check_dquotes_end(t_var *data)
 	quotes = 0;
 	dquotes = 0;
 	i = -1;
+	index = 0;
 	while (data->lex_str[++i])
 	{
 		if (data->lex_str[i] == '\'')

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:05:11 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/05 13:39:53 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/10 10:42:23 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,12 @@ void	heredoc_loop(t_var *data)
 			data->pos = 0;
 			add_to_here_stock('\n', data);
 			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+		}
+		if (!ft_strcmp(buffer, (char[4]){ 4, 0, 0, 0}))
+		{
+			ft_putchar('\n');
+			rm_herend(data);
+			break ;
 		}
 		get_key(data, buffer);
 	}

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 09:50:07 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/10 12:42:11 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/12 14:47:02 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		restore_fd(t_var *data, int new_fd, t_redirection_cmd *rcmd)
 {
-	int back_fd;
+//	int back_fd;
 
 	if (new_fd == -1)
 	{
@@ -24,26 +24,45 @@ void		restore_fd(t_var *data, int new_fd, t_redirection_cmd *rcmd)
 		free(rcmd);
 		return ;
 	}
-	back_fd = dup(rcmd->fd);
-	dup2(new_fd, rcmd->fd);
+	data->back_fd = dup(rcmd->fd);
+	dup2(data->new_fd, rcmd->fd);
 	close(new_fd);
+//	ft_printf("\nHERE\n");
+//	getchar();
+	if (rcmd->cmd->type == REDIR)
+		data->in_redir = 1;
 	get_cmd_type(rcmd->cmd, data);
-	dup2(back_fd, rcmd->fd);
+	dup2(data->back_fd, rcmd->fd);
 	free(rcmd->file);
 	free(rcmd);
+	data->in_redir = 0;
 }
 
-void		free_pipe(t_pipe_cmd *pcmd, t_cmd *left, t_cmd *right)
+void		init_heredoc_fd(t_var *data, t_redirection_cmd *rcmd, int mod)
 {
-/*	t_exec_cmd		*ecmd_left;
+	if (!mod)
+	{
+		dup2(data->back_fd, 1);
+		close(data->new_fd);
+//		data->back_fd = dup(rcmd->fd);
+//		data->new_fd = open(rcmd->file, rcmd->mode, S_IRUSR | S_IWUSR);
+	}
+}
+
+void		free_pipe(t_pipe_cmd *pcmd)
+{
+	t_exec_cmd		*ecmd_left;
 	t_exec_cmd		*ecmd_right;
 
 	ecmd_left = (t_exec_cmd *)pcmd->left;
 	ecmd_right = (t_exec_cmd *)pcmd->right;
 
+	free(ecmd_left->argv->content);
+	free(ecmd_right->argv->content);
+
 	free_lst(ecmd_left->argv);
 	free_lst(ecmd_right->argv);
-*/
+
 	free(pcmd->left);
 	free(pcmd->right);
 
@@ -53,8 +72,8 @@ void		free_pipe(t_pipe_cmd *pcmd, t_cmd *left, t_cmd *right)
 void		cmd_pipe(t_cmd *cmd, t_var *data)
 {
 	t_pipe_cmd		*pcmd;
-	int				pipes[2];
-	int				pid[2];
+	int			pipes[2];
+	int			pid[2];
 
 	data->pipe = 1;
 	pcmd = (t_pipe_cmd *)cmd;
@@ -78,21 +97,25 @@ void		cmd_pipe(t_cmd *cmd, t_var *data)
 	close(pipes[1]);
 	waitpid(-1, 0, 0);
 	waitpid(-1, 0, 0);
-
-	free_pipe(pcmd, pcmd->left, pcmd->right);
-
+	free_pipe(pcmd);
 	data->pipe = 0;
 }
 
 void		cmd_redir(t_cmd *cmd, t_var *data)
 {
 	t_redirection_cmd	*rcmd;
-	int					new_fd;
+//	int					new_fd;
 
-	new_fd = 0;
+//	data->new_fd = 0;
 	rcmd = (t_redirection_cmd *)cmd;
+	if (data->in_redir != 1)
+		data->rfile = ft_strdup(rcmd->file);
 	if (rcmd->mode == (O_RDONLY | O_NONBLOCK | O_CREAT | O_APPEND))
 	{
+		if (data->in_redir == 1)
+		{
+			init_heredoc_fd(data, rcmd, 0);
+		}
 		if (!init_heredoc(data, rcmd))
 			return ;
 	}
@@ -102,20 +125,19 @@ void		cmd_redir(t_cmd *cmd, t_var *data)
 	{
 		if (!ft_strcmp(rcmd->file, "&-"))
 			rcmd->file = close_fd(rcmd->file);
-		new_fd = open(rcmd->file, rcmd->mode, S_IRUSR | S_IWUSR);
+		data->new_fd = open(rcmd->file, rcmd->mode, S_IRUSR | S_IWUSR);
 	}
 	else if (rcmd->mode == (O_RDONLY | O_NONBLOCK | O_CREAT))
 	{
 		ft_putchar('\n');
-		new_fd = open(rcmd->file, O_RDONLY);
+		data->new_fd = open(rcmd->file, O_RDONLY);
 	}
-	restore_fd(data, new_fd, rcmd);
+	restore_fd(data, data->new_fd, rcmd);
 }
 
 void		cmd_basic(t_cmd *cmd, t_var *data)
 {
 	int			i;
-	char		**split;
 	t_list		*cur;
 	t_exec_cmd	*ecmd;
 
@@ -141,13 +163,12 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 	init_exec(data);
 	free_tab(data->argv);
 	ft_strdel(&data->here_stock);
-	if (!data->pipe)
+	if (!data->pipe) 				// n'a aucun effet
 	{
 //		ft_printf("\n\nFREE LST + CMD\n");
 		free_lst(ecmd->argv);
 		free(ecmd);
 	}
-//	ecmd = NULL;
 }
 
 void		get_cmd_type(t_cmd *cmd, t_var *data)

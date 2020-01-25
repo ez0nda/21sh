@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:48:59 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/05 13:37:32 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/12 10:58:57 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void		update_files(t_var *data)
 {
 	int		fd;
 	int		back_fd;
-	char	*line;
 	char	**split;
 
 	split = ft_strsplit(data->files, ' ');

@@ -98,7 +98,7 @@ ifeq ($(DEBUG),TRUE)
 	CFLAGS = -g3 -ggdb3
 endif
 
-.PHONY: all clean fclean re lib
+.PHONY: all clean fclean re lib valgrind
 
 all: lib $(NAME)
 

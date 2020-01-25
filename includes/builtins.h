@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 10:42:07 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/04 09:28:11 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/12 11:01:32 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ void	rm_error(char *s);
 void	old_pwd(char *old, t_var *data);
 void	new_env(t_var *data, char *newp);
 
-int		echo_builtin(t_var *data, char **cmd);
+int		echo_builtin(char **cmd);
 
 #endif

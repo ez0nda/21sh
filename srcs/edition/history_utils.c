@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 12:50:07 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/03 12:51:25 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/12 11:04:58 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	get_history(t_var *data, int fd)
 	while (get_next_line(fd, &line) == 1 && i < BUFF_SHELL)
 	{
 		data->history[i] = ft_strdup(line);
-		free(line);
+		ft_strdel(&line);
 		i++;
 	}
 }

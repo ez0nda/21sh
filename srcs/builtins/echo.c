@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 10:32:18 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/03 12:02:07 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/12 11:01:37 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,29 +61,39 @@ char	*rm_quotes(char *cmd, int count)
 	return (new);
 }
 
-void	print_echo(t_var *data, char **cmd, int i)
+int		print_echo(char **cmd, int i)
 {
 	int k;
 
 	k = 0;
-	while (cmd[i][k] && cmd[i][k] != '\\')
-	{
-		ft_putchar(cmd[i][k]);
-		k++;
-	}
-	if (cmd[i][k] == '\\')
-		k++;
-	if (cmd[i][k] == 'n' && data->mod_quotes)
+	if (cmd[i][k] == '\\' && cmd[i][k + 1] == 'n'
+			&& (cmd[i][k] != '>' && cmd[i][k] != '<'))
 	{
 		ft_putchar('\n');
-		k++;
+		k = k + 2;
 	}
-	ft_putstr(&cmd[i][k]);
-	if (cmd[i + 1])
+	while (cmd[i][k] && cmd[i][k] != '\\')
+	{
+		if (cmd[i][k] == '>' || cmd[i][k] == '<')
+		{
+			return (0);
+		}
+		ft_putchar(cmd[i][k]);
+		k++;
+	
+		if (cmd[i][k] == '\\' && cmd[i][k + 1] == 'n')
+		{
+//		ft_printf("\nchar : %c\n", cmd[i][k]);
+			ft_putchar('\n');
+			k = k + 2;
+		}
+	}
+	if (cmd[i + 1] && (cmd[i + 1][0] != '>' && cmd[i + 1][0] != '<'))
 		ft_putchar(' ');
+	return (1);
 }
 
-void	parse_echo(t_var *data, char **cmd, int i)
+void	parse_echo(char **cmd, int i)
 {
 	int j;
 	int k;
@@ -99,12 +109,13 @@ void	parse_echo(t_var *data, char **cmd, int i)
 				count++;
 		if (ft_strchr(cmd[i], '"'))
 			cmd[i] = rm_quotes(cmd[i], count);
-		print_echo(data, cmd, i);
+		if (!print_echo(cmd, i))
+			return ;
 		i++;
 	}
 }
 
-int		echo_builtin(t_var *data, char **cmd)
+int		echo_builtin(char **cmd)
 {
 	int i;
 	int flag_n;
@@ -127,7 +138,7 @@ int		echo_builtin(t_var *data, char **cmd)
 			return (1);
 		}
 	}
-	parse_echo(data, cmd, i);
+	parse_echo(cmd, i);
 	ft_putstr(flag_n ? "" : "\n");
 	free_tab(cmd);
 	return (1);

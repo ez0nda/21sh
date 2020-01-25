@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:55:06 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/05 15:05:41 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/12 11:01:44 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		is_builtin(t_var *data, char **cmd)
 	else if (!ft_strcmp(cmd[0], "env"))
 		return (env_builtin(data->environ));
 	else if (!ft_strcmp(cmd[0], "echo"))
-		return (echo_builtin(data, cmd));
+		return (echo_builtin(cmd));
 	else if (!ft_strcmp(cmd[0], "setenv"))
 		return (setenv_builtin(data, cmd));
 	else if (!ft_strcmp(cmd[0], "unsetenv"))
@@ -56,7 +56,6 @@ void	init_exec(t_var *data)
 {
 	char	*path;
 	char	**bin_path;
-	char	**cmds;
 
 	path = get_var("PATH=", data->environ);
 	bin_path = path ? ft_split(path, ':') : NULL;

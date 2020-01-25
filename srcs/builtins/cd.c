@@ -6,13 +6,13 @@
 /*   By: jebrocho <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 13:40:27 by jebrocho          #+#    #+#             */
-/*   Updated: 2020/02/04 13:03:55 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/12 11:00:26 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
-int		parse_cd(t_var *data, char **cmd)
+int		parse_cd(char **cmd)
 {
 	int ret;
 
@@ -104,7 +104,7 @@ int		cd_builtin(t_var *data, char **cmd)
 	else
 	{
 		add_home(data, cmd);
-		opt = parse_cd(data, cmd);
+		opt = parse_cd(cmd);
 		if (opt == 0)
 			newp = get_env(data->environ, "OLDPWD=");
 		else if (opt != -1)
