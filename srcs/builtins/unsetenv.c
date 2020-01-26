@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 14:10:17 by ezonda            #+#    #+#             */
-/*   Updated: 2019/11/23 19:42:03 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/04 14:15:05 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int	remove_var(t_var *data, int index)
 	free_tab(data->environ);
 	data->environ = ft_tabdup(tmp, 0);
 	free_tab(tmp);
-//	data->home = ft_strcpy(data->home, home_tmp);
 	free(home_tmp);
 	return (1);
 }
@@ -39,6 +38,10 @@ int			unsetenv_builtin(t_var *data, char **cmd)
 	char	*to_find;
 
 	i = 0;
+	if (!getenv("SHELL"))
+		ft_putendl_fd("21sh: unsetenv: shell launched without environment", 2);
+	if (!getenv("SHELL"))
+		return (1);
 	if (!cmd[1])
 		return (1);
 	to_find = ft_strjoin(cmd[1], "=");

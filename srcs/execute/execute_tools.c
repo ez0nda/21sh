@@ -56,7 +56,7 @@ int		free_tab(char **tab)
 
 	i = 0;
 	while (tab[i])
-		free(tab[i++]);
+		ft_strdel(&tab[i++]);
 	free(tab);
 	tab = NULL;
 	return (0);
@@ -72,6 +72,7 @@ char	*get_dollar_var(char *cmd, t_var *data)
 		free(var);
 		return (cmd);
 	}
+	free(cmd);
 	cmd = ft_strdup(get_var(var, data->environ));
 	free(var);
 	return (cmd);

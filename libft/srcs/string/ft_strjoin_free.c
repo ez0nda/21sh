@@ -6,7 +6,7 @@
 /*   By: jebrocho <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 15:44:39 by jebrocho          #+#    #+#             */
-/*   Updated: 2019/09/05 14:40:45 by jebrocho         ###   ########.fr       */
+/*   Updated: 2020/02/03 11:19:47 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,3 @@ char	*ft_strjoin_free(char *s1, char *s2, int mod)
 	free_join(s1, s2, mod);
 	return (str);
 }
-

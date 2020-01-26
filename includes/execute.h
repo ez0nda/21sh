@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 12:57:21 by ezonda            #+#    #+#             */
-/*   Updated: 2019/12/14 10:54:34 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/04 10:08:42 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,12 @@ void	init_exec(t_var *data);
 void	get_cmd_type(t_cmd *cmd, t_var *data);
 void	execute_redir(t_cmd *cmd, t_var *data);
 
-void cmd_basic(t_cmd *cmd, t_var *data);
+void	cmd_basic(t_cmd *cmd, t_var *data);
 void	cmd_redir(t_cmd *cmd, t_var *data);
+
+int		init_heredoc(t_var *data, t_redirection_cmd *rcmd);
+int		is_aggreg(char *file);
+int		is_cat_heredoc(t_var *data);
 
 void	add_to_files(t_var *data, char *str);
 

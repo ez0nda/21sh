@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:44:48 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/24 16:53:39 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/03 12:28:44 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	init_var(t_var *data)
 	data->q_prompt = 0;
 	data->dq_prompt = 0;
 	data->redir_count = 0;
+	data->cmd_index = 0;
+	data->hist_pos = 0;
 }
 
 void	init_shell(t_var *data)
@@ -48,6 +50,7 @@ void	init_shell(t_var *data)
 	init_var(data);
 	if (!(data->history = (char**)malloc(sizeof(char*) * BUFF_SHELL)))
 		return ;
+	ft_memset(data->history, 0, sizeof(char*) * BUFF_SHELL);
 	if (!(data->selection = (char*)malloc(sizeof(char) * BUFF_SHELL)))
 		return ;
 	if (!(data->tab = malloc(sizeof(int) * BUFF_SHELL)))
@@ -56,6 +59,7 @@ void	init_shell(t_var *data)
 		return ;
 	if (!(data->here_stock = (char*)malloc(sizeof(char) * BUFF_SHELL)))
 		return ;
+	ft_memset(data->here_stock, 0, sizeof(data->here_stock));
 	if (!(data->files = (char*)malloc(sizeof(char) * BUFF_SHELL)))
 		return ;
 	while (i < BUFF_SHELL)

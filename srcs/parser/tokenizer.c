@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:33:36 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/20 11:00:00 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/04 12:50:50 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,17 @@ static int	tokenizer_aggregators(char **s, int ret)
 
 static int	tokenizer_string(char **s, char *end)
 {
-	while (*s < end && !ft_strchr(WHITESPACES, **s) &&
-		!ft_strchr(TOKENS, **s))
+	while (*s < end && !ft_strchr(" \t\r\n\v", **s) &&
+		!ft_strchr("<|>", **s))
 		(*s)++;
 	return ('a');
+}
+
+char		*skip_whitespaces(char *s, char *end)
+{
+	while (s < end && ft_strchr(" \t\r\n\v", *s))
+		s++;
+	return (s);
 }
 
 int			tokenizer(
@@ -66,16 +73,14 @@ int			tokenizer(
 	int		ret;
 
 	s = *p_input;
-	while (s < end && strchr(WHITESPACES, *s))
-		s++;
+	s = skip_whitespaces(s, end);
 	if (new_cmd)
 		*new_cmd = s;
 	ret = *s;
 	if (*s && (ft_is_in("|();&", *s)))
 	{
 		s++;
-		if (*s && ft_is_in("12-", *s))
-			s++;
+		s = (*s && ft_is_in("12-", *s)) ? s + 1 : s;
 	}
 	else if (*s && ft_is_in("><", *s))
 		ret = tokenizer_redirection(&s, ret);
@@ -85,8 +90,7 @@ int			tokenizer(
 		ret = tokenizer_string(&s, end);
 	if (new_cmd_end)
 		*new_cmd_end = s;
-	while (s < end && ft_strchr(WHITESPACES, *s))
-		s++;
+	s = skip_whitespaces(s, end);
 	*p_input = s;
 	return (ret);
 }

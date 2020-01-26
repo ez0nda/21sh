@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/07 13:18:21 by ezonda            #+#    #+#             */
-/*   Updated: 2019/08/29 11:38:59 by ezonda           ###   ########.fr       */
+/*   Created: 2020/02/04 09:26:39 by ezonda            #+#    #+#             */
+/*   Updated: 2020/02/04 09:26:41 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@
 # include <limits.h>
 # include <dirent.h>
 # include <sys/stat.h>
-# include "../srcs/printf/includes/ft_printf.h"
+# include "ft_printf.h"
 
 # define BUFF_SIZE 4096
+# define FT_OPEN_MAX 4096
 
 typedef struct	s_list
 {

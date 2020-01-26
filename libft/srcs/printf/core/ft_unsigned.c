@@ -6,11 +6,11 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/18 13:55:40 by jebrocho     #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/28 20:52:19 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 19:34:57 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
-#include "../../includes/ft_printf.h"
+#include "../../../includes/ft_printf.h"
 
 intmax_t	ft_find_u(t_stock *stock, int i)
 {

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:55:06 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/23 16:22:47 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/04 13:04:19 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@ int		is_builtin(t_var *data, char **cmd)
 	if (!ft_strcmp(cmd[0], "exit"))
 		exit_shell(data);
 	else if (!ft_strcmp(cmd[0], "cd"))
-		return (cd_builtin(data, cmd));
+	{
+		cd_builtin(data, cmd);
+		free_tab(cmd);
+		return (1);
+	}
 	else if (!ft_strcmp(cmd[0], "env"))
 		return (env_builtin(data->environ));
 	else if (!ft_strcmp(cmd[0], "echo"))
-		return (echo_builtin(cmd));
+		return (echo_builtin(data, cmd));
 	else if (!ft_strcmp(cmd[0], "setenv"))
 		return (setenv_builtin(data, cmd));
 	else if (!ft_strcmp(cmd[0], "unsetenv"))
@@ -35,7 +39,7 @@ int		check_exe(t_var *data, char *cmd)
 	char	**split_cmd;
 
 	i = 0;
-	split_cmd = ft_strsplit(cmd, ' ');
+	split_cmd = ft_split(cmd, ' ');
 	while (split_cmd[i])
 	{
 		if (split_cmd[i][0] == '$')
@@ -55,7 +59,7 @@ void	init_exec(t_var *data)
 	char	**cmds;
 
 	path = get_var("PATH=", data->environ);
-	bin_path = ft_strsplit(path, ':');
+	bin_path = path ? ft_split(path, ':') : NULL;
 	if (data->cmd_index == 0)
 		ft_putchar_fd('\n', 0);
 	if (!check_exe(data, data->cmds[data->cmd_index]))

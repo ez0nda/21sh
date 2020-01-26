@@ -6,7 +6,7 @@
 #    By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/11/12 09:46:09 by ezonda       #+#   ##    ##    #+#        #
-#    Updated: 2019/12/28 21:42:57 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2020/01/22 19:41:33 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -25,7 +25,7 @@ VERBOSE = FALSE
 AR = ar rcs
 LIBTOOL = libtool -static
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Wunused -Wunreachable-code
 
 SUBDIR = \
 		convert \
@@ -35,6 +35,8 @@ SUBDIR = \
 		lst \
 		math \
 		memory \
+		printf/core \
+		printf/lib \
 		string
 
 SUBFILE = \
@@ -82,6 +84,33 @@ SUBFILE = \
 		memory/ft_memdel.c \
 		memory/ft_memmove.c \
 		memory/ft_memset.c \
+		\
+		printf/core/ft_dispatch.c \
+		printf/core/ft_flag_u.c \
+		printf/core/ft_float.c \
+		printf/core/ft_hexa.c \
+		printf/core/ft_indic_csp.c \
+		printf/core/ft_indic_mod.c \
+		printf/core/ft_octal.c \
+		printf/core/ft_parser.c \
+		printf/core/ft_parser.c \
+		printf/core/ft_print_numbers.c \
+		printf/core/ft_printf.c \
+		printf/core/ft_tools.c \
+		printf/core/ft_tools2.c \
+		printf/core/ft_unsigned.c \
+		printf/lib/pf_atoi.c \
+		printf/lib/pf_isdigit.c \
+		printf/lib/pf_itoa.c \
+		printf/lib/pf_putchar.c \
+		printf/lib/pf_putnbr.c \
+		printf/lib/pf_putstr.c \
+		printf/lib/pf_strcmp.c \
+		printf/lib/pf_strdup.c \
+		printf/lib/pf_strlen.c \
+		printf/lib/pf_strnew.c \
+		printf/lib/pf_strrev.c \
+		printf/lib/pf_strsub.c \
 		\
 		string/ft_strcat.c \
 		string/ft_strchr.c \
@@ -132,6 +161,11 @@ RM = rm -rf
 MKDIR = mkdir -p
 ERRIGNORE = 2>/dev/null
 
+# Old rules to link to lib
+# $(HIDE)echo $(MAKEFILE_NAME): "Linking \t ->" $@ $(LIBPRINTF)
+# $(HIDE)$(MAKE) -C srcs/printf
+# $(HIDE)$(LIBTOOL) -o $(NAME) $(NAME) $(LIBPRINTF)
+
 .PHONY: all clean fclean re 
 
 all: $(NAME)
@@ -139,9 +173,6 @@ all: $(NAME)
 $(NAME): $(OBJDIRS) $(OBJS)
 	$(HIDE)echo $(MAKEFILE_NAME): "Linking \t ->" $@
 	$(HIDE)$(AR) $(NAME) $(OBJS)
-	$(HIDE)echo $(MAKEFILE_NAME): "Linking \t ->" $@ $(LIBPRINTF)
-	$(HIDE)$(MAKE) -C srcs/printf
-	$(HIDE)$(LIBTOOL) -o $(NAME) $(NAME) $(LIBPRINTF)
 
 -include $(DEPS)
 

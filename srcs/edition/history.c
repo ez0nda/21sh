@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 13:21:59 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/23 16:19:39 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/04 10:06:15 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@ void	add_to_history(t_var *data)
 
 	i = 0;
 	tmp = ft_strdup(data->lex_str);
-	while (is_whitespaces(data->lex_str[i]))
-		i++;
-	if (i == ft_strlen(data->lex_str))
+	if (is_empty(data))
 	{
 		free(tmp);
 		return ;
 	}
-	i = 0;
 	if (!data->history[0])
 		data->history[i] = ft_strdup(data->lex_str);
 	else
@@ -43,40 +40,41 @@ void	add_to_history(t_var *data)
 	free(tmp);
 }
 
+void	history_down(t_var *data)
+{
+	data->hist_pos--;
+	if (!data->history[data->hist_pos])
+	{
+		data->hist_pos++;
+		if (data->hist_pos == 0)
+			ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+		tputs(tgetstr("cl", NULL), 1, ft_putchar_v2);
+		data->pos = ft_strlen(data->lex_str);
+		prompt(data);
+		return ;
+	}
+	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+	data->lex_str = ft_strcpy(data->lex_str, data->history[data->hist_pos]);
+}
+
 void	show_history(t_var *data, int mod)
 {
-	static int i;
-
 	if (data->new_history == 1)
 	{
 		data->new_history = 0;
-		i = 0;
+		data->hist_pos = 0;
 	}
 	if (mod == 1)
 	{
-		if (!data->history[i])
+		if (!data->history[data->hist_pos])
 			return ;
 		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-		data->lex_str = ft_strcpy(data->lex_str, data->history[i]);
-		i++;
+		data->lex_str = ft_strcpy(data->lex_str, data->history[data->hist_pos]);
+		data->hist_pos++;
 	}
 	else
-	{
-		i--;
-		if (!data->history[i])
-		{
-			i++;
-			if (i == 0)
-				ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-			TERMCAP("cl");
-			data->pos = ft_strlen(data->lex_str);
-			prompt(data);
-			return ;
-		}
-		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
-		data->lex_str = ft_strcpy(data->lex_str, data->history[i]);
-	}
-	TERMCAP("cl");
+		history_down(data);
+	tputs(tgetstr("cl", NULL), 1, ft_putchar_v2);
 	data->pos = ft_strlen(data->lex_str);
 	prompt(data);
 }

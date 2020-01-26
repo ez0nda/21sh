@@ -6,11 +6,11 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/01/14 13:29:10 by jebrocho     #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/28 20:52:18 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/22 19:34:57 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
-#include "../../includes/ft_printf.h"
+#include "../../../includes/ft_printf.h"
 
 void	ft_prec(t_struct *stru, long double f)
 {
@@ -86,9 +86,7 @@ size_t	ft_fnbrsize(double f, t_struct *stru)
 void	ft_print_float(long double f, t_struct *stru)
 {
 	long		nb_ent;
-	size_t		pad2;
 
-	pad2 = ft_fnbrsize(f, stru);
 	if (f < 0)
 		pf_putchar('-', stru);
 	f = pf_abs(f);

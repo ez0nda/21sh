@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 13:00:44 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/15 13:59:20 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/03 12:10:02 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 t_var			*update_data(int mod, t_var *data);
 int				exit_shell(t_var *data);
 void			set_termcanon(t_var *data);
+void			set_env(t_var *data);
 
 void			signal_handler(void);
 

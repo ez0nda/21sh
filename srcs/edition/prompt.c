@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/28 10:22:46 by ezonda           ###   ########.fr       */
+/*   Created: 2020/02/03 11:37:37 by ezonda            #+#    #+#             */
+/*   Updated: 2020/02/04 10:08:12 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static void		print_str(t_var *data)
 			ft_putchar(data->lex_str[i]);
 		else
 		{
-			TERMCAP("mr");
+			tputs(tgetstr("mr", NULL), 1, ft_putchar_v2);
 			ft_putchar(data->lex_str[i]);
-			TERMCAP("me");
+			tputs(tgetstr("me", NULL), 1, ft_putchar_v2);
 		}
 		i++;
 	}
@@ -33,11 +33,6 @@ static void		print_str(t_var *data)
 
 static void		print_prompt(t_var *data)
 {
-/*	if (data->quotes % 2 != 0 || data->dquotes % 2 != 0)
-	{
-		data->std_prompt = 0;
-		ft_putstr("quotes> ");
-	}*/
 	if (data->q_prompt == 1)
 		ft_putstr("quote> ");
 	else if (data->dq_prompt == 1)
@@ -52,11 +47,12 @@ static void		print_prompt(t_var *data)
 		ft_putstr("cursh> ");
 	else
 	{
-		TERMCAP("md");
+		tputs(tgetstr("md", NULL), 1, ft_putchar_v2);
 		data->std_prompt = 1;
 		ft_putstr("21sh $> ");
-		TERMCAP("me");
+		tputs(tgetstr("me", NULL), 1, ft_putchar_v2);
 	}
+	print_str(data);
 }
 
 void			prompt(t_var *data)
@@ -65,7 +61,7 @@ void			prompt(t_var *data)
 
 	tmp = data->pos;
 	if (!data->lex_str)
-		if (!(data->lex_str = (char*)malloc(sizeof(char) * BUFF_SHELL)))
+		if (!(data->lex_str = ft_strnew(BUFF_SHELL)))
 			return ;
 	if (data->q_prompt == 1)
 		data->pos = -8;
@@ -82,9 +78,8 @@ void			prompt(t_var *data)
 	else if (data->c_prompt == 1)
 		data->pos = -8;
 	get_curs_pos(data, data->pos);
-	TERMCAP("cd");
+	tputs(tgetstr("cd", NULL), 1, ft_putchar_v2);
 	print_prompt(data);
-	print_str(data);
 	data->pos = tmp;
 	get_curs_pos(data, data->pos);
 }
@@ -101,7 +96,7 @@ void			get_curs_pos(t_var *data, int index)
 	index = ft_strlen(data->lex_str);
 	while (index > data->pos)
 	{
-		TERMCAP("le");
+		tputs(tgetstr("le", NULL), 1, ft_putchar_v2);
 		index--;
 	}
 }

@@ -1,117 +1,134 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   echo_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jebrocho <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/23 13:28:56 by jebrocho          #+#    #+#             */
-/*   Updated: 2019/08/06 15:41:14 by jebrocho         ###   ########.fr       */
+/*   Created: 2019/04/16 10:32:18 by ezonda            #+#    #+#             */
+/*   Updated: 2020/02/03 12:02:07 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/core.h"
 
-void	rm_echo(char *str)
+int		check_flag_n(char *cmd)
 {
-	int i;
-	int j;
+	int		count;
+	char	**split;
+
+	count = 0;
+	split = NULL;
+	if (!ft_strcmp(cmd, "-n"))
+		return (1);
+	split = ft_split(cmd, '"');
+	if (!split[0])
+	{
+		free_tab(split);
+		return (1);
+	}
+	if (!ft_strcmp(split[0], "-n"))
+	{
+		free_tab(split);
+		return (1);
+	}
+	free_tab(split);
+	return (0);
+}
+
+char	*rm_quotes(char *cmd, int count)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*new;
 
 	i = 0;
 	j = 0;
-	while (str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
-		i++;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
-		i++;
-	while (str[i])
+	len = ft_strlen(cmd) - count;
+	if (!(new = (char*)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	while (cmd[i])
 	{
-		str[j] = str[i];
+		while (cmd[i] == '"')
+			i++;
+		new[j] = cmd[i];
 		i++;
 		j++;
 	}
-	str[j] = '\0';
+	new[j] = '\0';
+	free(cmd);
+	return (new);
 }
 
-int		detect_echo(char **line)
+void	print_echo(t_var *data, char **cmd, int i)
 {
-	int i;
-
-	i = -1;
-	if (ft_strcmp(line[0], "echo") == 0)
-	{
-		while (line[++i])
-			free(line[i]);
-		free(line);
-		return (0);
-	}
-	return (1);
-}
-
-void	rm_cote(char *line)
-{
-	int i;
-	int j;
 	int k;
 
-	i = -1;
-	while (line[++i])
+	k = 0;
+	while (cmd[i][k] && cmd[i][k] != '\\')
 	{
-		if (line[i] == '"')
-		{
-			k = i;
-			j = i + 1;
-			while (line[j])
-			{
-				line[k] = line[j];
-				k++;
-				j++;
-			}
-			line[k] = '\0';
-		}
+		ft_putchar(cmd[i][k]);
+		k++;
 	}
+	if (cmd[i][k] == '\\')
+		k++;
+	if (cmd[i][k] == 'n' && data->mod_quotes)
+	{
+		ft_putchar('\n');
+		k++;
+	}
+	ft_putstr(&cmd[i][k]);
+	if (cmd[i + 1])
+		ft_putchar(' ');
 }
 
-int		algo_cote(char *line, int i)
+void	parse_echo(t_var *data, char **cmd, int i)
 {
-	int index;
-	int new_id;
+	int j;
+	int k;
+	int count;
 
-	while (line[i] && line[i] != ' ' && line[i] != '\t')
-		i++;
-	index = i + 1;
-	new_id = index;
-	while (line[i] && (line[new_id] == ' ' || line[new_id] == '\t'))
-		new_id++;
-	while (line[new_id])
+	k = 0;
+	while (cmd[i])
 	{
-		line[index] = line[new_id];
-		index++;
-		new_id++;
+		j = 0;
+		count = 0;
+		while (cmd[i][j])
+			if (cmd[i][j++] == '"')
+				count++;
+		if (ft_strchr(cmd[i], '"'))
+			cmd[i] = rm_quotes(cmd[i], count);
+		print_echo(data, cmd, i);
+		i++;
 	}
-	line[index] = '\0';
-	return (i);
 }
 
-int 	echo_builtin(char **cmd)
+int		echo_builtin(t_var *data, char **cmd)
 {
 	int i;
-//	int id_cote;
+	int flag_n;
 
-	i = -1;
-	while (cmd[++i])
-		ft_printf("%s\n", cmd[i]);
-/*	rm_echo(str);
-	id_cote = 0;
-	i = -1;
-	while (str[++i])
+	i = 1;
+	flag_n = 0;
+	if (!cmd[1])
 	{
-		if (str[i] == '"')
-			id_cote++;
-		if (id_cote % 2 == 0)
-			i = algo_cote(str, i);
+		free_tab(cmd);
+		ft_putchar('\n');
+		return (1);
 	}
-	rm_cote(str);
-	ft_printf("%s", str);
-	free(str);*/
+	while (check_flag_n(cmd[i]))
+	{
+		i++;
+		flag_n = 1;
+		if (!cmd[i])
+		{
+			free_tab(cmd);
+			return (1);
+		}
+	}
+	parse_echo(data, cmd, i);
+	ft_putstr(flag_n ? "" : "\n");
+	free_tab(cmd);
 	return (1);
 }

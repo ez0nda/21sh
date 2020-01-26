@@ -6,7 +6,7 @@
 /*   By: jebrocho <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 12:42:33 by jebrocho          #+#    #+#             */
-/*   Updated: 2019/10/08 12:42:35 by jebrocho         ###   ########.fr       */
+/*   Updated: 2020/02/03 11:20:26 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strndup(const char *s1, size_t n)
 {
-	char   *s2;
-	size_t i;
+	char	*s2;
+	size_t	i;
 
 	i = 0;
 	if (!(s2 = (char*)malloc(sizeof(char) * (ft_strlen(s1) + 1))))

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:06:09 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/22 10:26:29 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/04 10:05:17 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	move_left(t_var *data)
 		data->in_selection = 0;
 	}
 	data->pos--;
-	TERMCAP("le");
+	tputs(tgetstr("le", NULL), 1, ft_putchar_v2);
 	if (data->in_selection == 1)
 	{
 		data->left = 1;
@@ -41,7 +41,7 @@ void	move_right(t_var *data)
 		data->in_selection = 0;
 	}
 	data->pos++;
-	TERMCAP("nd");
+	tputs(tgetstr("nd", NULL), 1, ft_putchar_v2);
 	if (data->in_selection == 1)
 	{
 		data->right = 1;

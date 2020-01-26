@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:33:47 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/20 10:45:39 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/04 15:15:29 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_cmd	*parse_redir_cmd(
 	cmd = malloc(sizeof(*cmd));
 	cmd->type = REDIR;
 	cmd->cmd = subcmd;
-	cmd->file = rm_char(file, ' ');
+	cmd->file = ft_strdup(rm_char(file, ' '));
+	free(file);
 	cmd->mode = mode;
 	cmd->fd = fd;
 	return (t_cmd*)cmd;

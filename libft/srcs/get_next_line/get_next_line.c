@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/24 10:16:49 by ezonda            #+#    #+#             */
-/*   Updated: 2019/04/06 15:35:35 by ezonda           ###   ########.fr       */
+/*   Created: 2020/02/03 11:17:49 by ezonda            #+#    #+#             */
+/*   Updated: 2020/02/03 11:17:49 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_checkerror(int fd, char **line, char **str)
 {
-	if (fd < 0 || line == NULL || BUFF_SIZE <= 0 || fd >= OPEN_MAX)
+	if (fd < 0 || line == NULL || BUFF_SIZE <= 0 || fd >= FT_OPEN_MAX)
 		return (-1);
 	if (!str[fd])
 		if (!(str[fd] = ft_strnew(0)))
@@ -56,7 +56,7 @@ static int	ft_nextline(char **str, char *line_feed)
 
 int			get_next_line(const int fd, char **line)
 {
-	static char	*str[OPEN_MAX];
+	static char	*str[FT_OPEN_MAX];
 	char		*line_feed;
 	int			ret;
 
