@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:01:24 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/04 12:59:51 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/05 14:47:13 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,13 @@ void					parse_multi_quotes(t_var *data, int index, int mod);
 void					parse_multi_dquotes(t_var *data, int index, int mod);
 void					check_backslash(t_var *data);
 
-int 					check_dquotes_end(t_var *data);
-int	 					check_quotes_end(t_var *data);
-void 					rm_dquotes(char *str, char c);
+int						check_dquotes_end(t_var *data);
+int						check_quotes_end(t_var *data);
+void					rm_dquotes(char *str, char c);
 
-void 					add_exp(t_var *data);
-void 					join_exp(t_var *data, char *stock, char *selec);
-void  				apply_exp(t_var *data, char *selec, int j, int i);
-char 					*get_exp(char *str, int index);
-
+void					add_exp(t_var *data);
+void					join_exp(t_var *data, char *stock, char *selec);
+void					apply_exp(t_var *data, char *selec, int j, int i);
+char					*get_exp(char *str, int index);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:34:02 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/05 13:07:26 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/06 13:09:45 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_cmd		*parse_basic(char **p_input, char *end, int *res)
 		if (tok != 'a' && (*res = 0))
 			return (NULL);
 		new_cmd[2] = ft_strndup(new_cmd[0], new_cmd[1] - new_cmd[0]);
-//		ft_printf("\nLST MALLOC\n");
+//		ft_printf("\nMALLOC LST\n");
 		lst = ft_lstnew(new_cmd[2], new_cmd[1] - new_cmd[0] + 1);
 		ft_lstadd_back(&cmd->argv, lst);
 		free(new_cmd[2]);

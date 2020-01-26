@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 14:10:40 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/04 12:39:55 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/05 13:48:44 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	parse_simple_quotes(t_var *data, int index)
 		i++;
 	}
 	i = 0;
-	index++;
-	index = get_close_quotes(data, index);
+	index = get_close_quotes(data, index + 1);
 	last_pos = index - 2;
 	while (data->lex_str[index])
 	{
@@ -57,8 +56,7 @@ void	parse_simple_dquotes(t_var *data, int index)
 		i++;
 	}
 	i = 0;
-	index++;
-	index = get_close_dquotes(data, index);
+	index = get_close_dquotes(data, index + 1);
 	last_pos = index - 2;
 	while (data->lex_str[index])
 	{

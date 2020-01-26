@@ -6,11 +6,18 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:59:19 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/05 13:25:55 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/06 09:50:23 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/core.h"
+
+char		*close_fd(char *file)
+{
+	free(file);
+	file = ft_strdup("/dev/null");
+	return (file);
+}
 
 int			is_cat_heredoc(t_var *data)
 {

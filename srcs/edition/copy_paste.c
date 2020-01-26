@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 11:00:50 by ezonda            #+#    #+#             */
-/*   Updated: 2019/09/12 11:26:18 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/06 11:38:10 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	copy_cut_mode(t_var *data, int mod)
 			}
 		}
 	}
-	data->pos++;
 	i = 0;
 	while (i <= ft_strlen(data->lex_str))
 	{

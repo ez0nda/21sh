@@ -6,11 +6,25 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 11:36:22 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/31 10:32:51 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/06 10:08:55 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/core.h"
+
+void		free_lst(t_list *lst)
+{
+	t_list *tmp;
+
+	tmp = NULL;
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst);
+		lst = tmp;
+	}
+	lst = NULL;
+}
 
 void	add_to_string(char c, t_var *data)
 {

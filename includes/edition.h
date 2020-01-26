@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/04 11:18:50 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/06 09:59:56 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void			add_to_string(char c, t_var *data);
 void			realloc_str(char c, t_var *data);
 void			remove_prev_char(t_var *data);
 void			remove_cur_char(t_var *data);
+void			free_lst(t_list *lst);
 
 void			add_to_history(t_var *data);
 void			show_history(t_var *data, int mod);

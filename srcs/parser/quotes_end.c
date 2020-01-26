@@ -6,7 +6,7 @@
 /*   By: jebrocho <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 00:49:56 by jebrocho          #+#    #+#             */
-/*   Updated: 2020/02/05 13:34:48 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/05 14:20:56 by jebrocho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,14 @@ int		ret_quotes(t_var *data, int quotes, int dquotes, int index)
 		return (1);
 	else
 	{
-		i = ft_strlen(data->lex_str) - 1;
+		i = ft_strlen(data->lex_str);
 		dquotes = 0;
-		while (data->lex_str[i] != '\'')
+		while (data->lex_str[--i] != '\'')
 		{
 			if (data->lex_str[i] == '"' && dquotes == 0)
 				index = i;
 			if (data->lex_str[i] == '"')
 				dquotes++;
-			i--;
 		}
 		if (dquotes % 2 == 1)
 		{
@@ -72,15 +71,14 @@ int		ret_dquotes(t_var *data, int quotes, int dquotes, int index)
 		return (1);
 	else
 	{
-		i = ft_strlen(data->lex_str) - 1;
+		i = ft_strlen(data->lex_str);
 		quotes = 0;
-		while (data->lex_str[i] != '"')
+		while (data->lex_str[--i] != '"')
 		{
 			if (data->lex_str[i] == '\'' && quotes == 0)
 				index = i;
 			if (data->lex_str[i] == '\'')
 				quotes++;
-			i--;
 		}
 		if (quotes % 2 == 1)
 		{

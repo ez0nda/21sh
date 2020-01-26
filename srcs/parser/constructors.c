@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:33:47 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/05 13:27:06 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/06 13:09:54 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_cmd	*parse_basic_cmd(void)
 {
 	t_exec_cmd *cmd;
 
-//	ft_printf("\nCMD MALLOC\n");
+//	ft_printf("\nMALLOC CMD\n");
 	cmd = malloc(sizeof(*cmd));
 	cmd->type = BASIC;
 	return (t_cmd*)cmd;
@@ -27,7 +27,7 @@ t_cmd	*parse_redir_cmd(
 {
 	t_redirection_cmd *cmd;
 
-//	ft_printf("\nREDIR MALLOC\n");
+//	ft_printf("\nMALLOC REDIR\n");
 	cmd = malloc(sizeof(*cmd));
 	cmd->type = REDIR;
 	cmd->cmd = subcmd;
@@ -42,7 +42,7 @@ t_cmd	*parse_pipe_cmd(t_cmd *left, t_cmd *right)
 {
 	t_pipe_cmd *cmd;
 
-//	ft_printf("\nPIPE MALLOC\n");
+//	ft_printf("\nMALLOC PIPE\n");
 	cmd = malloc(sizeof(*cmd));
 	cmd->type = PIPE;
 	cmd->left = left;
