@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:34:02 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/20 10:52:11 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/23 15:50:19 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_cmd		*parse_basic(char **p_input, char *end, int *res)
 			return (NULL);
 		tmp = ft_strndup(new_cmd[0], new_cmd[1] - new_cmd[0]);
 		ft_lstadd_back(&cmd->argv, ft_lstnew(tmp, new_cmd[1] - new_cmd[0] + 1));
-		free(tmp);
+//		free(tmp);
 		ret = parse_redir(ret, p_input, end);
 	}
 	return (ret);

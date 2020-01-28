@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:48:59 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/20 10:44:20 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/23 16:22:39 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,17 @@ char		*rm_char(char *str, char c)
 void		add_to_here_stock(char c, t_var *data)
 {
 	int i;
+	char *tmp;
 
 	i = 0;
-	while (data->here_stock[i])
+	tmp = ft_strdup(data->here_stock);
+	free(data->here_stock);
+	while (tmp[i])
 		i++;
-	data->here_stock[i++] = c;
-	data->here_stock[i] = '\0';
+	tmp[i++] = c;
+	tmp[i] = '\0';
+	data->here_stock = ft_strdup(tmp);
+	free(tmp);
 }
 
 void		rm_herend(t_var *data)

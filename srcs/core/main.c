@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:43 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/21 11:31:32 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/23 16:21:33 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,8 @@ void	set_termcanon(t_var *data)
 {
 	char buffer[256];
 
-	if (tgetent(buffer, getenv("TERM")) <= 0)
-	{
-		ft_putendl_fd("       21sh: incomplete environment", 2);
-		ft_putendl_fd("No Termcaps: shell might not work as expected\n", 2);
-	}
+	if (tgetent(buffer, get_var("TERM=", data->environ)) <= 0)
+		return ;
 	if (tcgetattr(0, &og_term) == -1)
 		return ;
 	term = og_term;
@@ -54,15 +51,13 @@ void	set_env(t_var *data)
 	char cwd[256];
 
 	path = getcwd(cwd, sizeof(cwd));
-	if (!(data->environ = (char**)malloc(sizeof(char*) * 7)))
+	if (!(data->environ = (char**)malloc(sizeof(char*) * 5)))
 		return ;
-	data->environ[0] = ft_strdup("TERM=xterm-256color");
-	data->environ[1] = ft_strdup("SHLVL=1");
+	data->environ[0] = ft_strdup("SHLVL=1");
+	data->environ[1] = ft_strdup("TERM=xterm-256color");
 	data->environ[2] = ft_strjoin("PWD=", path);
 	data->environ[3] = ft_strdup("_=/usr/bin/env");
-	data->environ[4] = ft_strjoin("HOME=", getenv("HOME"));
-	data->environ[5] = ft_strjoin("OLDPWD=", getenv("OLDPWD"));
-	data->environ[6] = NULL;
+	data->environ[4] = NULL;
 }
 
 void	update_history(t_var *data)

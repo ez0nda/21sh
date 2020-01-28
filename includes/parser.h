@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:01:24 by ezonda            #+#    #+#             */
-/*   Updated: 2019/10/29 11:47:20 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/24 14:59:38 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,9 @@ void	ft_lstadd_back(t_list **alst, t_list *nw);
 int		ft_is_in(char *str, char c);
 char	*ft_strndup(const char *s1, size_t n);
 int		is_whitespaces(char c);
+int		is_pipe(char c);
 int		ft_lstcount(t_list *list);
 
 int 		check_quotes(t_var *data);
-void read_quotes(t_var *data);
-
-
+void read_quotes(t_var *data, int i);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 11:21:46 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/20 10:53:27 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/23 15:08:47 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,16 @@ void	ft_lstadd_back(t_list **alst, t_list *nw)
 		nw = nw->next;
 }
 
+int		is_pipe(char c)
+{
+	if (c == ';' || c == '|')
+		return (1);
+	return (0);
+}
+
 int		is_whitespaces(char c)
 {
-	if (c == ' ' || c == '\r' || c == '\t' || c == '\n' || c == ';' || c == '|')
+	if (c == ' ' || c == '\r' || c == '\t' || c == '\n' || c == ';')
 		return (1);
 	return (0);
 }

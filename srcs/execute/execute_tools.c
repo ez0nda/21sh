@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 12:50:13 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/20 10:43:58 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/23 16:21:58 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,13 @@ char	*get_var(char *str, char **env)
 
 	i = 0;
 	content = NULL;
+	i = 0;
 	while (env[i])
 	{
 		if (ft_strstr(env[i], str) != NULL && env[i][0] == str[0])
 		{
-			content = ft_strchr(env[i], '/');
+			content = ft_strcmp(str, "TERM=") ?
+				ft_strchr(env[i], '/') : ft_strchr(env[i], 'x');
 			return (content);
 		}
 		i++;

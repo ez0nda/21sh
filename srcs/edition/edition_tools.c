@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:44:48 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/20 09:56:08 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/24 16:53:39 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	init_var(t_var *data)
 	data->h_prompt = 0;
 	data->n_prompt = 0;
 	data->c_prompt = 0;
+	data->q_prompt = 0;
+	data->dq_prompt = 0;
 	data->redir_count = 0;
 }
 

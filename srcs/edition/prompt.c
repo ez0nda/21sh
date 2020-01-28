@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 13:47:01 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/21 10:15:10 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/28 10:22:46 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ static void		print_str(t_var *data)
 
 static void		print_prompt(t_var *data)
 {
-	if (!get_var("SHELL=", data->environ))
-		ft_putchar('\n');
-	if (data->quotes % 2 != 0 || data->dquotes % 2 != 0)
+/*	if (data->quotes % 2 != 0 || data->dquotes % 2 != 0)
 	{
 		data->std_prompt = 0;
 		ft_putstr("quotes> ");
-	}
+	}*/
+	if (data->q_prompt == 1)
+		ft_putstr("quote> ");
+	else if (data->dq_prompt == 1)
+		ft_putstr("dquote> ");
 	else if (data->p_prompt == 1)
 		ft_putstr("pipe> ");
 	else if (data->h_prompt == 1)
@@ -65,7 +67,11 @@ void			prompt(t_var *data)
 	if (!data->lex_str)
 		if (!(data->lex_str = (char*)malloc(sizeof(char) * BUFF_SHELL)))
 			return ;
-	if (data->p_prompt != 1)
+	if (data->q_prompt == 1)
+		data->pos = -8;
+	else if (data->dq_prompt == 1)
+		data->pos = -9;
+	else if (data->p_prompt != 1)
 		data->pos = -9;
 	else if (data->p_prompt == 1)
 		data->pos = -7;

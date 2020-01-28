@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:55:06 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/21 10:35:40 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/23 16:22:47 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		check_exe(t_var *data, char *cmd)
 	}
 	if (is_builtin(data, split_cmd))
 		return (1);
-	free_tab(split_cmd);			// fait segfault "CMD"
+	free_tab(split_cmd);
 	return (0);
 }
 

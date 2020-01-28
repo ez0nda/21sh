@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/21 13:07:01 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/24 14:59:41 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void			get_key(t_var *data, char *buffer)
 		move_down(data);
 	if (!ft_strcmp(buffer, DEL))
 		remove_cur_char(data);
-	if (!ft_strcmp(buffer, UNDO))
+	if (!ft_strcmp(buffer, UNDO) || !ft_strcmp(buffer, UNDO_BIS))
 		remove_prev_char(data);
 	if (!ft_strcmp(buffer, HOME))
 		move_first_last(data, 1);
@@ -77,8 +77,8 @@ void			get_key(t_var *data, char *buffer)
 
 void			join_cmds(t_var *data, int index)
 {
-	data->cmds[index] = ft_strjoin_free(data->cmds[index],
-		data->cmds[index + 1], 0);
+	data->cmds[index] = ft_strjoin(data->cmds[index],
+			data->cmds[index + 1]); //free
 	index++;
 	while (data->cmds[index])
 	{
@@ -134,10 +134,17 @@ void			check_first_last_char(t_var *data, int mod)
 int				parse_error_pipe(t_var *data)
 {
 	int i;
+	int j;
 
 	i = 0;
-	while (data->lex_str[i] == '|' || data->lex_str[i] == ';')
+	j = 0;
+	while (data->lex_str[i] == '|' || data->lex_str[i] == ';'
+			|| data->lex_str[i] == ' ' || data->lex_str[i] == '\\')
 		i++;
+	while (data->lex_str[j] == ' ')
+		j++;
+	if (i == j)
+		return (0);
 	if (i == ft_strlen(data->lex_str))
 	{
 		ft_putstr_fd("\n21sh: parse error near `", 2);
@@ -153,8 +160,6 @@ void			launch_cmds(t_var *data)
 {
 	t_cmd	*cmd;
 
-//	ft_printf("\n1\n");
-//	getchar();
 	data->cmd_index = 0;
 	if (parse_error_pipe(data))
 	{
@@ -169,15 +174,19 @@ void			launch_cmds(t_var *data)
 	while (data->cmds[data->cmd_index])
 	{
 		cmd = shell_parser(data->cmds[data->cmd_index]);
+//		ft_printf("\ncmd1 : |%s|\n", data->cmds[data->cmd_index]);
 		get_cmd_type(cmd, data);
+//		ft_printf("\n3\n");
+//		getchar();
 		data->cmd_index++;
-//		free(&cmd->type);       // or free(cmd) ?
 	}
 	data->pos = 0;
 	if (data->lex_str)
 		ft_bzero(data->lex_str, ft_strlen(data->lex_str));
+//	ft_printf("\n4\n");
+//	getchar();
 	free_tab(data->cmds);
-//	ft_printf("\n2\n");
+//	ft_printf("\n5\n");
 //	getchar();
 }
 
@@ -186,7 +195,7 @@ void			init_cmds(t_var *data)
 	if (ft_strlen(data->lex_str) != 0)
 	{
 		if (check_quotes(data) == 1)
-			read_quotes(data);
+			read_quotes(data, 0);
 		add_to_history(data);
 		launch_cmds(data);
 	}

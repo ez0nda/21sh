@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2019/12/14 10:34:24 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/24 16:53:00 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define HOME		(char[4]){ 27, 91, 72, 0}
 # define END		(char[4]){ 27, 91, 70, 0}
 # define UNDO		(char[4]){ 127, 0, 0, 0}
+# define UNDO_BIS	(char[4]){ 8, 0, 0, 0}
 # define DEL		(char[5]){ 27, 91, 51, 126, 0}
 # define CTRL_D		(char[4]){ 4, 0, 0, 0}
 
@@ -68,6 +69,8 @@ typedef struct	s_var
 	int		h_prompt;
 	int		n_prompt;
 	int		c_prompt;
+	int		q_prompt;
+	int		dq_prompt;
 	char	*herend;
 	char	*here_stock;
 	int		cat_here;
@@ -75,6 +78,8 @@ typedef struct	s_var
 	int test;
 	char **stock_test;
 	int redir_count;
+	char *qstr;
+	int qlen;
 }				t_var;
 
 void			get_input(t_var *data);

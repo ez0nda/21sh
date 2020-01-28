@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:13:18 by ezonda            #+#    #+#             */
-/*   Updated: 2020/01/20 10:30:19 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/01/23 16:21:07 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void			cursh_prompt(t_var *data)
 	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 	while (1)
 	{
+		get_curs_pos(data, data->pos);
 		prompt(data);
 		update_data(0, data);
 		ft_bzero(buffer, 6);
@@ -61,6 +62,7 @@ void			new_prompt(t_var *data)
 	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 	while (1)
 	{
+		get_curs_pos(data, data->pos);
 		prompt(data);
 		update_data(0, data);
 		ft_bzero(buffer, 6);
@@ -71,13 +73,14 @@ void			new_prompt(t_var *data)
 		{
 			ft_putchar(buffer[0]);
 			add_to_here_stock(buffer[0], data);
-			data->lex_str = ft_strjoin(data->lex_str, &buffer[0]);
+			data->lex_str = ft_strjoin_free(data->lex_str, &buffer[0], 0);
 			data->pos = ft_strlen(data->lex_str);
 			data->char_count++;
 		}
 		if (!ft_strcmp(buffer, RET))
 		{
 			rm_char(data->here_stock, '\\');
+			free(data->cmds[ft_tablen(data->cmds) - 1]);
 			data->cmds[ft_tablen(data->cmds) - 1] = ft_strdup(data->here_stock);
 			check_single_pipes(data);
 			check_first_last_char(data, 1);
@@ -129,6 +132,7 @@ void		heredoc_prompt(t_var *data)
 	ft_bzero(data->here_stock, ft_strlen(data->here_stock));
 	while (1)
 	{
+		get_curs_pos(data, data->pos);
 		prompt(data);
 		update_data(0, data);
 		ft_bzero(buffer, 6);
@@ -139,7 +143,7 @@ void		heredoc_prompt(t_var *data)
 		{
 			ft_putchar(buffer[0]);
 			add_to_here_stock(buffer[0], data);
-			data->lex_str = ft_strjoin(data->lex_str, &buffer[0]);
+			data->lex_str = ft_strjoin_free(data->lex_str, &buffer[0], 0);
 			data->pos = ft_strlen(data->lex_str);
 			data->char_count++;
 		}

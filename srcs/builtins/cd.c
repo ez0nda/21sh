@@ -15,6 +15,7 @@
 void old_pwd(char *old, t_var *data)
 {
   char **cmd;
+
   if (!(cmd = (char**)malloc(sizeof(char*) * 3)))
     return ;
   cmd[0] = ft_strdup("setenv");
@@ -95,6 +96,31 @@ char  *new_path(char *cmd, int opt, t_var *data)
   return (s);
 }
 
+void  add_home(t_var *data, char **cmd)
+{
+  int i;
+  int j;
+  int k;
+
+  i = 0;
+  j = 1;
+  if (!cmd[2])
+    k = 1;
+  else
+    k = 2;
+  if (cmd[k][i] == '~')
+  {
+    while (cmd[k][j])
+    {
+      cmd[k][i] = cmd[k][j];
+      i++;
+      j++;
+    }
+    cmd[k][i] = '\0';
+    cmd[k] = ft_strjoin(get_env(data->environ, "HOME="), cmd[k]);
+  }
+}
+
 int   cd_builtin(t_var *data, char **cmd)
 {
   int opt;
@@ -104,6 +130,7 @@ int   cd_builtin(t_var *data, char **cmd)
     newp = get_env(data->environ, "HOME=");
   else
   {
+    add_home(data, cmd);
     opt = parse_cd(data, cmd);
     if (opt == 0)
       newp = get_env(data->environ, "OLDPWD=");
