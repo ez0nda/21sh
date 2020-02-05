@@ -12,7 +12,7 @@
 
 #include "../../includes/core.h"
 
-void	parse_multi_quotes(t_var *data, int index)
+void	parse_multi_quotes(t_var *data, int index, int mod)
 {
 	char *stock;
 
@@ -26,6 +26,12 @@ void	parse_multi_quotes(t_var *data, int index)
 	data->pos = 0;
 	ft_putchar('\n');
 	quotes_loop(data);
+	if (mod == 0)
+	{
+		rm_char(data->here_stock, '\'');
+		ft_strdel(&stock);
+		return ;
+	}
 	free(data->lex_str);
 	data->lex_str = ft_strdup(data->here_stock);
 	data->lex_str = ft_strjoin_free(stock, data->lex_str, 2);
@@ -48,7 +54,7 @@ void	quotes_loop(t_var *data)
 		{
 			data->here_stock = ft_strjoin_free(data->here_stock
 					, data->lex_str, 0);
-			if (data->lex_str[ft_strlen(data->lex_str) - 1] == '\'')
+			if (check_quotes_end(data) == 1)
 				break ;
 			add_to_here_stock('\\', data);
 			add_to_here_stock('n', data);
@@ -60,7 +66,7 @@ void	quotes_loop(t_var *data)
 	}
 }
 
-void	parse_multi_dquotes(t_var *data, int index)
+void	parse_multi_dquotes(t_var *data, int index, int mod)
 {
 	char *stock;
 
@@ -71,14 +77,21 @@ void	parse_multi_dquotes(t_var *data, int index)
 	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 	add_to_here_stock('\\', data);
 	add_to_here_stock('n', data);
-	data->pos = 0;
-	ft_putchar('\n');
 	dquotes_loop(data);
+	if (mod == 0)
+	{
+		ft_strdel(&stock);
+		return ;
+	}
+	free(data->qstr);
+	data->qstr = ft_strdup(data->here_stock);
+	add_exp(data);
 	free(data->lex_str);
-	data->lex_str = ft_strdup(data->here_stock);
+	data->lex_str = ft_strdup(data->qstr);
 	data->lex_str = ft_strjoin_free(stock, data->lex_str, 2);
 	ft_strdel(&data->here_stock);
-	rm_char(&data->lex_str[index], '"');
+	rm_dquotes(&data->lex_str[index], '"');
+	check_backslash(data);
 	data->dq_prompt = 0;
 }
 
@@ -86,6 +99,8 @@ void	dquotes_loop(t_var *data)
 {
 	char buffer[6];
 
+	data->pos = 0;
+	ft_putchar('\n');
 	while (1)
 	{
 		init_subshells(data, buffer);
@@ -96,9 +111,8 @@ void	dquotes_loop(t_var *data)
 		{
 			data->here_stock = ft_strjoin_free(data->here_stock
 					, data->lex_str, 0);
-			if (ft_strchr(data->lex_str, '"'))
-				if (!check_backslash(data))
-					break ;
+			if (check_dquotes_end(data) == 1)
+				break ;
 			add_to_here_stock('\\', data);
 			add_to_here_stock('n', data);
 			data->pos = 0;

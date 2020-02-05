@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/04 10:31:15 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/05 09:36:09 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void			launch_cmds(t_var *data)
 		cmd = shell_parser(data->cmds[data->cmd_index]);
 		get_cmd_type(cmd, data);
 		data->cmd_index++;
-		free(cmd);
 	}
 	data->pos = 0;
 	if (data->lex_str)

@@ -58,6 +58,8 @@ SUBFILE = \
 		parser/quotes.c \
 		parser/quotes_utils.c \
 		parser/quotes_subshell.c \
+		parser/quotes_end.c \
+		parser/exp.c \
 		parser/strings_scan.c \
 		\
 		execute/exec_cmd.c \
@@ -90,10 +92,10 @@ MKDIR = mkdir -p
 ERRIGNORE = 2>/dev/null
 
 ifeq ($(VERBOSE),TRUE)
-	HIDE = 
+	HIDE =
 endif
 ifeq ($(DEBUG),TRUE)
-	CFLAGS = -g3 -ggdb3 
+	CFLAGS = -g3 -ggdb3
 endif
 
 .PHONY: all clean fclean re lib

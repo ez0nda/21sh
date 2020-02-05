@@ -78,7 +78,18 @@ void					quotes_loop(t_var *data);
 void					dquotes_loop(t_var *data);
 int						get_close_quotes(t_var *data, int index);
 int						get_close_dquotes(t_var *data, int index);
-void					parse_multi_quotes(t_var *data, int index);
-void					parse_multi_dquotes(t_var *data, int index);
+void					parse_multi_quotes(t_var *data, int index, int mod);
+void					parse_multi_dquotes(t_var *data, int index, int mod);
+void					check_backslash(t_var *data);
+
+int 					check_dquotes_end(t_var *data);
+int	 					check_quotes_end(t_var *data);
+void 					rm_dquotes(char *str, char c);
+
+void 					add_exp(t_var *data);
+void 					join_exp(t_var *data, char *stock, char *selec);
+void  				apply_exp(t_var *data, char *selec, int j, int i);
+char 					*get_exp(char *str, int index);
+
 
 #endif

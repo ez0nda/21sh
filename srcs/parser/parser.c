@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:34:02 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/04 15:15:45 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/05 13:07:26 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,6 @@ t_cmd		*parse_redir(t_cmd *cmd, char **p, char *end)
 	return (cmd);
 }
 
-void		free_str(t_cmd **ret)
-{
-	if (ret)
-	{
-		if (*ret)
-			free(ret);
-		*ret = NULL;
-	}
-}
-
 t_cmd		*parse_basic(char **p_input, char *end, int *res)
 {
 	char			*new_cmd[3];
@@ -74,7 +64,6 @@ t_cmd		*parse_basic(char **p_input, char *end, int *res)
 	ret = parse_basic_cmd();
 	cmd = (t_exec_cmd *)ret;
 	cmd->argv = NULL;
-//	free_str(&ret);
 	ret = parse_redir(ret, p_input, end);
 	while (*p_input < end)
 	{
@@ -83,6 +72,7 @@ t_cmd		*parse_basic(char **p_input, char *end, int *res)
 		if (tok != 'a' && (*res = 0))
 			return (NULL);
 		new_cmd[2] = ft_strndup(new_cmd[0], new_cmd[1] - new_cmd[0]);
+//		ft_printf("\nLST MALLOC\n");
 		lst = ft_lstnew(new_cmd[2], new_cmd[1] - new_cmd[0] + 1);
 		ft_lstadd_back(&cmd->argv, lst);
 		free(new_cmd[2]);

@@ -108,7 +108,6 @@ void			rm_herend(t_var *data);
 
 void			init_subshells(t_var *data, char *buffer);
 void			display_subshells(t_var *data, char *buffer);
-int				check_backslash(t_var *data);
 void			new_prompt(t_var *data);
 void			newline_loop(t_var *data);
 void			cursh_prompt(t_var *data);

@@ -23,24 +23,23 @@ void	add_this(char *car, t_var *data)
 		realloc_str(car[0], data);
 }
 
-int		check_backslash(t_var *data)
+void	check_backslash(t_var *data)
 {
 	int i;
-	int ret;
+	int deca;
 
 	i = 0;
-	ret = 0;
-	while (data->here_stock[i])
+	while (data->lex_str[i])
 	{
-		if (data->here_stock[i] == '\\' && data->here_stock[i + 1] == '"')
+		if (data->lex_str[i] == '\\' && data->lex_str[i + 1] == '"')
 		{
-			ret = 1;
-			data->here_stock[i] = data->here_stock[i + 1];
-			i++;
+			deca = i - 1;
+			while (data->lex_str[++deca])
+				data->lex_str[deca] = data->lex_str[deca + 1];
+			data->lex_str[deca] = '\0';
 		}
 		i++;
 	}
-	return (ret);
 }
 
 void	realloc_quotes(t_var *data, char *start, char *end, int last_pos)

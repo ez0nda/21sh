@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 13:59:19 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/03 14:08:07 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/05 13:25:55 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int			init_heredoc(t_var *data, t_redirection_cmd *rcmd)
 	if (!check_cmd(data))
 	{
 		free(rcmd->file);
+		free(rcmd->cmd);
+		free(rcmd);
 		return (0);
 	}
 	return (1);

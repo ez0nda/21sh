@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:48:59 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/03 11:44:12 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/05 13:37:32 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,11 @@ void		rm_herend(t_var *data)
 	int i;
 
 	i = ft_strlen(data->here_stock);
-	while (data->here_stock[i] != '\n')
+	while (i > 0 && data->here_stock[i] != '\n')
 	{
 		data->here_stock[i] = '\0';
 		i--;
 	}
 	data->here_stock[i] = '\0';
+	ft_strdel(&data->herend);
 }

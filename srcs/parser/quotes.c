@@ -67,6 +67,7 @@ void	parse_simple_dquotes(t_var *data, int index)
 		index++;
 	}
 	data->dquotes -= 2;
+	add_exp(data);
 	realloc_quotes(data, tmp_start, tmp_end, last_pos);
 }
 
@@ -103,11 +104,11 @@ void	read_quotes(t_var *data, int i)
 			&& data->lex_str[i] != '\'' && data->lex_str[i] != '"')
 		i++;
 	if (data->lex_str[i] == '\'' && data->quotes == 1)
-		parse_multi_quotes(data, i);
+		parse_multi_quotes(data, i, 1);
 	else if (data->lex_str[i] == '\'' && data->quotes != 0)
 		parse_simple_quotes(data, i);
 	else if (data->lex_str[i] == '"' && data->dquotes == 1)
-		parse_multi_dquotes(data, i);
+		parse_multi_dquotes(data, i, 1);
 	else if (data->lex_str[i] && data->dquotes != 0)
 		parse_simple_dquotes(data, i);
 	ft_strdel(&data->qstr);

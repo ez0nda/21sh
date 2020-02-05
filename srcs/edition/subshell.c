@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:13:18 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/04 10:03:12 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/05 13:35:35 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,7 @@ void		heredoc_prompt(t_var *data)
 		data->here_stock = ft_strnew(BUFF_SHELL);
 	data->pos = 0;
 	heredoc_loop(data);
+	data->cmds[data->cmd_index] = ft_strjoin_free(data->cmds[data->cmd_index], data->here_stock, 0);
+	ft_strdel(&data->here_stock);
 	data->h_prompt = 0;
 }
