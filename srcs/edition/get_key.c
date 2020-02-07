@@ -44,7 +44,7 @@ void		check_first_last_char(t_var *data, int mod)
 	int len;
 
 	len = ft_strlen(data->lex_str) - 1;
-	if (data->lex_str[0] == '{' && data->lex_str[1] == '\0' && mod == 0)
+	if (data->lex_str[0] == '{' && (data->lex_str[1] == '\0' || is_whitespaces(data->lex_str[1])) && mod == 0)
 	{
 		ft_putchar('\n');
 		cursh_prompt(data);
@@ -63,12 +63,15 @@ int			parse_error_pipe(t_var *data)
 
 	i = 0;
 	j = 0;
-	while (data->lex_str[i] == '|' || data->lex_str[i] == ';'
-			|| data->lex_str[i] == ' ' || data->lex_str[i] == '\\')
+	while (data->lex_str[i] != '|' && data->lex_str[i] != ';'
+				&& data->lex_str[i] != ' ' && data->lex_str[i] != '\\'
+				&& data->lex_str[i])
 		i++;
-	while (data->lex_str[j] == ' ')
-		j++;
-	if (i == j)
+	j = i;
+	while ((data->lex_str[i] == '|' || data->lex_str[i] == ';'
+			|| data->lex_str[i] == ' ' || data->lex_str[i] == '\\') && data->lex_str[i])
+		i++;
+	if (i - 2 == j || data->lex_str[i - 1] == ' ' || i == j)
 		return (0);
 	if (i == ft_strlen(data->lex_str))
 	{

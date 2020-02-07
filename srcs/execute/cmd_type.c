@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 09:50:07 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/06 13:26:56 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/07 11:33:44 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,31 @@ void		restore_fd(t_var *data, int new_fd, t_redirection_cmd *rcmd)
 	free(rcmd);
 }
 
+void		free_pipe(t_pipe_cmd *pcmd, t_cmd *left, t_cmd *right)
+{
+	t_exec_cmd		*ecmd_left;
+	t_exec_cmd		*ecmd_right;
+
+	ecmd_left = (t_exec_cmd *)pcmd->left;
+	ecmd_right = (t_exec_cmd *)pcmd->right;
+
+	free_lst(ecmd_left->argv);
+	free_lst(ecmd_right->argv);
+
+	free(pcmd->left);
+	free(pcmd->right);
+
+	free(pcmd);
+}
+
 void		cmd_pipe(t_cmd *cmd, t_var *data)
 {
 	t_pipe_cmd		*pcmd;
-	t_exec_cmd		*ecmd_left;
-	t_exec_cmd		*ecmd_right;
 	int				pipes[2];
 	int				pid[2];
 
+	data->pipe = 1;
 	pcmd = (t_pipe_cmd *)cmd;
-	ecmd_left = (t_exec_cmd *)pcmd->left;
-	ecmd_right = (t_exec_cmd *)pcmd->right;
 	if (pipe(pipes) != 0)
 		ft_putendl_fd("\n21sh: pipe: syntax error", 2);
 	else if ((pid[0] = fork()) == 0)
@@ -51,8 +65,6 @@ void		cmd_pipe(t_cmd *cmd, t_var *data)
 		dup2(pipes[1], STDOUT_FILENO);
 		close(pipes[0]);
 		get_cmd_type(pcmd->left, data);
-		free_lst(ecmd_right->argv);
-		free(ecmd_right);
 		exit(0);
 	}
 	if ((pid[1] = fork()) == 0)
@@ -60,19 +72,16 @@ void		cmd_pipe(t_cmd *cmd, t_var *data)
 		dup2(pipes[0], STDIN_FILENO);
 		close(pipes[1]);
 		get_cmd_type(pcmd->right, data);
-		free_lst(ecmd_left->argv);
-		free(ecmd_left);
 		exit(0);
 	}
 	close(pipes[0]);
 	close(pipes[1]);
 	waitpid(-1, 0, 0);
 	waitpid(-1, 0, 0);
-	free_lst(ecmd_left->argv);
-	free_lst(ecmd_right->argv);
-	free(ecmd_left);
-	free(ecmd_right);
-	free(pcmd);
+
+	free_pipe(pcmd, pcmd->left, pcmd->right);
+
+	data->pipe = 0;
 }
 
 void		cmd_redir(t_cmd *cmd, t_var *data)
@@ -132,9 +141,13 @@ void		cmd_basic(t_cmd *cmd, t_var *data)
 	init_exec(data);
 	free_tab(data->argv);
 	ft_strdel(&data->here_stock);
-//	ft_printf("\n\nFREE CMD + LST\n");
-	free_lst(ecmd->argv);
-	free(ecmd);
+	if (!data->pipe)
+	{
+//		ft_printf("\n\nFREE LST + CMD\n");
+		free_lst(ecmd->argv);
+		free(ecmd);
+	}
+//	ecmd = NULL;
 }
 
 void		get_cmd_type(t_cmd *cmd, t_var *data)

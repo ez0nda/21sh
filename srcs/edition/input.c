@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 12:12:15 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/05 09:36:09 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/07 12:44:59 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void			get_input(t_var *data)
 {
 	char buffer[6];
 
+	data->reset = 0;
 	prompt(data);
 	while (1)
 	{

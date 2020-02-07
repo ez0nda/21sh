@@ -20,6 +20,8 @@ void		cursh_prompt(t_var *data)
 	data->pos = 0;
 	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 	cursh_loop(data);
+	if (data->reset == 1)
+		get_input(data);
 	ft_strdel(&data->lex_str);
 	data->lex_str = ft_strdup(data->here_stock);
 	rm_char(data->lex_str, '}');
@@ -35,6 +37,8 @@ void		new_prompt(t_var *data)
 	data->pos = 0;
 	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 	newline_loop(data);
+	if (data->reset == 1)
+		get_input(data);
 	ft_bzero(data->here_stock, ft_strlen(data->here_stock));
 	ft_bzero(data->lex_str, ft_strlen(data->lex_str));
 	data->n_prompt = 0;
@@ -57,6 +61,8 @@ void		pipe_prompt(t_var *data, int index)
 		read(0, &buffer, sizeof(buffer));
 		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
 			display_subshells(data, buffer);
+		if (data->reset == 1)
+			break ;
 		if (!ft_strcmp(buffer, (char[4]){ 10, 0, 0, 0}))
 		{
 			data->pos = 0;
@@ -64,6 +70,8 @@ void		pipe_prompt(t_var *data, int index)
 		}
 		get_key(data, buffer);
 	}
+	if (data->reset == 1)
+		get_input(data);
 	data->cmds[index] = ft_strjoin_free(data->cmds[index], data->lex_str, 0);
 	check_single_pipes(data);
 	data->p_prompt = 0;
@@ -77,8 +85,9 @@ void		heredoc_prompt(t_var *data)
 		data->here_stock = ft_strnew(BUFF_SHELL);
 	data->pos = 0;
 	heredoc_loop(data);
+	if (data->reset == 1)
+		get_input(data);
 	data->cmds[data->cmd_index] = ft_strjoin_free(data->cmds[data->cmd_index],
 			data->here_stock, 0);
-//	ft_strdel(&data->here_stock);
 	data->h_prompt = 0;
 }

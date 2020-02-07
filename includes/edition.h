@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:19:08 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/06 09:59:56 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/07 12:44:31 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef struct	s_var
 	char	*qstr;
 	int		qlen;
 	int		hist_pos;
+	int		pipe;
+	int		reset;
 }				t_var;
 
 void			get_input(t_var *data);

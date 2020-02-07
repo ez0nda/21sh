@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 10:44:48 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/03 12:28:44 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/07 09:45:38 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	init_var(t_var *data)
 	data->redir_count = 0;
 	data->cmd_index = 0;
 	data->hist_pos = 0;
+	data->pipe = 0;
 }
 
 void	init_shell(t_var *data)

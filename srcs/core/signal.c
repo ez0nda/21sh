@@ -19,6 +19,7 @@ static void		signal_quit(int sig)
 
 	data = update_data(1, data);
 	i = ft_strlen(data->lex_str);
+	data->reset = 1;
 	if (sig == SIGINT)
 	{
 		ft_putchar('\n');

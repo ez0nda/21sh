@@ -99,4 +99,6 @@ void			get_curs_pos(t_var *data, int index)
 		tputs(tgetstr("le", NULL), 1, ft_putchar_v2);
 		index--;
 	}
+	if (data->h_prompt == 1 && data->pos < 0)
+		tputs(tgetstr("le", NULL), 1, ft_putchar_v2);
 }

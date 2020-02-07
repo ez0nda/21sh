@@ -39,6 +39,8 @@ void	cursh_loop(t_var *data)
 		read(0, &buffer, sizeof(buffer));
 		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
 			display_subshells(data, buffer);
+		if (data->reset == 1)
+			break ;
 		if (!ft_strcmp(buffer, (char[4]){ 10, 0, 0, 0}))
 		{
 			data->here_stock = ft_strjoin_free(data->here_stock
@@ -64,6 +66,8 @@ void	newline_loop(t_var *data)
 		read(0, &buffer, sizeof(buffer));
 		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
 			display_subshells(data, buffer);
+		if (data->reset == 1)
+			break ;
 		if (!ft_strcmp(buffer, (char[4]){ 10, 0, 0, 0}))
 		{
 			data->here_stock = ft_strjoin_free(data->here_stock
@@ -90,6 +94,8 @@ void	heredoc_loop(t_var *data)
 		read(0, &buffer, sizeof(buffer));
 		if ((buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0))
 			display_subshells(data, buffer);
+		if (data->reset == 1)
+			break ;
 		if (!ft_strcmp(buffer, (char[4]){ 10, 0, 0, 0}))
 		{
 			ft_putchar('\n');

@@ -26,6 +26,8 @@ void	parse_multi_quotes(t_var *data, int index, int mod)
 	data->pos = 0;
 	ft_putchar('\n');
 	quotes_loop(data);
+	if (data->reset == 1)
+		get_input(data);
 	if (mod == 0)
 	{
 		rm_char(data->here_stock, '\'');
@@ -50,6 +52,8 @@ void	quotes_loop(t_var *data)
 		read(0, &buffer, sizeof(buffer));
 		if (buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0)
 			display_subshells(data, buffer);
+		if (data->reset == 1)
+					break ;
 		if (!ft_strcmp(buffer, (char[4]){ 10, 0, 0, 0}))
 		{
 			data->here_stock = ft_strjoin_free(data->here_stock
@@ -78,6 +82,8 @@ void	parse_multi_dquotes(t_var *data, int index, int mod)
 	add_to_here_stock('\\', data);
 	add_to_here_stock('n', data);
 	dquotes_loop(data);
+	if (data->reset == 1)
+		get_input(data);
 	if (mod == 0)
 	{
 		ft_strdel(&stock);
@@ -107,6 +113,8 @@ void	dquotes_loop(t_var *data)
 		read(0, &buffer, sizeof(buffer));
 		if (buffer[0] >= 32 && buffer[0] < 127 && buffer[1] == 0)
 			display_subshells(data, buffer);
+		if (data->reset == 1)
+				break ;
 		if (!ft_strcmp(buffer, (char[4]){ 10, 0, 0, 0}))
 		{
 			data->here_stock = ft_strjoin_free(data->here_stock
