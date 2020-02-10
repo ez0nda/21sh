@@ -6,7 +6,7 @@
 /*   By: ezonda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 09:50:07 by ezonda            #+#    #+#             */
-/*   Updated: 2020/02/07 11:33:44 by ezonda           ###   ########.fr       */
+/*   Updated: 2020/02/10 12:42:11 by ezonda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		restore_fd(t_var *data, int new_fd, t_redirection_cmd *rcmd)
 
 void		free_pipe(t_pipe_cmd *pcmd, t_cmd *left, t_cmd *right)
 {
-	t_exec_cmd		*ecmd_left;
+/*	t_exec_cmd		*ecmd_left;
 	t_exec_cmd		*ecmd_right;
 
 	ecmd_left = (t_exec_cmd *)pcmd->left;
@@ -43,7 +43,7 @@ void		free_pipe(t_pipe_cmd *pcmd, t_cmd *left, t_cmd *right)
 
 	free_lst(ecmd_left->argv);
 	free_lst(ecmd_right->argv);
-
+*/
 	free(pcmd->left);
 	free(pcmd->right);
 
